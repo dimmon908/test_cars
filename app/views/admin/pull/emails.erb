@@ -1,0 +1,35 @@
+<% @data ||= [] %>
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11 col-sm-11 col-xs-11">
+    <% if @data.empty? %>
+      No emails in queqe
+    <% else %>
+      <table cellpadding="2" cellspacing="0" border="1" width="100%">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>User</th>
+          <th>EmailId</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+        <% @data.each do |mail| %>
+        <tr>
+          <td><%= mail.id %></td>
+          <td><%= mail.user.first_name %> <%= mail.user.last_name %></td>
+          <td><%= mail.email.internal_name %></td>
+          <td><%= mail.status %></td>
+          <td><%= mail.created_at %></td>
+          <td>
+
+            <br/>
+          </td>
+        </tr>
+        <% end %>
+        </thead>
+      </table>
+      <%= will_paginate @data %>
+    <% end %>
+  </div>
+</div>

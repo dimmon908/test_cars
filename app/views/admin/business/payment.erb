@@ -1,0 +1,65 @@
+<%= form_for(resource, :as => resource_name, :url => "/admin/business/#{@company.id}/payment", :validate => true, :remote => true) do |f| %>
+
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :admin_id %>
+
+  <div class="row">
+    <div class="col-xs-12 form-group">
+      <%= t('admin.company.credit_limit') %>: <%= number_to_currency @company.credit_limit %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 form-group">
+      <%= t('admin.company.credit') %>: <%= number_to_currency @company.credit %>
+    </div>
+  </div>
+
+  <div class="separator-line"></div>
+
+  <div class="row">
+    <div class="col-xs-12 form-group">
+      <h3><%= t('admin.company.apply_payment') %></h3>
+    </div>
+  </div>
+
+  <div class="clearfix">
+    <div class="pull-left form-group innerR">
+      <%= f.text_field :value, :class => 'form-control validate[required]', :style => 'width:100px; height:28px;', :placeholder => '$' %>
+    </div>
+
+    <div class="pull-left innerR">
+      <%= f.label :paid_via, t('admin.company.paid_via') %>
+    </div>
+
+    <div class="pull-left form-group innerR">
+      <%= f.select :paid_via, options_for_select(Payments::PAID_VIA.invert), :prompt => 'Check', :class => 'form-control' %>
+    </div>
+
+    <div class="pull-left innerR">
+      <%= f.label :date, t('admin.company.paid_date') %>
+    </div>
+
+    <div class="pull-left form-group innerR">
+      <div class="input-group datepicker" style="width: 129px;">
+        <%= f.text_field :date, :class => 'form-control validate[required] input-append add-on', :style => 'height:28px;' %>
+        <span class="input-group-addon">
+          <i class="icon-th"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="pull-left innerR">
+      <%= button_tag t('admin.company.apply_payment_button'), :type => :confirm, :class => 'btn btn-primary submitForm' %>
+    </div>
+
+    <div class="pull-left">
+      <%= button_tag t('admin.company.reset'), :class => 'btn btn-primary resetForm' %>
+
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $('#addPaymentLabel').html('<%= t('admin.company.payment', :company_name => @company.business_name) %>');
+</script>

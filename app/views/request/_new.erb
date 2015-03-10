@@ -1,0 +1,317 @@
+<% if Payment::Type::net_terms?(current_user) && !current_user.approve%>
+  Your account must approved or add credit card to your account.
+<% else
+
+     url = "/request/update/book/#{resource.id}" if resource.id
+     url ||= request_index_path
+     resource.vehicle_id ||= 1
+     params = "#{resource_name}[params]"
+     only_future_vehicle ||= Vehicle.only_future.select(:id).all.collect {|v| v.id}
+     only_future_vehicle ||= []
+  %>
+
+  <%= form_for resource, :as => resource_name, :url => url,  :validate => true do |f| %>
+    <%= render 'shared/summary_errors' %>
+
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :distance %>
+    <%= f.hidden_field :time %>
+    <%= f.hidden_field :payment, :value => current_user.payment %>
+    <%= hidden_field_tag :to, "/request/confirm/#{resource.id}", :id => 'route_to' %>
+    <%= hidden_field_tag :id, resource.id, :id => 'request_id' %>
+    <%= hidden_field_tag :url_to, "/request/confirm/#{resource.id}", :id => 'url_to' %>
+
+
+    <div class="row divider" style="margin-top: 0;">
+      <div class="col-md-12">
+        <p class="title">
+          <span class="glyphicon glyphicon-time f20"></span>
+          <span class="text"><%= t('forms.request.labels.need_car') %></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="row request_type_buttons" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <div class="pull-left" style="margin-right: 20px;">
+          <%= f.label :status_instant, :class => :btn do %>
+            <%= f.radio_button :status, :instant %>
+            <span class="check_box_label_span">Now</span>
+          <% end %>
+        </div>
+        <div class="pull-left">
+          <%= f.label :status_future, :class => :btn do %>
+            <%= f.radio_button :status, :future %>
+            <span class="check_box_label_span">Future</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="future_date" <% unless Trip::Status::future? resource %>style="display: none;"<%end%>>
+      <div class="row divider">
+        <div class="col-md-12">
+          <p class="title">
+            <span class="glyphicon glyphicon-time f20"></span>
+            <span class="text"><%= t('forms.request.labels.select_time') %></span>
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10 form-group" style="margin-top: 20px;">
+          <div class="input-group">
+            <%= f.text_field :date,
+                             :placeholder => Time.now.strftime('%m/%d/%Y - %I:%M %p'),
+                             :class => 'form-control validate[required] input-append add-on ie_input select_date_input',
+                             'data-date' => resource.date.strftime(HelperTools::JS_DATE) %>
+            <span class="input-group-addon datepicker" style="border-left: 0;" data-date="<%=resource.date.strftime(HelperTools::JS_DATE)%>">
+          <span class="icons icons-calendar"></span>
+        </span>
+        <span class="input-group-addon timepicker" data-date="<%=resource.date.strftime(HelperTools::JS_DATE)%>">
+          <span class="text-muted  f16 glyphicon glyphicon-time" style="top: 0;"></span>
+        </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row divider">
+      <div class="col-md-6">
+        <p class="title">
+          <span class="icons icons-destination"></span>
+          <span class="text"><%= t 'forms.request.labels.select_address' %></span>
+        </p>
+      </div>
+      <div class="col-md-6 text-right">
+        <%= link_to t('forms.request.labels.address_import'), '#', :id => 'address_import', :class => 'f12', :style => 'line-height: 2.5;' %>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <%= f.label :from, "#{t('forms.request.labels.from')} *" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 form-group">
+        <%= f.text_field :from,
+                         :class => 'form-control address_select ie_input trip_place_input',
+                         'data-lng' => resource.params['from_coordinates']['lng'],
+                         'data-lat' => resource.params['from_coordinates']['lat'],
+                         'data-street' => resource.params['from_coordinates']['street'],
+                         'data-city' => resource.params['from_coordinates']['city'],
+                         'data-name' => resource.params['from_coordinates']['name']
+        %>
+        <span class="favorite_star favorites"></span>
+      </div>
+
+      <!--<button type="button" value="+" class="btn btn-sm btn-default text-upper" id="add_destination">+</button>-->
+
+    </div>
+    <% resource.to.each_with_index do |to, index| %>
+      <div class="row">
+        <div class="col-md-12">
+          <%= label_tag "Request[to][#{index}]", "#{t('forms.request.labels.to')} (#{t('general.optional')})" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 form-group">
+          <%= text_field_tag "Request[to][#{index}]", to, {
+            :placeholder => 'Enter Drop Off address (Required for fare quote)',
+            :class => 'form-control validate[required] address_select ie_input trip_place_input',
+            'data-lng' => resource.params["to_coordinates_#{index}"]['lng'],
+            'data-lat' => resource.params["to_coordinates_#{index}"]['lat'],
+            'data-street' => resource.params["to_coordinates_#{index}"]['street'],
+            'data-city' => resource.params["to_coordinates_#{index}"]['city'],
+            'data-name' => resource.params["to_coordinates_#{index}"]['name']
+          } %>
+          <span class="favorite_star favorites"></span>
+        </div>
+        <div class="col-md-1">
+          <div class="row">
+            <div class="info" style="margin-top: 6px;">?</div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row divider" id="beforeVechicle">
+      <div class="col-md-12">
+        <p class="title">
+          <span class="icons icons-black_dots"></span>
+          <span class="text"><%= t('forms.request.labels.vehicle_type') %></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12 clearfix">
+        <% Vehicle.order('sort_order ASC').all.collect do |p| %>
+          <div class="pull-left vehicle_type" <% if RequestHelper::future_vehicle? resource, only_future_vehicle, p.id %>style="display: none;"<% end %>>
+            <%= f.radio_button :vehicle_id, p.id %>
+            <label for="<%="#{resource_name}_#{:vehicle_id.to_s}_#{p.id}"%>">
+              <%= image_tag(p.photo) %>
+              <p class="vehicle_title"><%=p.name%></p>
+              <p class="museoSans100 f12"><%=p.desc%></p>
+              <p class="museoSans300 f12" style="margin-top: 5px;"><%=p.passengers%> passengers</p>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row divider">
+      <div class="col-md-12">
+        <% recommend = resource.recommend? %>
+        <%= check_box params, :recommend, {checked: recommend} %>
+        <%= label params, :recommend, t('forms.request.labels.for_friend') %>
+      </div>
+    </div>
+
+    <div class="row" id="passengers" style="margin-top: 15px;<% unless recommend %>display:none;<% end %>">
+      <div class="col-md-12">
+        <%
+           resource.client_validation = true
+           count = resource.params['passengers'].count rescue 1
+           count.times do |i|
+        %>
+          <div id="passenger_<%=i%>">
+          <span class="qunit-fail" id="errors_passenger_block" style="display: none">
+            <p></p>
+          </span>
+            <div class="row">
+              <div class="col-md-5">
+                <%= f.label :recommended_first_name, t('first_name_holder') %>
+              </div>
+              <div class="col-md-5">
+                <%= f.label :recommended_last_name, t('last_name_holder') %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 form-group">
+                <%= f.text_field :recommended_first_name, :placeholder => t('placeholders.user.first_name_request'), :class => 'form-control ie_input name_input', :validate => true %>
+              </div>
+              <div class="col-md-5 form-group">
+                <%= f.text_field :recommended_last_name, :placeholder => t('placeholders.user.last_name_request'), :class => 'form-control ie_input name_input', :validate => true %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-10">
+                <%= f.label :recommended_phone, t('forms.request.labels.passenger_phone') %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10 form-group">
+                <%= f.text_field :recommended_phone, :class => 'form-control ie_input trip_place_input', :validate => true %>
+              </div>
+            </div>
+
+            <% if can? :charge_business_account,  current_user %>
+              <div class="row">
+                <div class="col-md-12">
+                  <%= radio_button_tag :payment, :Net_Terms, Payment::Type::net_terms?(resource) %>
+                  <%= label_tag :payment_Net_Terms, t('forms.request.labels.charge_business_account') %>
+                </div>
+              </div>
+            <% end %>
+
+            <% if can? :charge_passenger_credit_card, current_user %>
+              <div class="row">
+                <div class="col-md-12 charge_credit_card">
+                  <%= radio_button_tag :payment, :passenger_credit_card, resource.passenger_credit_card? %>
+                  <%= label_tag :payment_passenger_credit_card, t('forms.request.labels.charge_passenger_credit_card') %>
+                </div>
+              </div>
+
+              <div class="row charge_credit_card_attention" style="margin-top: 10px; display: none;">
+                <div class="col-md-12">
+                  <div style="padding: 10px; background: #edf5f7; border: 1px solid #c4d6db; border-radius: 1px;">
+                    <span class="icons icons-attention v-middle"></span><span class="f13 museoSans300 v-middle" style="margin-left: 10px;"><%= t 'messages.credit_card_scanned_before_trip' %></span>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <% if can? :put_room_number, current_user %>
+              <div class="row" style="margin-top: 15px;">
+                <div class="col-md-10">
+                  <%= f.label :recommended_room, t('forms.request.labels.room_number') %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-10 form-group">
+                  <%= f.text_field :recommended_room, :placeholder => t('placeholders.request.room_number'), :class => 'form-control' %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-10">
+                  <%= f.label :recommended_reference, t('forms.request.labels.reference_number') %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-10 form-group">
+                  <%= f.text_field :recommended_reference, :placeholder => t('placeholders.request.room_number'), :class => 'form-control' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row divider">
+      <div class="col-md-12">
+        <p class="title">
+          <span class="icons icons-additional_info" style="vertical-align: middle;"></span>
+          <span class="text"><%= t('forms.request.labels.additional_information') %></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <%= f.label :comment, t('forms.request.labels.comments') %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 form-group">
+        <%= f.text_area :comment, :placeholder => t('placeholders.request.comments'), :class => 'form-control text_box_ie ', :id => 'comments' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <%= f.label :promo, t('forms.request.labels.promo') %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 form-group">
+        <%= f.text_field :promo, :class => 'form-control ie_input promo_input' %>
+      </div>
+      <div class="col-md-4 form-group">
+        <span id="promo_amount"  class="valid_promo" ></span>
+      </div>
+    </div>
+
+
+    <span class="qunit-fail" id="errors_block" style="display: none">
+      <p></p>
+    </span>
+    <span class="qunit-fail" id="errors_submit_block" style="display: none">
+    </span>
+
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <%= button_tag :type => 'submit', :class => 'btn btn-default text-upper' do %>
+          <%= t 'button.review_trip' %>
+          <span class="icons icons-next"></span>
+        <% end %>
+      </div>
+    </div>
+
+  <% end %>
+<% end %>

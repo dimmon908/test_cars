@@ -1,0 +1,93 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag  'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+    <%= form_for(resource, :as => resource_name, :url => admin_car_path(resource),  :validate => true) do |f| %>
+      <p class="lead"><%= t 'forms.car.info' %></p>
+
+      <div class="form-group">
+        <%= f.label :place_number %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= resource.place_number %>
+          </div>
+        </div>
+        <% if resource.car_photoses %>
+          <% resource.car_photoses.each do |ff| %>
+            <div class="avatar">
+              <%= image_tag ff.photo.url(:medium) %>
+            </div>
+          <% end %>
+
+          <% if resource.car_photoses.size < Configurations[:max_car_photos] %>
+                <div class="avatar">
+                  <%= f.file_field :photo %>
+                  <%= submit_tag 'Upload' %>
+                </div>
+          <% end %>
+        <% end %>
+
+
+      </div>
+
+
+
+      <div class="form-group">
+        <%= f.label :manufacturer %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= resource.manufacturer %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :model_name %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= resource.model_name %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :model_year %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= resource.model_year %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :color %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= resource.color %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :passenger_capacity %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= resource.passenger_capacity %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :fuel_type %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= resource.fuel_type %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

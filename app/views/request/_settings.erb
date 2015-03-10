@@ -1,0 +1,488 @@
+<% user = User::user_object_by_role(current_user.role, current_user.id) %>
+<!-- Modal -->
+<div class="modal fade custom_modal" id="account_settings" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content clearfix">
+      <div class="col-xs-3">
+        <ul class="text-upper menu nav" style="margin-top: 20px;">
+          <li class="active">
+            <a href="#account_information" data-toggle="tab"><%= t('forms.user.accountInfo') %></a>
+          </li>
+          <li>
+            <a href="#change_password" data-toggle="tab"><%= t('forms.user.change_password') %></a>
+          </li>
+          <li>
+            <a href="#change_email_address" data-toggle="tab"><%= t('forms.user.change_email_address') %></a>
+          </li>
+          <li>
+            <a href="#change_cell_phone" data-toggle="tab"><%= t('forms.user.change_cell_phone') %></a>
+          </li>
+          <li>
+            <a href="#personal_information" data-toggle="tab"><%= t('forms.user.personalInfo') %></a>
+          </li>
+          <% if can? :credit_card, user %>
+          <li>
+            <a href="#billing" data-toggle="tab"><%= t('forms.user.billing') %></a>
+          </li>
+          <% end %>
+          <li>
+            <a href="#help" data-toggle="tab"><%= t('general.help') %></a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-9">
+        <div class="tab-content">
+          <div class="tab-pane active fade in" id="account_information">
+            <div class="modal-header row">
+              <p class="close museoSans100 text-lower pointer" data-dismiss="modal" aria-hidden="true">
+                <span class="f14" style="line-height: 1.8; vertical-align: top;"><%= t 'links.close' %></span>
+                <span style="margin-left: 5px;vertical-align: top;line-height: 1.6;" data-dismiss="modal" class="f16 text-upper">X</span>
+              </p>
+
+              <p class="f22 museoSans300 modal-title"><%= t 'forms.user.account_info' %></p>
+            </div>
+            <div class="modal-body">
+              <%= form_for user, as: :user,  :url => "/#{user.role.internal_name}/#{user.id}", :validate => true, :remote => true do |f| %>
+              <div class="row">
+                <div class="col-xs-12">
+                  <%= f.label(:email, t('activerecord.attributes.user.email')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.email_field :email, :placeholder => t('placeholders.general.email'), :class => 'usr_email form-control validate[required,custom[email]]', :validate => true %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <%= f.label(:phone, t('activerecord.attributes.user.phone')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.telephone_field(:phone, :placeholder => t('placeholders.general.phone2'), :class => 'usr_phone form-control validate[required]') %>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <button type="submit" class="btn btn-default text-upper f12"><%= t 'button.save_changes' %></button>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="change_password">
+            <div class="modal-header row">
+              <p class="close museoSans100 text-lower pointer" data-dismiss="modal" aria-hidden="true">
+                <span class="f14" style="line-height: 1.8; vertical-align: top;"><%= t 'links.close' %></span>
+                <span style="margin-left: 5px;vertical-align: top;line-height: 1.6;" class="f16 text-upper">X</span>
+              </p>
+
+              <p class="f22 museoSans300 modal-title"><%= t 'forms.user.change_password' %></p>
+            </div>
+            <div class="modal-body">
+              <%= form_for user, as: :user,:url => "/change_password/#{user.id}", :validate => true, :remote => true do |f|%>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="success hidden_field">
+                    <p class="f14 museoSans300"><%= t 'forms.user.change_password_success' %></p>
+                  </div>
+                  <div class="fail hidden_field">
+                    <p class="f14 museoSans300"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <%= f.label(:current_password, t('current_password')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.password_field(:current_password, :class => 'form-control validate[required,minSize[5]]', 'data_id' => user.id) %>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <%= f.label(:password, t('new_password')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.password_field(:password, :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]]') %>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <%= f.label(:password_confirmation, t('confirm_password')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.password_field(:password_confirmation, :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]]') %>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <button type="submit" class="btn btn-default text-upper f12"><%= t 'button.save_changes' %></button>
+                </div>
+              </div>
+            </div>
+            <% end %>
+          </div>
+
+          <div class="tab-pane fade" id="change_email_address">
+            <div class="modal-header row">
+              <p class="close museoSans100 text-lower pointer" data-dismiss="modal" aria-hidden="true">
+                <span class="f14" style="line-height: 1.8; vertical-align: top;"><%= t 'links.close' %></span>
+                <span style="margin-left: 5px;vertical-align: top;line-height: 1.6;" class="f16 text-upper">X</span>
+              </p>
+              <p class="f22 museoSans300 modal-title"><%= t 'forms.user.change_email_address' %></p>
+            </div>
+            <div class="modal-body">
+              <%= form_for user, as: :user, :url => "/change_email/#{user.id}", :validate => true, :remote => true do |f|%>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="success hidden_field">
+                    <p class="f14 museoSans300"><%= t 'forms.user.change_email_success' %></p>
+                  </div>
+
+                  <div class="fail hidden_field">
+                    <p class="f14 museoSans300"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <%= f.label(:email, t('forms.user.labels.current_email_address')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.email_field(:email, :placeholder => t('placeholders.general.email'), :class => 'usr_email form-control validate[required,custom[email]]') %>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <%= f.label(:email_new, t('forms.user.labels.new_email_address')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.email_field(:email_new, :placeholder => t('placeholders.general.email2'), :class => 'form-control validate[required,custom[email]]') %>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <button type="submit" class="btn btn-default text-upper f12"><%= t 'button.save_changes' %></button>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="change_cell_phone">
+            <div class="modal-header row">
+              <p class="close museoSans100 text-lower pointer" data-dismiss="modal" aria-hidden="true">
+                <span class="f14" style="line-height: 1.8; vertical-align: top;"><%= t 'links.close' %></span>
+                <span style="margin-left: 5px;vertical-align: top;line-height: 1.6;" class="f16 text-upper">X</span>
+              </p>
+
+              <p class="f22 museoSans300 modal-title"><%= t 'forms.user.change_cell_phone' %></p>
+            </div>
+            <div class="modal-body">
+              <%= form_for user, as: :user, :url => "/change_phone/#{user.id}", :validate => true, :remote => true do |f|%>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="success hidden_field">
+                    <p class="f14 museoSans300"><%= t 'forms.user.change_password_success' %></p>
+                  </div>
+                  <div class="fail hidden_field">
+                    <p class="f14 museoSans300"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <%= f.label(:phone, t('forms.user.labels.current_phone_number')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.telephone_field(:phone, :placeholder => t('placeholders.general.phone'), :class => 'usr_phone form-control validate[required]') %>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <%= f.label(:phone_new, t('forms.user.labels.new_phone_number')) %>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-xs-12 col-sm-7">
+                  <%= f.telephone_field(:phone_new, :placeholder => t('placeholders.general.phone3'), :class => 'form-control validate[required]') %>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <button type="submit" class="btn btn-default text-upper f12"><%= t 'button.save_changes' %></button>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="personal_information">
+            <div class="modal-header row">
+              <p class="close museoSans100 text-lower pointer" data-dismiss="modal" aria-hidden="true">
+                <span class="f14" style="line-height: 1.8; vertical-align: top;"><%= t 'links.close' %></span>
+                <span style="margin-left: 5px;vertical-align: top;line-height: 1.6;" class="f16 text-upper">X</span>
+              </p>
+
+              <p class="f22 museoSans300 modal-title"><%= t 'forms.user.personal_info' %></p>
+            </div>
+            <div class="modal-body">
+              <%= form_for user, as: :user, :url => "/#{user.role.internal_name}/#{user.id}", :validate => true, :remote => true, :html => {:id => :personal_info_edit} do |f|%>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="success hidden_field">
+                      <p class="f14 museoSans300"><%= t 'forms.user.changes_success' %></p>
+                    </div>
+                    <div class="fail hidden_field">
+                      <p class="f14 museoSans300"></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12">
+                    <%= f.label(:first_name, t('forms.user.labels.first_name')) %>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-xs-12 col-sm-10">
+                    <%= f.text_field(:first_name, :placeholder => t('placeholders.user.first_name2'), :class => 'form-control validate[required]') %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12">
+                    <%= f.label(:last_name, t('forms.user.labels.last_name')) %>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-xs-12 col-sm-10">
+                    <%= f.text_field(:last_name, :placeholder => t('placeholders.user.last_name2'), :class => 'form-control validate[required]') %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-3 text-left">EMail</div>
+                  <div class="col-xs-6 col-sm-4 text-left usr_email_html"><%= user.email %></div>
+                  <div class="col-xs-3 text-right"><a href="#change_email_address" data-toggle="tab" class="settings_edit_link">Click to edit</a></div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                  <div class="col-xs-3 text-left">Contact Phone</div>
+                  <div class="col-xs-6 col-sm-4 text-left usr_phone_html"><%= user.phone %></div>
+                  <div class="col-xs-3 text-right"><a href="#change_cell_phone" data-toggle="tab" class="settings_edit_link">Click to edit</a></div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                  <div class="col-xs-12">
+                    <%= f.label(:gender, t('driver.gender')) %>
+                    <%= f.radio_button(:gender, :male, :style => 'margin-left: 20px;') %>&nbsp;&nbsp;<%= t :male %>
+                    <%= f.radio_button(:gender, :female, :style => 'margin-left: 20px;') %>&nbsp;&nbsp;<%= t :female %>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                  <div class="col-xs-12">
+                    <%= f.label(:age, t(:age)) %>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-xs-3 col-sm-4 col-md-3">
+                    <%= f.select :age, options_for_select((18..50).to_a), {:prompt => ''}, :class => 'form-control' %>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                  <div class="col-xs-12">
+                    <%= f.label(:params, t(:preferred_vehicle)) %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <% Vehicle::order(:sort_order => :asc).all.each do |vehicle| %>
+                      <p class="f12 museoSans100"><%= check_box('user[params]', :vehicle, {}, vehicle.id) %>&nbsp;&nbsp;<%= vehicle.name %></p>
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                  <div class="col-xs-12">
+                    <%= f.label(:comments, t('special_instructions')) %>
+                  </div>
+                </div>
+                <div class="row form-group">
+                  <div class="col-xs-12 col-sm-10">
+                    <%= f.text_area(:comments, :placeholder => t('placeholders.driver.special_instructions'), :class => 'form-control', :style => 'height: 80px;') %>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top: 30px;">
+                  <div class="col-xs-12">
+                    <%= label(:user, :photo, t('profile_image')) %>
+                    <%= image_tag user.user_profile.photo.url(:small), :class => 'img-circle user_avatar', :title => 'wer rwre', :width => 45, :style => 'margin: 0 15px;' %>
+
+                    <a href="#" class="f12 museoSans100 text-decor-none" style="display: inline-block;" id="upload_new_photo">
+                      <%= f.file_field :photo, :style => 'opacity: 0; position: absolute; cursor: pointer; z-index: 3;' %>
+                      <span class="icons icons-upload_image v-middle poiner"></span>&nbsp;
+                      <span class="poiner" style="position: relative; top: 2px;"><%= t 'upload_new_photo' %></span>
+                    </a>
+
+                    <p class="f12 museoSans100 text-decor-none" style="display: inline-block;" id="image_uploader"></p>
+                  </div>
+                </div>
+
+                <div class="row" style="margin-top: 30px;">
+                  <div class="col-xs-12">
+                    <button type="submit" class="btn btn-default text-upper f12"><%= t 'button.save_changes' %></button>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <% if can? :credit_card, user %>
+          <div class="tab-pane fade" id="billing">
+            <div class="modal-header row">
+              <p class="close museoSans100 text-lower pointer" data-dismiss="modal" aria-hidden="true">
+                <span class="f14" style="line-height: 1.8; vertical-align: top;"><%= t 'links.close' %></span>
+                <span style="margin-left: 5px;vertical-align: top;line-height: 1.6;" class="f16 text-upper">X</span>
+              </p>
+
+              <p class="f22 museoSans300 modal-title"><%= t 'billing_information' %></p>
+            </div>
+
+            <div class="modal-body">
+              <p>The credit card information we have for your account is:</p>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="success hidden_field">
+                    <p class="f14 museoSans300"><%= t 'forms.user.create_card_success' %></p>
+                  </div>
+
+                  <div class="update_success hidden_field">
+                    <p class="f14 museoSans300"><%= t 'forms.user.update_card_success' %></p>
+                  </div>
+
+                  <div class="fail hidden_field">
+                    <p class="f14 museoSans300"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div id="credit_card_list">
+                <%= render file: 'card/index' %>
+              </div>
+
+              <div class="row divider" style="margin-bottom: 20px;"></div>
+
+
+              <div id="credit_card_block">
+              <% #if user.card %>
+                <%# render template: 'card/edit', :locals => {:card => user.card, :name => 'card'} %>
+              <%# end %>
+              </div>
+
+            </div>
+          </div>
+          <% end %>
+
+          <div class="tab-pane fade" id="help">
+            <div class="modal-header row">
+              <p class="close museoSans100 text-lower pointer" data-dismiss="modal" aria-hidden="true">
+                <span class="f14" style="line-height: 1.8; vertical-align: top;"><%= t 'links.close' %></span>
+                <span style="margin-left: 5px;vertical-align: top;line-height: 1.6;" class="f16 text-upper">X</span>
+              </p>
+
+              <p class="f22 museoSans300 modal-title"><%= t 'general.help' %></p>
+            </div>
+            <div class="modal-body">
+              <div class="col-xs-12">
+                <div class="help_list_wrap">
+                  <ul class="help_list">
+                    <li data-toggle="collapse" data-target="#item1" class="collapsed">
+                      <p>Topic title lorem ipsum dolor sit amet senctuer</p>
+                      <p id="item1" class="collapse text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ligula sed nulla tristique hendrerit. Nulla facilisi. Aliquam non leo sit amet lectus hendrerit auctor. Nunc eu auctor orci, et posuere erat. In ac justo nulla. In a urna sollicitudin, euismod tortor sed, hendrerit sapien.
+                      </p>
+                    </li>
+                    <li data-toggle="collapse" data-target="#item2">
+                      <p>Topic title lorem ipsum dolor sit amet senctuer</p>
+                      <p id="item2" class="in text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ligula sed nulla tristique hendrerit. Nulla facilisi. Aliquam non leo sit amet lectus hendrerit auctor. Nunc eu auctor orci, et posuere erat. In ac justo nulla. In a urna sollicitudin, euismod tortor sed, hendrerit sapien.
+                      </p>
+                    </li>
+
+                    <li data-toggle="collapse" data-target="#item3">
+                      <p>Topic title lorem ipsum dolor sit amet senctuer</p>
+                      <p id="item3" class="in text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ligula sed nulla tristique hendrerit. Nulla facilisi. Aliquam non leo sit amet lectus hendrerit auctor. Nunc eu auctor orci, et posuere erat. In ac justo nulla. In a urna sollicitudin, euismod tortor sed, hendrerit sapien.
+                      </p>
+                    </li>
+                    <li data-toggle="collapse" data-target="#item4">
+                      <p>Topic title lorem ipsum dolor sit amet senctuer</p>
+                      <p id="item4" class="in text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ligula sed nulla tristique hendrerit. Nulla facilisi. Aliquam non leo sit amet lectus hendrerit auctor. Nunc eu auctor orci, et posuere erat. In ac justo nulla. In a urna sollicitudin, euismod tortor sed, hendrerit sapien.
+                      </p>
+                    </li>
+                    <li data-toggle="collapse" data-target="#item5">
+                      <p>Topic title lorem ipsum dolor sit amet senctuer</p>
+                      <p id="item5" class="in text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ligula sed nulla tristique hendrerit. Nulla facilisi. Aliquam non leo sit amet lectus hendrerit auctor. Nunc eu auctor orci, et posuere erat. In ac justo nulla. In a urna sollicitudin, euismod tortor sed, hendrerit sapien.
+                      </p>
+                    </li>
+                    <li data-toggle="collapse" data-target="#item6">
+                      <p>Topic title lorem ipsum dolor sit amet senctuer</p>
+                      <p id="item6" class="in text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ligula sed nulla tristique hendrerit. Nulla facilisi. Aliquam non leo sit amet lectus hendrerit auctor. Nunc eu auctor orci, et posuere erat. In ac justo nulla. In a urna sollicitudin, euismod tortor sed, hendrerit sapien.
+                      </p>
+                    </li>
+                    <li data-toggle="collapse" data-target="#item7">
+                      <p>Topic title lorem ipsum dolor sit amet senctuer</p>
+                      <p id="item7" class="in text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ligula sed nulla tristique hendrerit. Nulla facilisi. Aliquam non leo sit amet lectus hendrerit auctor. Nunc eu auctor orci, et posuere erat. In ac justo nulla. In a urna sollicitudin, euismod tortor sed, hendrerit sapien.
+                      </p>
+                    </li>
+                    <li data-toggle="collapse" data-target="#item8">
+                      <p>Topic title lorem ipsum dolor sit amet senctuer</p>
+                      <p id="item8" class="in text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ligula sed nulla tristique hendrerit. Nulla facilisi. Aliquam non leo sit amet lectus hendrerit auctor. Nunc eu auctor orci, et posuere erat. In ac justo nulla. In a urna sollicitudin, euismod tortor sed, hendrerit sapien.
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

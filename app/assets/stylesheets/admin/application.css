@@ -1,0 +1,59 @@
+/*                                                male
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require bootstrap-datetimepicker
+ *= require bootstrap-datepicker
+ *= require bootstrap/bootstrap.min.css
+ *= require glyphicons/glyphicons_regular.css
+ *= require glyphicons/glyphicons_social.css
+ *= require glyphicons/glyphicons_filetypes.css
+ *= require font-awesome/font-awesome.min.css
+ *= require font-awesome/font-awesome-ie7.min.css
+ *= require ./style-default-menus-light
+ *= require admin/messages
+ */
+.notification, .template {
+  display: none;
+}
+.field_with_errors input, .field_with_errors .input-group-addon {
+  border-color: #d57077;
+}
+
+.field_with_errors select {
+  border-color: red;
+}
+
+.request_details textarea {
+  resize: none;
+}
+
+#admin_notify_clear .close {
+  font-size: 14px;
+  text-decoration: underline;
+}
+#admin_notify_clear {
+  height: auto;
+}
+
+.admin_notify_list,
+.admin_notify {
+  width: 100%;
+}
+
+.notify_new {
+  background: cornsilk;
+}
+.hidden_field {
+  display: none;
+}
+
+.date-picker-today {
+  border: 0;
+}

@@ -1,0 +1,30 @@
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    //<![CDATA[
+    window.resource_name = '<%= resource_name %>';
+    //]]>
+  </script>
+  <%= javascript_include_tag  'regex-mask-plugin', :profile_page, 'custom_validators', 'custimize_validator', 'steps' %>
+<% end %>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11">
+    <%= form_for(resource, :as => resource_name, :url => sub_account_path(resource), :validate => true) do |f| %>
+      <%= render 'shared/summary_errors' %>
+      <div class="col-md-12">
+        <%= render 'sub_account/form_fields', :f => f, :focus => true %>
+
+        <!--<div class="row">-->
+          <!--<div class="col-md-3">-->
+            <!--<%= f.label :password %>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row form-group">-->
+          <!--<div class="col-md-3">-->
+            <!--<%= f.password_field :password, :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]]' %>-->
+          <!--</div>-->
+        <!--</div>-->
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-12 col-xs-12 col-sm-12">
+    <p><%= t(:change_password) %></p>
+
+    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="row">
+        <div class="form-group col-md-4 col-xs-4 col-sm-4">
+          <%= f.label :password, t(:new_password)  %>
+          <%= f.password_field :password, :autofocus => true, :placeholder => t(:password_placeholder), :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 col-xs-4 col-sm-4">
+        <%= f.submit t(:change_password_submit), :class => 'btn btn-lg btn-primary btn-block' %>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>
+
+<%= render "devise/shared/links" %>

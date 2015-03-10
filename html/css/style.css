@@ -1,0 +1,135 @@
+html, body, .container_wrap {
+  height: 100%;
+}
+.container_wrap .container {
+  width: 1024px;
+  background-color: #f9f9f9;
+  padding-bottom: 30px;
+  min-height: 100%;
+}
+.bg_light_grey {
+  background-color: #f3f3f3;
+}
+#right_column {
+  padding: 0;
+}
+#right_column .map {
+  width: 100%;
+  height: auto;
+}
+#left_column .nav-pills, #left_column .tab-content {
+  margin-top: 20px;
+}
+.icon {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+.icon.select_address {
+  background: url("../img/select_address.png") no-repeat;
+}
+.icon.vehicle_type {
+  background: url("../img/vehicle_type.png") no-repeat;
+}
+.tab-content .fieldset a {
+  text-decoration: underline;
+}
+.tab-content .fieldset a, .tab-content .fieldset label {
+  font-size: 90%;
+}
+.tab-content .fieldset .title, #address_book .title {
+  font-size: 120%;
+  font-weight: bold;
+}
+.tab-content .fieldset .title .icon {
+  margin-right: 5px;
+}
+.divider {
+  border-bottom: 1px solid #000;
+}
+.tab-content .fieldset .divider {
+  margin: 10px 0 15px;
+}
+.tab-content .fieldset .required_icon {
+  font-size: 120%;
+  margin-left: 5px;
+}
+.tab-content .fieldset .row {
+  margin-bottom: 20px;
+}
+.tab-content .fieldset label.radio span {
+  display: block;
+  font-weight: normal;
+}
+.bold {
+  font-weight: bold !important;
+}
+.passenger_info_title {
+  padding: 5px 10px;
+  background-color: #FFF;
+  font-weight: bold;
+}
+.passenger_info_title .passenger_icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background: url("../img/passenger_icon.png") no-repeat;
+  vertical-align: top;
+  margin-right: 10px;
+}
+#address_book {
+  position: absolute;
+  z-index: 1;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+}
+#address_book .title {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+#address_book .address_list li:hover {
+  background: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+}
+#address_book .address_list .address_list_item_icon {
+  background: url("../img/address-list-item.png") no-repeat;
+  width: 26px;
+  height: 27px;
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+.clear {
+  clear: both;
+}
+.logo {
+  font-size: 250%;
+  margin: 30px 0;
+}
+p.title {
+  margin-bottom: 0;
+  font-size: 130%;
+  font-weight: bold;
+  line-height: 90%;
+}
+p.description {
+  font-size: 90%;
+}
+.request_type_tab {
+  background: #222;
+  color: #fff;
+  padding: 3px 5px;
+}
+.request_info {
+  background: #fff;
+  padding: 10px 15px;
+}
+.path {
+  position: relative;
+  top: -25px;
+  margin-bottom: -15px;
+}
+.request_info ul .car_img {
+  margin-right: 10px;
+}

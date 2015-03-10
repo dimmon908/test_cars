@@ -1,0 +1,21 @@
+<div class="row divider">
+  <div class="col-xs-12">
+    <p class="text-right pull-right f12 museoSans100 text-lower pointer close_menu" style="margin-bottom: 5px;">
+      <span style="line-height: 1.8; vertical-align: top;"><%= t 'links.close' %></span>
+      <span style="margin-left: 5px;" class="f16 text-upper">X</span>
+    </p>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-xs-12">
+    <%= tabs_tag :open_tabs => { :class => 'text-upper menu' } do |tab| %>
+      <%= tab.home t('general.home'), root_path, :class => '' %>
+      <%= tab.request t('top.header.requests'), request_index_path %>
+      <% tab.address_book t('top.header.address_book'), address_book_index_path %>
+      <%= tab.free_ride t('top.header.free_ride'), '#', 'data-toggle' => 'modal', 'data-target' => '#free_ride' %>
+      <% tab.billing t('links.billing'), '#' %>
+      <%= tab.settings t('links.settings'), '#', 'data-toggle' => 'modal', 'data-target' => '#account_settings' %>
+    <% end %>
+  </div>
+</div>

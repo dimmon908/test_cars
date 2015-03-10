@@ -1,0 +1,152 @@
+require './app/models/extend/autorize_net'
+module Payment
+  class AuthorizeNet
+    def initialize
+      @trans = ::AuthorizeNet::AIM::Transaction
+      @resp = ::AuthorizeNet::AIM::Response
+    end
+
+    attr_accessor :client, :card, :transaction
+    def authorize
+      begin
+        aim = get_sim
+        aim.set_fields :invoice_num => transaction.request_id if transaction
+        aim.set_fields client.role_class.payment_info rescue nil
+        response = aim.authorize transaction.full_price, get_card
+
+        log_response response.fields, :authorize
+        post_auth response
+      rescue Exception => e
+        Log::exception e
+      end
+    end
+
+    def check(card, first_name = '', last_name = '', zip = '', invoice_num = 1)
+      begin
+        aim = get_sim
+        aim.set_fields({
+          :invoice_num => invoice_num,
+          :first_name => first_name,
+          :last_name => last_name,
+          :zip_code => zip,
+          :zip => zip,
+          :ship_to_zip_code => zip,
+          :ship_to_zip => zip,
+        })
+
+        response = aim.authorize 0.01, card
+
+        log_response response.fields, :authorize
+        response
+      rescue Exception => e
+        Log::exception e
+        nil
+      end
+    end
+
+    def void
+      begin
+        aim = get_sim
+        response = aim.void transaction.ext_id
+        log_response response.fields, :void
+        post_void response
+      rescue Exception => e
+        Log::exception e
+      end
+    end
+
+    def check_void(transaction_id)
+      begin
+        aim = get_sim
+        response = aim.void transaction_id
+        log_response response.fields, :void
+        post_void response
+      rescue Exception => e
+        Log::exception e
+      end
+    end
+
+    def prior
+      begin
+        aim = get_sim
+        #Log << {:type => :prior, :ext_id => transaction.ext_id}.to_s
+        response = aim.prior_auth_capture transaction.ext_id
+        log_response response.fields, :prior
+        post_apply response
+      rescue Exception => e
+        Log::exception e
+      end
+    end
+
+    private
+    def post_auth(response)
+      return nil unless response.success?
+
+      transaction.status              = :approve
+      transaction.authorization_code  = response.authorization_code
+      transaction.ext_id              = response.transaction_id
+      transaction.save
+      response
+    end
+
+    def post_apply(response)
+      return nil unless response.success?
+
+      transaction.status              = :finish
+      transaction.authorization_code  = response.authorization_code unless response.authorization_code.blank?
+      transaction.ext_id              = response.transaction_id if response.transaction_id.to_i > 0
+      transaction.save
+      response
+    end
+
+    def post_void(response)
+      return nil unless response.success?
+
+      if transaction
+        transaction.status = :void
+        transaction.save
+      end
+
+      response
+    end
+
+    def get_sim
+      @trans.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :relay_url => 'http://ondemand.test.cc/payments/response')
+      #@trans.new(AUTHORIZE_NET_CONFIG['api_login_id'], AUTHORIZE_NET_CONFIG['api_transaction_key'], :gateway => :sandbox)
+    end
+
+    def get_card
+      ::AuthorizeNet::CreditCard.new(card.card_number, card.card_expire.strftime('%m%y'), :card_code =>  card.cvv)
+    end
+
+    def log_response(data, request)
+      client_id = client.id rescue 0
+
+      begin
+        data = {
+            :user_id     => client_id,
+            :log_type    => :payment,
+            :data        => data.to_json,
+            :request_url => request.to_s,
+            :params      => request.to_s
+        }
+
+
+        data.merge!(
+            {
+              :cc_number => card.card_number,
+              :cc_expire => card.card_expire.strftime('%m%y'),
+              :cc_cvv => card.cvv
+            }) if card
+
+        Log.create data
+        Rails.logger.fatal(data.to_s)
+
+      rescue Exception => e
+        Log.exception e
+        Rails.logger.fatal e.message
+      end
+
+    end
+  end
+end

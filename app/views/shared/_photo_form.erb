@@ -1,0 +1,16 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag  'photo' %>
+<% end %>
+<div class="popover" id="photo_form">
+  <p>
+    <label for="upload_file">Select File</label> :
+
+  </p>
+  <%= submit_tag "Upload" %>
+
+  <% form_for resource.profile, :url => '#', :html => { :multipart => true } do |f| %>
+    3947238974
+    <%= f.file_field :photo %>
+    234234786
+  <% end %>
+</div>

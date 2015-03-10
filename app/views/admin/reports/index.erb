@@ -1,0 +1,87 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css', 'forms/pixelmatrix-uniform/uniform.default.css' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag 'tables/FooTable/footable.js',
+                                        'admin/tables_responsive',
+                                        'tables/TableFilter/picnet.table.filter.min.js',
+                                        'extend_datetimepicker',
+                                        'forms/pixelmatrix-uniform/jquery.uniform.min.js',
+                                        'admin/reports'
+  %>
+<% end %>
+
+<%
+   data = Reports::order('created_at DESC').paginate(:page => params[:page], :per_page => params[:per_page]) rescue nil
+   data ||= []
+%>
+
+<div class="pull-right innerLR">
+  <%= link_to t('reports.add'), '/admin/reports/new', :remote => true, 'data-toggle' => 'modal', 'data-target' => '#newReport', :class => 'btn btn-primary pull-left' %>
+</div>
+
+<h1><%= t 'admin.reports_header' %></h1>
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <div class="pull-left">
+        <%= "#{t('general.found')} #{data.count} #{t('admin.tabs.reports')}" %>
+      </div>
+
+      <% unless data.empty? %>
+        <div class="pull-right">
+          <%= render 'admin/shared/paginate', :tab => :cars %>
+        </div>
+      <% end %>
+    </div>
+
+    <% unless data.empty? %>
+      <table class="table-filter footable table table-striped table-bordered table-white table-primary">
+        <thead>
+        <tr>
+          <th data-class="expand"><%= t 'reports.id' %></th>
+          <th><%= t 'reports.date' %></th>
+          <th data-hide="phone"><%= t 'reports.name' %></th>
+          <th style="width: 50px;" filter="false"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% data.each do |report| %>
+          <tr>
+            <td><%= report.id %> </td>
+            <td><%= report.date %></td>
+            <td><%= report.name %></td>
+            <td>
+              <div class="dropdown">
+                <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <%= link_to t('reports.show'), "/admin/reports/#{report.id}", 'data-toggle' => :modal, 'data-target' => '#viewReport', :remote => true %>
+                  </li>
+                  <li>
+                    <%= link_to t('reports.pdf'), "/admin/reports/#{report.id}.pdf", :target => '_blank'%>
+                  </li>
+                  <li>
+                    <%= link_to t('reports.csv'), "/admin/reports/#{report.id}.csv", :target => '_blank', :format => :csv %>
+                  </li>
+                  <li>
+                    <%= link_to t('reports.destroy'), "/admin/reports/#{report.id}", method: :delete, data: {confirm: t('messages.sure')} %>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="paginators">
+        <%= will_paginate data, :remote => true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'admin/shared/modal', :text => t('admin.reports.add'), :label => 'newReportLabel', :id => 'newReport' %>
+<%= render 'admin/shared/modal', :text => t('admin.reports.view'), :label => 'viewReportLabel', :id => 'viewReport', :buttons => false %>

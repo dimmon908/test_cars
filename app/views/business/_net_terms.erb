@@ -1,0 +1,63 @@
+<p class="lead"><span class="icons icons-credit_card_information"></span><%= t 'forms.user.net_terms' %></p>
+<p><%= t('forms.user.net_terms_first_line') %></p>
+<div class="row" style="margin-left: 0">
+  <%= label_tag 'user[need_approve]' do %>
+    <%= check_box_tag 'user[need_approve]', 1, false, :class => 'checkbox', :style => 'display: inline-block;' %>
+    &nbsp;&nbsp;
+    <span class="no_upper"><%= t('forms.user.net_terms_apply') %></span>
+  <% end %>
+</div>
+
+<p><%= t('forms.user.ner_terms_info').html_safe %></p>
+
+
+<div class="row">
+  <div class="col-xs-6">
+    <%= f.label :first_name %>
+  </div>
+</div>
+<div class="row form-group">
+  <div class="col-xs-3">
+    <%= f.text_field :term_applicant_first_name, :placeholder => t('placeholders.user.first_name'), :class => 'form-control validate[required]' %>
+  </div>
+  <div class="col-xs-3">
+    <%= f.text_field :term_applicant_last_name, :placeholder => t('placeholders.user.last_name'), :class => 'form-control validate[required]' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-6">
+    <%= f.label :email %>
+  </div>
+</div>
+<div class="row form-group">
+  <div class="col-xs-6">
+    <%= f.email_field :term_applicant_email, :placeholder => t('placeholders.general.email'), :class => 'form-control validate[required,custom[email]]' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-3">
+    <%= f.label :phone %>
+  </div>
+</div>
+
+<div class="row form-group">
+  <div class="col-xs-4 input-group">
+        <span class="input-group-addon">
+          <%= f.select :term_applicant_phone_code, options_for_select(ApplicationHelper::PHONE_CODES.collect { |i| [i[:name], i[:name]]}), {}, {:style => 'width: 100px;'} %>
+        </span>
+    <%= f.telephone_field :term_applicant_phone, :class => 'form-control validate[required]' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-6">
+    <%= f.label :title %>
+  </div>
+</div>
+<div class="row form-group">
+  <div class="col-xs-6">
+    <%= f.text_field :term_applicant_job_title, :placeholder => t('placeholders.general.business_title'), :class => 'form-control validate[required,custom[email]]' %>
+  </div>
+</div>

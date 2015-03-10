@@ -1,0 +1,14 @@
+<% resource.need_validate = true %>
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11">
+    <%= form_for(resource, :as => resource_name, :url => '/admin/personal', :validate => true) do |f| %>
+
+      <%= render 'hidden_fields' %>
+      <div class="row steps">
+        <div class="col-md-12">
+          <%= render '/admin/personal/form_fields', :f => f, :focus => true %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

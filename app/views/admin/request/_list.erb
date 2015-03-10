@@ -1,0 +1,62 @@
+<% data ||= [] %>
+<table class="table-filter footable table table-striped table-bordered table-white table-primary list">
+  <thead>
+  <tr>
+    <th data-class="expand"><%= t 'request.id' %></th>
+    <th data-hide="phone"><%= t 'request.user' %></th>
+    <th data-hide="phone"><%= t 'request.driver' %></th>
+    <th data-hide="phone,tablet"><%= t 'request.date' %></th>
+    <th data-hide="phone,tablet"><%= t 'request.pu' %></th>
+    <th data-hide="phone,tablet"><%= t 'request.do' %></th>
+    <th data-hide="phone,tablet"><%= t 'request.rate' %></th>
+    <th><%= t 'request.final_rate' %></th>
+    <th filter-type="ddl"><%= t 'request.payment_type' %></th>
+    <th filter-type="ddl"><%= t 'request.status' %></th>
+    <th data-hide="phone,tablet"><%= t 'request.comments' %></th>
+    <th style="width: 50px;" filter="false"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% data.each do |request| %>
+    <tr>
+      <td><%= request.id %> </td>
+      <% if request.user %>
+      <td><%= request.user.full_name %></td>
+      <% else %>
+      <td></td>
+      <% end %>
+      <% if request.driver %>
+        <td><%= request.driver.full_name %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+      <td><%= human_readable(request.date) %></td>
+      <td><%= request.from %></td>
+      <td><%= request.to.last %></td>
+      <td><%= number_to_currency request.estimated_rate %></td>
+      <td><%= number_to_currency(request.charged_price) if request.finished? %></td>
+      <td><%= request.payment %></td>
+      <td><%= request.status %></td>
+      <td><%= request.comment.to_s[0..20] %></td>
+      <td>
+        <div class="dropdown">
+          <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <%= link_to t('request.show'), "/admin/request/#{request.id}/instant", :remote => true, 'data-toggle' => 'modal', 'data-target' => '#showRequest', 'data-tab' => :requests, 'data-ignore-tab' => true %>
+            </li>
+            <li>
+              <%= link_to t('request.destroy'), "/admin/request/#{request.id}", method: :delete, data: {confirm: t('messages.sure')}, :remote => true, 'data-reload' => true %>
+            </li>
+            <% unless Trip::Status::cant_canceled? request %>
+              <li>
+                <%= link_to t('request.cancel'), "/admin/request/#{request.id}/cancel", :remote => true, data: { confirm: t('admin.messages.request.cancel') }, 'data-reload' => true %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
