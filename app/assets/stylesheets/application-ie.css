@@ -1,0 +1,130 @@
+.check_box_label_span {
+    margin-top: 0 !important;
+}
+.formErrorContent{
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+
+    behavior: url(/pie/PIE.htc);
+}
+
+.info {
+    background: url(/img/backgrounds/help.png) no-repeat left top;
+}
+.info:hover {
+    background: url(/img/backgrounds/help_hover.png) no-repeat left top;
+}
+
+
+.ie_input {
+    border: 0;
+    height: 31px !important;
+    line-height: 30px;
+
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/trip_point_field.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+    src='/img/backgrounds/trip_point_field.png',
+    sizingMethod='scale')";
+}
+.field_with_errors .ie_input {
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/trip_point_error.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+    src='/img/backgrounds/trip_point_error.png',
+    sizingMethod='scale')";
+}
+.text_box_ie {
+    border: 0 !important;
+    height: 70px !important;
+
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/text_box_field.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                src='/img/backgrounds/text_box_field.png',
+                sizingMethod='scale')";
+}
+
+.name_input {
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/name_field.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                src='/img/backgrounds/name_field.png',
+                sizingMethod='scale')";
+}
+.promo_input {
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/promo_field.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                src='/img/backgrounds/promo_field.png',
+                sizingMethod='scale')";
+}
+.field_with_errors .promo_input {
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/promo_error_field.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                src='/img/backgrounds/promo_error_field.png',
+                sizingMethod='scale')";
+}
+.field_with_errors .name_input {
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/name_error_field.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+    src='/img/backgrounds/name_error_field.png',
+    sizingMethod='scale')";
+}
+.btn-default {
+    border: 0;
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/ie_btn.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/ie_btn.png',
+            sizingMethod='scale')";
+}
+.btn-primary {
+    background: none;
+    border: 0;
+
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/btn_primary_ie.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/btn_primary_ie.png',
+            sizingMethod='scale')";
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active{
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/btn_primary_ie_focused.png',
+            sizingMethod='scale');
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='/img/backgrounds/btn_primary_ie_focused.png',
+            sizingMethod='scale')";
+}
+
+.infoBox>img {
+    right: -330px;
+}

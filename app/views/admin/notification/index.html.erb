@@ -1,0 +1,37 @@
+<% @data ||= []%>
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11 col-sm-11 col-xs-11">
+    <% if @data.empty? %>
+      None email templates
+    <% else %>
+      <table cellspacing="0" cellpadding="1" border="1" width="100%">
+        <thead>
+        <tr>
+          <th><%= t('notification.id') %></th>
+          <th><%= t('notification.internal_name') %></th>
+          <th><%= t('notification.title') %></th>
+          <th><%= t('notification.actions') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @data.each do |email| %>
+          <tr>
+            <td><%= email.id %></td>
+            <td><%= email.internal_name %></td>
+            <td><%= email.title %></td>
+            <td>
+              <%= link_to t('links.show'), admin_notification_path(email) %>
+              <br/>
+              <%= link_to t('links.edit'), edit_admin_notification_path(email) %>
+              <br/>
+              <%= link_to t('links.destroy'), admin_notification_path(email), method: :delete, data: { confirm: t('messages.sure') }  %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

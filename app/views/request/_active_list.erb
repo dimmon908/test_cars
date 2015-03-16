@@ -1,0 +1,24 @@
+<% unless @list.blank? %>
+  <div class="row divider" style="margin-top: 0;">
+    <div class="col-md-12">
+      <p class="title">
+        <span class="icons icons-black_thick v-middle"></span>
+        <span class="text"><%= t('forms.request.labels.manage_your_requests') %></span>
+      </p>
+    </div>
+  </div>
+  <%= render 'list' %>
+<% end %>
+
+<% unless @future_list.blank? %>
+  <div class="row divider" style="margin-top: 0;">
+    <div class="col-md-12">
+      <p class="title">
+        <span class="icons icons-black_thick v-middle"></span>
+        <span class="text"><%= t('forms.request.labels.manage_your_future_requests') %></span>
+      </p>
+    </div>
+  </div>
+
+  <%= render 'list', :list => @future_list %>
+<% end %>

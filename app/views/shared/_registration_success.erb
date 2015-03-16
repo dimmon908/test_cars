@@ -1,0 +1,16 @@
+<% activate_path ||= '#' %>
+<div class="row divider" style="margin-top: 30px;"></div>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-xs-12 text-center">
+    <% link_to t('links.confirm_your_email'), activate_path, :role => 'button', :class => 'btn btn-default text-upper'%>
+    <%= link_to t('links.start'), '/login', :role => 'button', :class => 'btn btn-default text-upper'%>
+
+    <p class="f18 museosans500" style="margin-top: 30px;margin-bottom: 0;">CONGRATULATIONS ON CREATING YOUR NEW <span style="text-decoration: underline">FREE</span> ACCOUNT.</p>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        <p><%= t 'user.messages.personal_sign_in_success_body' %></p>
+      </div>
+    </div>
+  </div>
+</div>

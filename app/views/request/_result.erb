@@ -1,0 +1,173 @@
+<%= render 'shared/summary_errors' %>
+
+<%= hidden_field_tag :notify_max_count, Configurations[:max_notify_count], :id => 'max_notify_count' %>
+<%= hidden_field_tag :method, 'confirm' %>
+<%= hidden_field_tag :request_id, resource.id.to_s, :id => 'request_id' %>
+<%= hidden_field_tag :to, "/request/confirm/book/#{resource.id}", :id => 'route_to' %>
+<%= hidden_field_tag :url_to, "/request/confirm/book/#{resource.id}", :id => 'url_to' %>
+<%= hidden_field_tag :booked, (resource.booked + 5.minutes).strftime('%Y-%m-%dT%H:%M:%S%:z'), :id => "booked_time_#{resource.id}" %>
+<%= hidden_field_tag :status, resource.status, :id => 'request_status' %>
+
+<span id="congratulation_block">
+  <p class="f18 museoSans500"><%= t 'forms.request.labels.congratulation_title' %></p>
+
+  <p class="f14 museoSans100"><%= t('forms.request.labels.new_congratulation_body_html',:href => link_to(t("forms.request.labels.here_href"), '#active_list_con'))%></p>
+
+</span>
+
+<span id="canceled_block" style="display: none;">
+  <p class="f18 museoSans500"><%= t 'forms.request.labels.canceled_title' %></p>
+  <p class="f14 museoSans100"><%= t 'forms.request.labels.canceled_body' %></p>
+</span>
+
+<span id="error_canceled_block" style="display: none;">
+  <p class="f18 museoSans100"></p>
+</span>
+
+<span id="errors_block" style="display: none;">
+  <p class="f18 museoSans100"></p>
+</span>
+
+<div class="row divider"></div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-12">
+    <p><%= t('forms.request.labels.pickup_location') %></p>
+
+    <p class="f12 museoSans100"><%= resource.from %></p>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-12">
+    <p><%= t('forms.request.labels.destination_location') %></p>
+
+    <p class="f12 museoSans100"><%= resource.to.last %></p>
+  </div>
+</div>
+
+<div class="row divider"></div>
+
+<div class="row divider">
+  <div class="col-md-12">
+    <p class="title">
+      <span class="glyphicon glyphicon-time f20"></span>
+      <span class="text"><%= t('forms.request.labels.set_notifications') %></span>
+    </p>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-10" id="notifications">
+    <%
+       trigger = Configurations[:default_notify_trigger]
+       is_phone = trigger == 'phone'
+       is_mail = trigger == 'email'
+       Configurations[:min_notify_count].times do |i| %>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <%= hidden_field_tag "[notification][#{i}][type]", trigger, :id => "notify_trigger_type_#{i}", 'data-id' => i %>
+          <div class="input-group">
+              <span class="input-group-addon">
+                <span class="notify_trigger notify_phone_trigger <% if is_phone %>active<%end%>" id="notify_phone_trigger_<%=i%>"></span>
+              </span>
+              <span class="input-group-addon">
+                <span class="notify_trigger notify_email_trigger <% if is_mail  %>active<%end%>" id="notify_email_trigger_<%=i%>"></span>
+              </span>
+
+            <%= text_field :notification,
+                           "#{i}[email]",
+                           :placeholder => t('placeholders.request.email'),
+                           :class => 'form-control validate[required] notify_email notify',
+                           :id => "notify_email_#{i}",
+                           :style => (is_mail ? 'display: block;' : 'display: none;'),
+                           'data-id' => i %>
+            <%= text_field :notification,
+                           "#{i}[phone]",
+                           :placeholder => t('placeholders.request.phone'),
+                           :class => 'form-control validate[required] notify_phone notify',
+                           :id => "notify_phone_#{i}",
+                           :style => (is_phone ? 'display: block;' : 'display: none;'),
+                           'data-id' => i %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <a href="#" class="pull-right btn btn-default" id="send_notification"><%= t 'forms.request.labels.save_notification' %></a>
+
+    <%= link_to t('forms.request.labels.add_more_notification'), '#add_notification', :id => 'add_notification' %>
+  </div>
+</div>
+
+<div class="row divider">
+  <div class="col-md-12">
+  </div>
+</div>
+
+<div class="row cancel_row" style="margin-top: 20px;">
+  <div class="col-md-4">
+    <%= link_to t('button.cancel_request'), "#request_cancel_#{resource.id}", :class => 'btn btn-default text-upper cancel_request' %>
+  </div>
+</div>
+
+<% if resource.instant? %>
+<div class="row cancel_row" style="margin-top: 10px;">
+  <div class="col-xs-12">
+    <p class="f14 museoSans100">
+      <%= t 'forms.request.labels.cancel_body1' %>
+      <span class="orange cancel_time" id="cancel_time_<%= resource.id %>"><%=HelperTools.format_time resource.before_cancel_time.to_i %></span>
+      <%= t 'forms.request.labels.cancel_body2' %>
+    </p>
+  </div>
+</div>
+<% end %>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-12 request_total">
+    <p class="f16 museoSans300"><%= "#{t('forms.request.labels.trip_rate')}:" %></p>
+
+    <p class="f22 museoSans700"><%= number_to_currency resource.rate %></p>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-6">
+    <%= link_to t('button.active_list'), '#active_requests', :class => 'btn btn-default text-upper', :id => 'goto_active_list' %>
+  </div>
+</div>
+
+<div id="notify_tmp" class="template">
+  <div class="row">
+    <div class="col-md-12 form-group">
+      <%= hidden_field "#{resource_name}[params][notification][__i__][type]", trigger, :id => 'notify_trigger_type___i__', 'data-id' => '__i__' %>
+      <div class="input-group">
+          <span class="input-group-addon">
+            <span class="notify_trigger notify_phone_trigger <% if is_phone %>active<%end%>" id="notify_phone_trigger___i__"></span>
+          </span>
+          <span class="input-group-addon">
+            <span class="notify_trigger notify_email_trigger <% if is_mail  %>active<%end%>" id="notify_email_trigger___i__"></span>
+          </span>
+
+        <%= text_field :notification,
+                       '__i__[email]',
+                       :placeholder => t('placeholders.general.email'),
+                       :class => 'form-control validate[required] notify_email notify',
+                       :id => 'notify_email___i__',
+                       :style => (is_mail ? 'display: block;' : 'display: none;'),
+                       'data-id' => '__i__' %>
+        <%= text_field :notification,
+                       '__i__[phone]',
+                       :placeholder => t('placeholders.general.phone'),
+                       :class => 'form-control validate[required] notify_phone notify',
+                       :id => 'notify_phone___i__',
+                       :style => (is_phone ? 'display: block;' : 'display: none;'),
+                       'data-id' => '__i__' %>
+      </div>
+    </div>
+  </div>
+</div>

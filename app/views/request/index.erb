@@ -1,0 +1,104 @@
+<%
+   only_future_vehicle = Vehicle::only_future::select(:id).all.collect {|v| v.id}
+   only_future_vehicle ||= []
+%>
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'request' %>
+<% end %>
+<% content_for :scripts do %>
+    <script type="text/javascript">
+      //<![CDATA[
+      window.instant_request_time = '<%= Configurations[:instant_request_time] %>';
+      window.user_id = '<%=current_user.id %>';
+      window.resource_name = '<%= resource_name %>';
+      window.only_future_vehicle = <%= only_future_vehicle %>;
+      window.time_zone_offset = parseInt('<%= Time.now.strftime('%:z') %>', 10);
+      window.current_begin_date = new Date('<%= Time.now.strftime(HelperTools::JS_DATE) %>');
+      //window.current_begin_date.setHours(window.current_begin_date.getHours() + window.time_zone_offset);
+      //]]>
+    </script>
+    <%= javascript_include_tag  'custom_validators', 'custimize_validator', 'new_request', 'map', 'TouchSwipe/jquery.touchSwipe.min', 'profile_page' %>
+<% end %>
+
+<div class="row">
+  <%= render 'request/tabs' %>
+</div>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<div class="row">
+  <div class="col-md-12 request">
+    <div id="new_request">
+      <%= render 'request/new' %>
+    </div>
+    <div id="address_book_block" class="side_bar">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-right pull-right f12 museoSans100 text-lower pointer" id="close_address_book" style="margin-bottom: -7px; margin-top: 10px;">
+            <span style="line-height: 1.8; vertical-align: top;">Close</span>
+            <span style="margin-left: 5px;" class="f16 text-upper">X</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="row divider" style="margin-top: 0;">
+        <div class="col-md-12">
+          <p class="f16 museoSans300" style="margin-bottom: 5px;"><%= t 'forms.request.labels.address_import' %></p>
+        </div>
+      </div>
+
+      <div id="favorites_list">
+        <%= render 'address_book/list'%>
+      </div>
+    </div>
+
+    <div id="left_menu" class="row">
+      <div class="col-md-12">
+        <%= render 'request/left_menu' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'request/settings' %>
+<%= render 'request/free_ride' %>
+
+<% unless resource.from.blank? %>
+  <% content_for :scripts do %>
+  <script type="text/javascript">
+    //<![CDATA[
+    jQuery(function() {
+      <% coord = resource.from_coord %>
+      <% if !coord.blank? && (coord['lat'] != 0 && coord['lng'] != 0) %>
+
+      window.from = {
+        geometry: {location: (new google.maps.LatLng(<%=coord['lat'].to_f%>, <%=coord['lng'].to_f%>))},
+        formatted_address: '<%=coord['name'].to_s%>'
+      };
+      <% end %>
+
+      <% resource.to.each do |to, index| %>
+        <% coord = resource.to_coord index %>
+        <% if !coord.blank? && (coord['lat'] != 0 && coord['lng'] != 0) %>
+      window.current_to[<%=index.to_i%>] = {
+        geometry: {location: (new google.maps.LatLng(<%= coord['lat'].to_f %>, <%= coord['lng'].to_f %>))},
+        formatted_address: '<%=coord['name'].to_s%>'
+      };
+          <% if index.to_i == 0 %>
+      window.to = window.current_to[0];
+          <% end %>
+        <% end %>
+      <% end %>
+
+      window.direction();
+
+      <% if Trip::Status::future? resource %>
+      $('#passengers').find('input').disableClientSideValidations();
+      window.current_begin_date = new Date('<%= resource.date.strftime(HelperTools::JS_DATE) %>');
+      <% end %>
+    });
+    //]]>
+  </script>
+  <% end %>
+<% end %>

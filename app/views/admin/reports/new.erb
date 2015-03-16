@@ -1,0 +1,136 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag  'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row" style="width: 500px;">
+  <div class="col-xs-12">
+    <h5><%= t 'reports.report_type' %></h5>
+  </div>
+</div>
+
+<div class="innerB border-top"></div>
+<%= form_for(resource, :as => resource_name, :url => '/admin/reports',  :validate => true) do |f| %>
+  <div class="row">
+    <div class="col-xs-2 uniformjs">
+      <%= f.label :sales, :class => 'checkbox' do %>
+        <%= f.check_box :sales, :class => 'checkbox' %>Sales Report
+      <% end %>
+    </div>
+    <div class="col-xs-4">
+      <div class="input-group datepicker" <%if resource.date%>data-date="<%resource.date%>"<%end%>>
+        <%= f.text_field :s_from, :placeholder => Time.now.strftime('%m/%d/%Y'), :class => 'form-control' %>
+        <span class="input-group-addon">
+          <i class="icon-calendar"></i>
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="input-group datepicker" <%if resource.date%>data-date="<%resource.date%>"<%end%>>
+        <%= f.text_field :s_to, :placeholder => Time.now.strftime('%m/%d/%Y'), :class => 'form-control' %>
+        <span class="input-group-addon">
+          <i class="icon-calendar"></i>
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-1">
+      <div class="input-group">
+        <span class="input-group-addon date-picker-today" style="border: 0">Today</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 uniformjs">
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_trip %>Trip ID</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_driver %>Driver ID</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_car %>Car Plate Number</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_user %>Customer Name</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_business %>Business Name</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_full_price %>Total Fare</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_gratuity %>Gratuity</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_reward %>Affiliate Reward</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :s_else %>Something Else</label>
+    </div>
+  </div>
+
+  <div class="innerB border-top"></div>
+
+  <div class="row">
+    <div class="col-xs-3 uniformjs">
+      <%= f.label :refund, :class => 'checkbox' do %>
+        <%= f.check_box :refund, :class => 'checkbox' %>Refund Report
+      <% end %>
+    </div>
+    <div class="col-xs-4">
+      <div class="input-group datepicker">
+        <%= f.text_field :r_from, :placeholder => Time.now.strftime('%m/%d/%Y'), :class => 'form-control' %>
+        <span class="input-group-addon">
+          <i class="icon-calendar"></i>
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="input-group datepicker">
+        <%= f.text_field :r_to, :placeholder => Time.now.strftime('%m/%d/%Y'), :class => 'form-control' %>
+        <span class="input-group-addon">
+          <i class="icon-calendar"></i>
+        </span>
+
+        <span>Today</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 uniformjs">
+      <label class="checkbox pull-left innerR"><%= f.check_box :r_trip %>Trip ID</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :r_driver %>Driver ID</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :r_car %>Car Plate Number</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :r_user %>Customer Name</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :r_business %>Business Name</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :r_full_price %>Total Fare</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :r_gratuity %>Gratuity</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :r_amount %>Refund Amount</label>
+    </div>
+  </div>
+
+  <div class="innerB border-top"></div>
+
+  <div class="row">
+    <div class="col-xs-3 uniformjs">
+      <%= f.label :driver, :class => 'checkbox' do %>
+        <%= f.check_box :driver, :class => 'checkbox' %>Driver Report
+      <% end %>
+    </div>
+    <div class="col-xs-4">
+      <div class="input-group datepicker">
+        <%= f.text_field :d_from, :placeholder => Time.now.strftime('%m/%d/%Y'), :class => 'form-control' %>
+        <span class="input-group-addon">
+          <i class="icon-calendar"></i>
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="input-group datepicker">
+        <%= f.text_field :d_to, :placeholder => Time.now.strftime('%m/%d/%Y'), :class => 'form-control' %>
+        <span class="input-group-addon">
+          <i class="icon-calendar"></i>
+        </span>
+
+        <span>Today</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 uniformjs">
+      <label class="checkbox pull-left innerR"><%= f.check_box :d_id%>Driver ID</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :d_car%>Car Plate Number</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :d_start%>Shift Start</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :d_end%>Shift End</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :d_breaks%>Number of Breaks</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :d_gratuity%>Gratuity</label>
+      <label class="checkbox pull-left innerR"><%= f.check_box :d_roting%>Roting</label>
+    </div>
+  </div>
+<% end %>

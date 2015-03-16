@@ -1,0 +1,83 @@
+<div class="row">
+  <%= form_for(resource, :as => resource_name, :url => personal_path(resource)) do |f| %>
+    <div class="col-xs-12">
+      <p class="lead"><%= t 'forms.user.personal_info' %></p>
+
+      <div class="row">
+        <div class="col-xs-3">
+          Avatar
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :first_name %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :last_name %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :phone %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">
+          <div class="avatar">
+            <%= image_tag resource.profile.photo.url(:medium), :style => 'width: auto;' %>
+          </div>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.first_name  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.last_name  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.phone  %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <p class="lead"><%= t 'forms.user.account_info' %></p>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <%= f.label :email %>
+          <%= resource.email  %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <p class="lead"><%= t 'forms.user.credit_info' %></p>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :credit_card %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :cvv %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :expiration_date %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.show_card  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.cvv  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.expiration_date  %>
+        </div>
+      </div>
+    </div>
+
+    <% if can?(:client_approve, current_user) && !resource.status %>
+      <% link_to t('links.approve'), "/#{resource_name}/approve" %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="separator"></div>

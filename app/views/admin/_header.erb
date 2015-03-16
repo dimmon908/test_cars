@@ -1,0 +1,27 @@
+<div class="row top_header_stream">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3 text-right">
+        <%= link_to '/admin/dashboard', :remote => true do %>
+        <p class="request_logo"><%= t 'general.project_name' %></p>
+        <% end %>
+      </div>
+      <div class="col-md-6 text-right">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="row">
+              <p class="f16" style="margin-top: 8px;"><%= "#{current_user.full_name}" %></p>
+              <p class="f12" style="color: #b0a69e;"><%= t 'admin.role' %></p>
+            </div>
+          </div>
+          <div class="col-md-4 user_info text-left">
+            <div style="position: absolute;">
+              <%= image_tag(current_user.profile.photo.url(:small), :alt => current_user.full_name, class: 'img-circle user_avatar', :width => 45, title: current_user.full_name) %>
+              <span class="icons icons-dropdown"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

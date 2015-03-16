@@ -1,0 +1,44 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css' %>
+<% end %>
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag  'tables/FooTable/footable.js', 'admin/tables_responsive', 'tables/TableFilter/picnet.table.filter.min.js' %>
+<% end %>
+<%
+   if can? :admin, :all
+     data = Request::where('`status` != ?', :future)
+   else
+     data = Request::where('`status` != ? AND (`user_id` = ? or `user_id` in (select `id` from users where `partner_id` = ?))', :future, current_user.id, current_user.id)
+   end
+   data = data.order('created_at DESC').paginate(:page => params[:page], :per_page => params[:per_page]) if data
+   data ||= []
+%>
+<div class="pull-right innerLR">
+  <%= link_to t('download.csv'), admin_request_index_path(format: :csv, page: params[:page]), :class => 'btn btn-primary pull-left' %>
+</div>
+<h1><%= t 'request.requests' %></h1>
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <div class="pull-left">
+        <%= "#{t('general.found')} #{data.count} #{t('general.requests')}" %>
+      </div>
+
+      <% unless data.empty? %>
+        <div class="pull-right">
+          <%= render 'admin/shared/paginate', :tab => @tab %>
+        </div>
+      <% end %>
+    </div>
+
+    <% unless data.empty? %>
+      <%= render '/admin/request/list', :data => data %>
+      <div class="paginators">
+        <%= will_paginate data, :remote => true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'admin/shared/modal', :text => t('admin.request.show'), :label => :requestLabel, :id => :showRequest, :buttons => false %>

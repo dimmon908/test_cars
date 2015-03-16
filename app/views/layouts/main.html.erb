@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render 'layouts/head' %>
+</head>
+<body>
+  <div class="container"<% unless controller_name == 'index' %> style="width: 1200px;"<% end %>>
+    <div class="row">
+      <div class="col-xs-12">
+        <%= render 'layouts/header' %>
+        <!--<p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>-->
+        <%= yield %>
+        <%= yield :scripts %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

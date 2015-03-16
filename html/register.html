@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <!-- Bootstrap -->
+  <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet">
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="bootstrap/assets/js/html5shiv.js"></script>
+  <script src="bootstrap/assets/js/respond.min.js"></script>
+  <![endif]-->
+
+  <link href="jQueryValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container_wrap">
+  <div class="container">
+    <div class="col-md-12 col-xs-12 col-sm-12">
+      <div class="logo text-center">Logo</div>
+
+      <div class="divider">
+        <div class="pull-right text-right">
+          <p class="title">Already an client?</p>
+          <p class="description"><a href="#">Sign in</a> here to your account</p>
+        </div>
+
+        <div class="pull-left text-left">
+          <p class="title">Sign up for a new account</p>
+          <p class="description">Lorem ipsum dolor sit amet senctuer lorem ipsum dolor sit amet senctuer</p>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-md-6 col-xs-6 col-sm-6 ">
+          <form role="form" id="registration_form">
+            <p class="lead">Personal Information</p>
+            <div class="form-group">
+              <label for="first_name">Your name</label>
+              <div class="row">
+                <div class="col-md-6 col-xs-6 col-sm-6">
+                  <input type="text" class="form-control validate[required]" id="first_name" placeholder="First name">
+                </div>
+                <div class="col-md-6 col-xs-6 col-sm-6">
+                  <input type="text" class="form-control validate[required]" id="last_name" placeholder="Last name">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-10 col-xs-10 col-sm-10">
+                <label for="country">Country</label>
+                <select class="form-control" id="country">
+                  <option>Russia</option>
+                  <option>Ukraine</option>
+                  <option>USA</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-5 col-xs-5 col-sm-5">
+                <label for="zipcode">Zipcode</label>
+                <input type="text" class="form-control" id="zipcode" placeholder="400200">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-6 col-xs-6 col-sm-6">
+                <label for="mobile_phone">Mobile Phone</label>
+                <input type="text" class="form-control validate[required]" id="mobile_phone" placeholder="+1 (720) 700-7200">
+              </div>
+            </div>
+
+            <p class="lead">Personal Information</p>
+
+            <div class="row">
+              <div class="form-group col-md-10 col-xs-10 col-sm-10">
+                <label for="email">Email</label>
+                <input type="text" class="form-control validate[required,custom[email]]" id="email" placeholder="john,doe@test.cc">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-10 col-xs-10 col-sm-10">
+                <label for="password">Password</label>
+                <input type="text" class="form-control validate[required,minSize[5]]" id="password" placeholder="At least 5">
+              </div>
+            </div>
+
+            <p class="lead">Credit Card Information</p>
+
+            <div class="row">
+              <div class="form-group col-md-8 col-xs-8 col-sm-8">
+                <label for="credit_card">Credit Card</label>
+                <input type="text" class="form-control" id="credit_card" placeholder="1234567890123456">
+              </div>
+              <div class="form-group col-md-2 col-xs-2 col-sm-2">
+                <label for="cvv">CVV</label>
+                <input type="text" class="form-control" id="cvv" placeholder="123">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-4 col-xs-4 col-sm-4">
+                <label for="expiration_month">Expiration Date</label>
+                <select id="expiration_month" class="form-control">
+                  <option>Month</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-3 col-xs-3 col-sm-3">
+                <label>&nbsp;</label>
+                <select class="form-control">
+                  <option>Year</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-3 col-xs-3 col-sm-3">
+                <label for="postal_code">Postal Code</label>
+                <input type="text" class="form-control" id="postal_code" placeholder="12345">
+              </div>
+            </div>
+
+            <div class="row">
+              <p class="col-md-10 col-xs-10 col-sm-10">By Clicking "Sign Up" below, you are agreeing to the<a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a></p>
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-10 col-xs-10 col-sm-10">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="bootstrap/assets/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="jQueryValidationEngine/js/languages/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"></script>
+<script src="jQueryValidationEngine/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+<script>
+  (function($) {
+    $(function() {
+      $("#registration_form").validationEngine({
+        promptPosition: "bottomLeft"
+      });
+    })
+  })(jQuery);
+</script>
+</body>
+</html>

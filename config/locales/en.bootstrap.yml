@@ -1,0 +1,35 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  helpers:
+    actions: "Actions"
+    links:
+      back: "Back"
+      cancel: "Cancel"
+      confirm: "Are you sure?"
+      destroy: "Delete"
+      new: "New"
+      edit: "Edit"
+    titles:
+      edit: "Edit %{model}"
+      save: "Save %{model}"
+      new: "New %{model}"
+      delete: "Delete %{model}"
+  user:
+    first_name: "First name"
+    last_name: "Last name"
+    email: "Email"
+    phone: "Phone number"
+    status: "Status"
+    partner: "partner"
+    create_sub_account: "Create SubAccount"
+    actions: "Actions"
+  forms:
+    user:
+      sub_account_info: "SubAccount Information"
+  links:
+    add_address: "Add address"
+  address_book:
+    public_name: "Public name"
+    address: "Address"

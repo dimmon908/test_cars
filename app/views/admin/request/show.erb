@@ -1,0 +1,106 @@
+<h1><%= t 'admin.request.header' %>:</h1>
+
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <table border="1" class="_list table table-striped table-bordered table-white table-primary">
+        <tr>
+          <th><%= t 'request.id' %></th>
+          <td><%= resource.id %> </td>
+        </tr>
+        <tr>
+          <th><%= t 'request.passenger' %></th>
+          <td><%= resource.user ? resource.user.full_name : ''%></td>
+        </tr>
+        <% unless Trip::Status::future? resource %>
+        <tr>
+          <th><%= t 'request.driver' %></th>
+          <td><%= resource.driver ? resource.driver.full_name : ''%></td>
+        </tr>
+        <% end %>
+        <tr>
+          <th><%= t 'request.phone' %></th>
+          <td><%= resource.user ? resource.user.phone : ''%></td>
+        </tr>
+        <tr>
+          <th><%= t 'request.from' %></th>
+          <td><%= resource.from %></td>
+        </tr>
+        <tr>
+          <th><%= t 'request.to' %></th>
+          <td><%= resource.to.last %></td>
+        </tr>
+        <% if false %>
+        <tr>
+          <th><%= t 'request.passenger_capacity' %></th>
+          <td><%= resource.passengers %></td>
+        </tr>
+        <% end %>
+        <tr>
+          <th><%= t 'request.date' %></th>
+          <td><%= human_readable(resource.date) %></td>
+        </tr>
+        <tr>
+          <th><%= t 'request.comment' %></th>
+          <td><%= resource.comment %></td>
+        </tr>
+        <% if resource.promo_code %>
+          <tr>
+            <th><%= t 'request.promo_code' %></th>
+            <td><%= resource.promo_code.code %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th><%= t 'request.estimate_rate' %></th>
+          <td><%= number_to_currency resource.rate %></td>
+        </tr>
+        <% unless Trip::Status::future?(resource) || !resource.transaction %>
+        <tr>
+          <th><%= t 'request.gratuity' %></th>
+          <td><%= resource.transaction ? number_to_currency(resource.transaction.gratuity) : ''%></td>
+        </tr>
+        <tr>
+          <th><%= t 'request.total' %></th>
+          <td><%= resource.transaction ? number_to_currency(resource.charged_price) : ''%></td>
+        </tr>
+        <% end %>
+        <% if current_user.developer? %>
+          <tr>
+            <th><%= t 'request.waiting_time' %></th>
+            <td><%= resource.calculate_wait_time %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th><%= t 'request.status' %></th>
+          <td><%= resource.status %></td>
+        </tr>
+      </table>
+
+      <%
+         prev = resource.previous(current_user, @data)
+         nex = resource.next(current_user, @data)
+      %>
+      <% if prev.any? %>
+        <%= link_to t('request.prev'), "/admin/request/#{prev.first.id}/#{@data}", :class => 'btn btn-primary', :remote => true, 'data-toggle' => 'modal', 'data-target' => '#showRequest', 'data-tab' => :requests, 'data-ignore-tab' => true %>
+      <% end %>
+
+      <% if nex.any? %>
+        <%= link_to t('request.next'), "/admin/request/#{nex.first.id}/#{@data}", :class => 'btn btn-primary', :remote => true, 'data-toggle' => 'modal', 'data-target' => '#showRequest', 'data-tab' => :requests, 'data-ignore-tab' => true %>
+      <% end %>
+
+      <%= link_to t('request.close'), :back, :class => 'btn btn-primary', :remote => true, 'data-tab' => :requests, 'data-ignore-tab' => true, 'data-target' => '#ajax_content', 'data-dismiss' => :modal, 'aria-hidden' => true %>
+
+      <% unless Trip::Status::cant_canceled? resource %>
+        <%= link_to t('request.cancel'), "/admin/request/#{resource.id}/cancel", :class => 'btn btn-primary', :remote => true, 'data-toggle' => 'modal', 'data-target' => '#showRequest', 'data-tab' => :requests, 'data-ignore-tab' => true, data: { confirm: t('admin.messages.request.cancel') } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">//<![CDATA[
+  var label = $('#requestLabel');
+  if (label.length) {
+    label.html('Request No. <%=resource.id%> Details');
+  }
+//]]>
+</script>

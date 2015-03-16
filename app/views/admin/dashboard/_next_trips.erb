@@ -1,0 +1,20 @@
+<% requests = Request.future.order('date ASC') %>
+
+<div class="col-md-4 innerAll">
+  <div class="padding-bottom-none-phone">
+    <%= link_to('/admin/future_riders', { :remote => true, 'data-tab' => :future_rides, :class => 'widget-stats widget-stats-primary widget-stats-4'}) do %>
+      <span class="txt"><%= t 'admin.dashboard.future_request.header' %></span>
+      <span class="count"><%= requests.count %></span>
+      <span class="glyphicons road"><i></i></span>
+      <div class="clearfix"></div>
+      <i class="icon-play-circle"></i>
+    <% end %>
+
+    <% requests = requests.limit(2).all %>
+    <% unless requests.empty? %>
+      <% requests.each do |request| %>
+        <%= render 'admin/request/row', :request => request %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

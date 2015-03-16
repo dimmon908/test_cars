@@ -1,0 +1,23 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag 'gmaps4rails/gmaps4rails.base', 'gmaps4rails/gmaps4rails.googlemaps' %>
+<% end %>
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11 col-sm-11 col-xs-11">
+    <table cellspacing="0" cellpadding="1" border="1" width="100%">
+      <thead>
+      <tr><th><%= link_to t('top.header.users'), '/admin/users' %></th></tr>
+      <tr><th><%= link_to t('top.header.drivers'), '/admin/driver' %></th></tr>
+      <tr><th><%= link_to t('top.header.cars'), '/admin/car' %></th></tr>
+      <tr><th><%= link_to t('top.header.personal'), '/admin/personal' %></th></tr>
+      <tr><th><%= link_to t('top.header.companies'), '/admin/business' %></th></tr>
+      <tr><th><%= link_to t('top.header.configs'), '/admin/config/group' %></th></tr>
+      <tr><th><%= link_to t('top.header.emails'), '/admin/emails' %></th></tr>
+      <tr><th><%= link_to t('top.header.sms'), '/admin/sms' %></th></tr>
+      <tr><th><%= link_to t('top.header.notifications'), '/admin/notifications' %></th></tr>
+      <tr><th><%= link_to t('top.header.pulls'), '/admin/pull' %></th></tr>
+      <tr><th><%= link_to t('top.header.request_reasons'), '/admin/request/reason' %></th></tr>
+      </thead>
+    </table>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

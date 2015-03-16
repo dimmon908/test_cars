@@ -1,0 +1,81 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <b>User:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+  <%= @log.username %>
+</pre>
+
+<div class="row">
+  <b>Type:</b>
+  <div class="divider"></div>
+</div>
+<br/>
+
+<pre>
+  <%= @log.log_type %>
+</pre>
+
+<div class="row">
+  <b>Date:</b>
+  <div class="divider"></div>
+</div>
+<br/>
+<pre>
+  <span class="datetime" data-date="<%= @log.created_at.strftime(HelperTools::JS_DATE) %>"></span>
+</pre>
+
+<div class="row">
+  <b>Data:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.data %>
+</pre>
+
+
+<div class="row">
+  <b>Request:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.request_url %>
+</pre>
+
+<div class="row">
+  <b>Request Data:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.request %>
+</pre>
+
+<div class="row">
+  <b>Session:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.session %>
+</pre>
+
+<div class="row">
+  <b>Params:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.params %>
+</pre>

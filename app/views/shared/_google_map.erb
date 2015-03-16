@@ -1,0 +1,113 @@
+<div class="template map_popup" id="map_popup2" >
+  <div style="background: #FFF; padding: 15px; border-radius: 5px; box-shadow: 0 3px 5px 0 #969696; min-width: 330px;">
+    <p class="f14 museoSans100" style="margin-bottom: 0;">__street__</p>
+    <p class="f14 museoSans100">__city__</p>
+
+    <div class="favorites f14 museoSans100">
+      <p class="icon" data-address="__text__" onclick='window.add_favorite(this, "__city__", "__street__", "__lat__", "__lng__", "__name__");'><%= t('request.favorites.add')%></p>
+    </div>
+
+    <div class="row" style="margin-top: 15px;">
+      <div class="col-md-6">
+        <button type="button" class="btn btn-default btn-block text-upper f12 museoSans500" onclick='setPickup("__text__", __i__, "__street__", "__city__", "__lat__", "__lng__", "__name__", "__marker_id__"); return false;'><%=t 'button.pickup_address' %></button>
+      </div>
+      <div class="col-md-6" style="padding-left: 0;">
+        <button type="button" class="btn btn-default btn-block text-upper f12 museoSans500" onclick='setDest("__text__", __i__, "__street__", "__city__", "__lat__", "__lng__", "__name__", "__marker_id__"); return false;'><%=t 'button.destination' %></button>
+      </div>
+    </div>
+    <!--<div class="row" style="margin-top: 15px;">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-default btn-block text-upper f12 museoSans500" onclick='addWaypoint("__text__", __i__, "__street__", "__city__", "__lat__", "__lng__", "__name__", "__marker_id__); return false;'><%=t 'button.add_waypoint' %></button>
+      </div>
+    </div>-->
+  </div>
+</div>
+
+<div class="template map_popup" id="driver_popup" >
+  <div class="request_details">
+    <ul class="tabs">
+      <li class="active"><a href="#request_driver___id__" data-toggle="tab" onclick="setTab(this); return false;"><span class="icons icons-car"></span></a></li>
+      <li><a href="#request_time___id__" data-toggle="tab" onclick="setTab(this); return false;"><span class="icons icons-time"></span></a></li>
+      <li class="border-bottom-none"><a href="#request_rate___id__" data-toggle="tab" onclick="setTab(this); return false;"><span class="icons icons-money"></span></a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active fade in" id="request_driver___id__">
+        <p class="f14 museoSans300 text-upper"><%= t 'request.driver_name' %></p>
+        <p class="f12 museoSans100">__DRIVER_NAME__</p>
+
+        <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.car_type' %></p>
+        <p class="f12 museoSans100">__CAR_TYPE__</p>
+
+        <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.notes' %></p>
+        <p class="f12 museoSans100">__NOTES__</p>
+      </div>
+      <div class="tab-pane fade in" id="request_time___id__">
+        <p class="f14 museoSans300 text-upper"><%= t 'request.trip_date' %></p>
+        <p class="f12 museoSans100">__DATE__</p>
+
+
+        <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.estimated_cost' %></p>
+        <p class="f12 museoSans100">$__RATE__</p>
+      </div>
+      <div class="tab-pane fade text-center in" id="request_rate___id__">
+        __IMG__
+        <p class="f14 museoSans500" style="max-width: 100px; margin: 0 auto;">__NAME__</p>
+        <p class="f12 museoSans100" style="margin-top: 5px;">__DESC__</p>
+
+        <!--<div class="divider" style="margin-top: 15px;"></div>-->
+
+        <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.estimated_duration' %></p>
+        <p class="f18 museoSans100" style="margin-top: 5px;">__ETA__</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="template" id="dest_temp">
+  <div class="row">
+    <div class="col-md-12">
+      <label for="Request_to___i__">Destination __i__ (optional) </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-10 form-group">
+      <input class="form-control validate[required] address_select" id="Request_to___i__" name="Request[to][__i__]" placeholder="Green Street, San Francisco" size="30" type="text" data-validate="true" autocomplete="off">
+      <span class="favorite_star favorites"></span>
+    </div>
+    <div class="col-md-1">
+      <div class="row">
+        <div class="info" style="margin-top: 6px;">?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <% content_for :scripts do %>
+    <%= javascript_include_tag 'gmaps4rails/gmaps4rails.base', 'gmaps4rails/gmaps4rails.googlemaps' %>
+  <% end %>
+  <%= gmaps(:map_options => {
+    :center_latitude => Configurations[:default_map_latitude],
+    :center_longitude => Configurations[:default_map_longitude],
+    :auto_adjust => true,
+    :auto_zoom => true,
+    :detect_location => true,
+    :center_on_user => true,
+    :zoom => Configurations[:default_map_zoom],
+    :libraries => ["places"], :language => :en
+  }) %>
+  <% content_for :scripts do %>
+    <%= javascript_include_tag  'infoBox', 'infoBubble' %>
+  <% end %>
+</div>
+
+<div class="template" id="map_popup">
+  <b>__street__</b>
+  <br/>
+  __city__
+  <br/>
+  <input type="button" value="<%=t 'button.set_pickup' %>" onclick='setPickup("__text__", __i__, "__street__", "__city__", "__lat__", "__lng__"); return false;'/>
+  <br/>
+  <input type="button" value="<%=t 'button.set_dest' %>" onclick='setDest("__text__", __i__, "__street__", "__city__", "__lat__", "__lng__"); return false;'/>
+</div>

@@ -1,0 +1,62 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag 'tables/FooTable/footable.js', 'admin/tables_responsive', 'tables/TableFilter/picnet.table.filter.min.js' %>
+<% end %>
+
+<%
+   data = Configurations.paginate(:page => params[:page], :per_page => params[:per_page]) rescue nil
+   data ||= []
+%>
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<h1><%= t 'admin.tabs.rates' %></h1>
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <div class="pull-left">
+        <%= "#{t('general.found')} #{data.count} #{t('general.configs')}" %>
+      </div>
+
+      <% unless data.empty? %>
+        <div class="pull-right">
+          <%= render 'admin/shared/paginate', :tab => :configs %>
+        </div>
+      <% end %>
+    </div>
+
+    <table class="table-filter footable table table-striped table-bordered table-white table-primary list">
+      <thead>
+      <tr>
+        <th data-class="expand"><%= t 'config.internal_name' %></th>
+        <th><%= t 'config.value' %></th>
+        <th filter="false" style="width: 50px;"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% data.each do |config| %>
+        <tr>
+          <td><%= config.internal_name %></td>
+          <td><%= config.text_value %></td>
+          <td>
+            <div class="dropdown">
+              <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <%= link_to t('config.actions.edit'), "/admin/config/#{config.id}/edit", :remote => true, 'data-toggle' => 'modal', 'data-target' => '#editConfig' %>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="paginators">
+      <%= will_paginate data, :remote => true %>
+    </div>
+  </div>
+</div>
+
+<%= render 'admin/shared/modal', :text => t('admin.config.edit'), :label => :newConfigLabel, :id => :editConfig %>

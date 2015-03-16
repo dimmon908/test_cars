@@ -1,0 +1,91 @@
+@font-face {
+  font-family: "MuseoSans 100";
+  src: url('/fonts/MuseoSans/MuseoSans-100.otf');
+}
+@font-face {
+  font-family: "MuseoSans 100 Italic";
+  src: url('/fonts/MuseoSans/MuseoSans-100Italic.otf');
+}
+@font-face {
+  font-family: "MuseoSans 300";
+  src: url('/fonts/MuseoSans/MuseoSans-300.otf');
+}
+@font-face {
+  font-family: "MuseoSans 300 Italic";
+  src: url('/fonts/MuseoSans/MuseoSans-300Italic.otf');
+}
+@font-face {
+  font-family: "MuseoSans 500";
+  src: url('/fonts/MuseoSans/MuseoSans-500.otf');
+}
+@font-face {
+  font-family: "MuseoSans 700";
+  src: url('/fonts/MuseoSans/MuseoSans-700.otf');
+}
+@font-face {
+  font-family: "MuseoSans 900";
+  src: url('/fonts/MuseoSans/MuseoSans-900.otf');
+}
+@font-face {
+  font-family: "Josefin Slab SemiBold";
+  src: url('/fonts/JosefinSlab/JosefinSlab-SemiBold.ttf');
+}
+@font-face {
+  font-family: "Josefin Slab Bold";
+  src: url('/fonts/JosefinSlab/JosefinSlab-Bold.ttf');
+}
+@font-face {
+  font-family: "Josefin Slab Regular";
+  src: url('/fonts/JosefinSlab/JosefinSlab-Regular.ttf');
+}
+.museoSans100 {
+  font-family: "MuseoSans 100" !important;
+}
+.museoSans300 {
+  font-family: "MuseoSans 300" !important;
+}
+.museoSans500 {
+  font-family: "MuseoSans 500" !important;
+}
+.museoSans700 {
+  font-family: "MuseoSans 700" !important;
+}
+.museoSans900 {
+  font-family: "MuseoSans 900" !important;
+}
+.josefinSlabBold {
+  font-family: "Josefin Slab Bold" !important;
+}
+.f12 {
+  font-size: 12px !important;
+}
+.f13 {
+  font-size: 13px !important;
+}
+.f14 {
+  font-size: 14px !important;
+}
+.f15 {
+  font-size: 15px !important;
+}
+.f16 {
+  font-size: 16px !important;
+}
+.f17 {
+  font-size: 17px !important;
+}
+.f18 {
+  font-size: 18px !important;
+}
+.f19 {
+  font-size: 19px !important;
+}
+.f20 {
+  font-size: 20px !important;
+}
+.f22 {
+  font-size: 22px !important;
+}
+.f26 {
+  font-size: 26px !important;
+}

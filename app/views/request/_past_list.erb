@@ -1,0 +1,67 @@
+<div class="row divider" style="margin-top: 0;">
+  <div class="col-md-12">
+    <p class="title">
+      <span class="icons icons-archive v-middle"></span>
+      <span class="text"><%= t('forms.request.labels.archive') %></span>
+    </p>
+  </div>
+</div>
+
+<form action="/request/past_list" data-remote="true" id="past_list_form">
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md-6">
+    <label><%= t 'forms.request.labels.start_date' %></label>
+  </div>
+  <div class="col-md-6">
+    <label><%= t 'forms.request.labels.end_date' %></label>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 form-group">
+    <div class="input-group">
+      <input id="from_date"
+             name="from_date"
+             class="form-control validate[required]"
+             placeholder="<%= Time.now.at_beginning_of_month.strftime Request::DATE_FORMAT %>"
+             size="30" type="text"
+             value="<%= @from_date.strftime Request::DATE_FORMAT %>">
+
+      <span class="input-group-addon datepicker" style="border-left: 0;" data-date="<%=@from_date.strftime(HelperTools::JS_DATE)%>">
+        <span class="icons icons-calendar"></span>
+      </span>
+      <span class="input-group-addon timepicker" data-date="<%=@from_date.strftime(HelperTools::JS_DATE)%>">
+        <span class="text-muted f16 glyphicon glyphicon-time" style="top: 0;"></span>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="input-group">
+      <input id="to_date"
+             name="to_date"
+             class="form-control validate[required]"
+             placeholder="<%= Time.now.strftime Request::DATE_FORMAT %>"
+             size="30" type="text"
+             value="<%= @to_date.strftime Request::DATE_FORMAT %>">
+
+      <span class="input-group-addon datepicker" style="border-left: 0;" data-date="<%=@to_date.strftime(HelperTools::JS_DATE)%>">
+        <span class="icons icons-calendar"></span>
+      </span>
+      <span class="input-group-addon timepicker" data-date="<%=@to_date.strftime(HelperTools::JS_DATE)%>">
+        <span class="text-muted f16 glyphicon glyphicon-time" style="top: 0;"></span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= button_tag t('button.search_now'), :class => 'btn btn-default text-upper f12 museoSan500 pull-right', :type => :submit %>
+  </div>
+</div>
+
+</form>
+
+<div id="requests_list">
+  <%= render 'list' %>
+</div>

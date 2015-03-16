@@ -1,0 +1,153 @@
+<div class="row">
+  <%= form_for(resource, :as => resource_name, :url => "/admin/business/#{resource.id}") do |f| %>
+    <div class="col-xs-12">
+      <p class="lead"><%= t 'forms.user.business_info' %></p>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :business_name %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :company_address %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.business_name  %>
+        </div>
+        <div class="col-xs-6 ">
+          <%= resource.company_address  %>
+        </div>
+      </div>
+
+      <div class="row innerT">
+        <div class="col-xs-6">
+          <%= f.label :city %>
+        </div>
+        <div class="col-xs-2">
+          <%= f.label :suite %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :business_zip_code %>
+        </div>
+      </div>
+      <div class="row">
+        <div class=" col-xs-6">
+          <%= resource.city  %>
+        </div>
+        <div class="col-xs-2 ">
+          <%= resource.suite  %>
+        </div>
+        <div class="col-xs-3 ">
+          <%= resource.business_zip_code  %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <p class="lead"><%= t 'forms.user.personal_info' %></p>
+
+      <div class="row">
+        <div class="col-xs-3">
+          <%= f.label :first_name %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :last_name %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :phone %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :zip_code %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">
+          <%= resource.first_name  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.last_name  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.phone  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.postal_code  %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <p class="lead"><%= t 'forms.user.account_info' %></p>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <%= f.label :email %>
+          <%= resource.email  %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <p class="lead"><span class="icons icons-credit_card_information"></span><%= t 'forms.user.credit_info' %></p>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :credit_card %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :cvv %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :expiration_date %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.show_card  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.cvv  %>
+        </div>
+        <div class="col-xs-3">
+          <%= resource.expiration_date  %>
+        </div>
+      </div>
+
+      <% if resource.payment == 'Net_Terms' %>
+
+        <div class="separator"></div>
+
+        <p class="lead"><span class="icons icons-credit_card_information"></span><%= t 'forms.user.net_terms' %></p>
+
+        <table class="table table-white table-primary">
+          <tbody>
+          <tr>
+            <% if !resource.terms %>
+              <td class="v-middle"><label> <%= t('admin.company.pending_approval') %></label></td>
+            <% else %>
+              <td class="v-middle"><label> <%= t('admin.company.approve') %></label></td>
+              <td>
+                <span class="v-middle"><%= t('admin.company.limit_set') %></span>
+                <%= f.text_field :credit_limit, :class => 'form-control inline-block', :style => 'width: 100px;' %>
+              <td>
+                <span class="v-middle"><%= t('admin.company.terms') %></span>
+                <label>
+                  <%= resource.terms %>
+                </label>
+              </td>
+            <% end %>
+          </tr>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+
+    <% if can?(:client_approve, current_user) && !resource.status %>
+      <% link_to t('links.approve'), "/#{resource_name}/approve" %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="separator"></div>

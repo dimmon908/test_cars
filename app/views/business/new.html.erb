@@ -1,0 +1,48 @@
+<% resource.need_validate = true %>
+<% content_for :scripts do %>
+    <script type="text/javascript">
+      //<![CDATA[
+        window.resource_name = '<%= resource_name %>';
+        window.user_step = 1;
+        window.steps_blocks = {
+          1: [window.resource_name + '_first_name', window.resource_name + '_last_name', window.resource_name + '_phone'],
+          2: [window.resource_name + '_business_name', window.resource_name + '_company_address', window.resource_name + '_suite', window.resource_name + '_business_zip_code',window.resource_name + '_city'],
+          3: [window.resource_name + '_email', window.resource_name + '_password', window.resource_name + '_password_confirmation'],
+          4: [window.resource_name + '_credit_card', window.resource_name + '_cvv', window.resource_name + '_credit_card_date', window.resource_name + '_zip_code']
+        };
+        window.alt_steps_blocks = {
+          4: [window.resource_name + 'need_need_approve']
+        };
+      //]]>
+    </script>
+    <%= javascript_include_tag  'regex-mask-plugin', :profile_page, 'custom_validators', 'custimize_validator', 'steps' %>
+<% end %>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-xs-11">
+    <%= form_for(resource, :as => resource_name, :url => new_busines_path, :validate => true) do |f| %>
+      <%= devise_error_messages! %>
+
+      <%= render 'shared/summary_errors' %>
+
+      <%= render 'personal/hidden_fields' %>
+
+      <div class="row steps">
+        <div class="col-xs-12">
+          <%= render 'business/form_fields', :f => f, :focus => false %>
+
+          <%= render 'personal/form_fields', :f => f, :focus => false %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-xs-1">
+    <div class="steps_control">
+      <div class="step step_first step_active" data-step="1"><%= t 'forms.user.personalInfo' %></div>
+      <div class="step" data-step="2"><%= t 'forms.user.businessInfo' %></div>
+      <div class="step" data-step="3"><%= t 'forms.user.accountInfo' %></div>
+      <div class="step" data-step="4"><%= t 'forms.user.paymentInfo' %></div>
+      <div class="step step_last"><%= t 'forms.user.sign_up_complete' %></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag  'tables/FooTable/footable.js', 'admin/tables_responsive', 'tables/TableFilter/picnet.table.filter.min.js' %>
+<% end %>
+
+<%
+  @data = Classes::PersonalAccount.users.order('created_at DESC').paginate(:page => params[:page], :per_page => params[:per_page]) rescue nil if @data.blank?
+  @data ||= []
+%>
+
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<div class="pull-right innerLR">
+  <%= link_to t('passenger.add'), '/admin/personal/new', :remote => true, 'data-toggle' => 'modal', 'data-target' => '#newPassenger', :class => 'btn btn-primary pull-left' %>
+  <%= link_to t('download.csv'), admin_personal_index_path(format: :csv, page: params[:page]), :class => 'btn btn-primary pull-left' %>
+</div>
+
+<h1><%= t 'admin.tabs.passengers' %></h1>
+
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <div class="pull-left">
+        <%= "#{t('general.found')} #{@data.count} #{t('general.passengers')}" %>
+      </div>
+
+      <% unless @data.empty? %>
+        <div class="pull-right">
+          <%= render 'admin/shared/paginate', :tab => :passengers, :default_paginate => User::per_page %>
+        </div>
+      <% end %>
+    </div>
+
+    <% unless @data.empty? %>
+      <table class="table-filter footable table table-striped table-bordered table-white table-primary">
+        <thead>
+        <tr>
+          <th data-class="expand">Username</th>
+          <th data-hide="phone,tablet">First name</th>
+          <th data-hide="phone,tablet">Last name</th>
+          <th data-hide="phone,tablet" filter-type="ddl">Gender</th>
+          <th data-hide="phone,tablet">Age</th>
+          <th data-hide="phone">Email</th>
+          <th data-hide="phone">Phone</th>
+          <th style="width: 50px;" filter="false"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @data.each do |user| %>
+          <tr>
+            <td><%= user.username %></td>
+            <td><%= user.first_name %></td>
+            <td><%= user.last_name %></td>
+            <td><%= user.gender rescue nil %></td>
+            <td><%= user.age_group rescue nil %></td>
+            <td><%= user.email %></td>
+            <td><%= user.phone %></td>
+            <td>
+              <div class="dropdown">
+                <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <%= link_to t('links.show'), "/admin/personal/#{user.id}", :remote => true, 'data-toggle' => 'modal', 'data-target' => '#showPassenger' %>
+                  </li>
+                  <li>
+                    <%= link_to t('links.edit'), "/admin/personal/#{user.id}/edit", :remote => true, 'data-toggle' => 'modal', 'data-target' => '#editPassenger' %>
+                  </li>
+                  <li>
+                    <%= link_to t('links.destroy'), "/admin/personal/#{user.id}", method: :delete, data: {confirm: t('messages.sure')} %>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="paginators">
+        <%= will_paginate @data, :remote => true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'admin/shared/modal', :text => t('admin.passenger.add'), :label => :newPassengerLabel, :id => :newPassenger %>
+<%= render 'admin/shared/modal', :text => t('admin.passenger.edit'), :label => 'editPassengerLabel', :id => 'editPassenger' %>
+<%= render 'admin/shared/modal', :text => t('admin.passenger.show'), :label => 'showPassengerLabel', :id => 'showPassenger', :buttons => false %>

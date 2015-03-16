@@ -1,0 +1,38 @@
+<div class="col-md-12">
+  <% if @data.empty? %>
+    None requests
+  <% else %>
+    <table class="footable table table-striped table-bordered table-white table-primary list">
+      <thead>
+      <tr>
+        <th data-hide="phone"><%= t 'request.user' %></th>
+        <th data-hide="phone,tablet"><%= t 'request.date' %></th>
+        <th data-hide="phone,tablet"><%= t 'request.pu' %></th>
+        <th data-hide="phone,tablet"><%= t 'request.do' %></th>
+        <th data-hide="phone,tablet"><%= t 'request.rate' %></th>
+        <th filter-type="ddl"><%= t 'request.payment_type' %></th>
+        <th filter-type="ddl"><%= t 'request.status' %></th>
+        <th data-hide="phone,tablet"><%= t 'request.comments' %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @data.each do |request| %>
+        <tr>
+          <% if request.user %>
+            <td><%= request.user.full_name %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td><%= request.date %></td>
+          <td><%= request.from %></td>
+          <td><%= request.to.last %></td>
+          <td><%= number_to_currency request.rate %></td>
+          <td><%= request.payment %></td>
+          <td><%= request.status %></td>
+          <td><%= request.comment.to_s[0..20] %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

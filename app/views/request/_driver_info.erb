@@ -1,0 +1,37 @@
+<% request ||= Request.new %>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 20px;">
+  <% if request.driver %>
+  <p class="f16 museoSans100" style="margin-bottom: 10px;">
+    <%= image_tag request.driver.car.vehicle.photo, :style => 'width: 30px;', :class => 'show_driver_info' %>
+    <span class="label"><%= t('request.car_type') %>:</span>
+    <%= request.driver.car.vehicle.name %>
+  </p>
+
+  <p class="f16 museoSans100" style="margin-bottom: 10px;">
+    <%= image_tag request.driver.user.user_profile.photo.url(:small), :style => 'width: 30px;', :class => 'show_driver_info' %>
+    <span class="label"><%= t('request.chauffeured_by') %>:</span>
+    <%= request.driver.full_name %> | <%=request.driver.phone %>
+  </p>
+  <% end %>
+
+  <% if Trip::Status::accepted? request %>
+  <p class="f16 museoSans100">
+    <span class="glyphicon glyphicon-time f22 show_driver_info" style="color: #CC0311;width: 30px;text-align: center;top: 3px;"></span>
+    <span class="label"><%= t('request.eta') %>:</span>
+    <span class="red"><%= request.remain_time %></span>
+  </p>
+  <% end %>
+</div>
+
+<div class="popover popover_driver_info">
+  <div class="media">
+            <span class="pull-left">
+              <%= image_tag request.driver.user.user_profile.photo.url(:small), :style => 'width: 120px;', :class => 'media-object img-rounded' %>
+            </span>
+    <div class="media-body">
+      <p class="f16 museoSans100" style="margin-top: 15px;"><%= request.driver.full_name %></p>
+      <p class="f16 museoSans100" style="margin-top: 10px;"><%= request.driver.car.vehicle.name %></p>
+      <p class="f16 museoSans100" style="margin-top: 10px;"><%= t('driver.license_plate') %>: <%= request.driver.license_number %></p>
+    </div>
+  </div>
+</div>

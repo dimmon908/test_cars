@@ -1,0 +1,39 @@
+<% request ||= Request.new %>
+
+<div class="widget widget-body-default" style="margin-bottom: 5px;">
+  <div class="widget-body clearfix">
+    <div class="table-cell">
+      <span class="glyphicons history"><i></i></span>
+    </div>
+    <div class="table-cell">
+      <div class="table-row">
+        <div class="table-cell">
+          <span class="strong">From:</span>
+        </div>
+        <div class="table-cell innerL">
+          <%= request.from.to_s %>
+        </div>
+      </div>
+
+      <div class="table-row">
+        <div class="table-cell innerT">
+          <span class="strong">To:</span>
+        </div>
+        <div class="table-cell innerL">
+          <%= request.to.last.to_s %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="well margin-bottom-none clearfix">
+    <div class="col-xs-6">
+      <p class="margin-bottom-none strong">Start date:</p>
+      <p class="margin-bottom-none" data-date="<%= request.date.strftime HelperTools::JS_DATE %>"></p>
+    </div>
+    <div class="col-xs-6">
+      <p class="margin-bottom-none strong">Rate:</p>
+      <p class="margin-bottom-none"><%= number_to_currency request.rate %></p>
+    </div>
+  </div>
+</div>

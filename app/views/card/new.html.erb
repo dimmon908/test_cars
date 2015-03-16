@@ -1,0 +1,15 @@
+<%
+  card = resource if card.nil?
+  name = resource_name if name.nil?
+%>
+
+<%= form_for(card, :as => name, :url => '/card/new', :validate => true, :remote => true) do |f| %>
+
+  <%= render '/card/form', :f => f, :card => card %>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-xs-12">
+      <button type="submit" class="btn btn-default text-upper f12"><%= t 'button.save_changes' %></button>
+    </div>
+  </div>
+<% end %>

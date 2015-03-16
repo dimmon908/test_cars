@@ -1,0 +1,109 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag 'tables/FooTable/footable.js', 'admin/tables_responsive', 'tables/TableFilter/picnet.table.filter.min.js' %>
+<% end %>
+
+<%
+   data = Driver.order('created_at DESC').paginate(:page => params[:page], :per_page => params[:per_page]) rescue nil
+   data ||= []
+%>
+
+<div class="pull-right innerLR">
+  <%= link_to t('driver.add'), '/admin/driver/new', :remote => true, 'data-toggle' => :modal, 'data-target' => '#newDriver', :class => 'btn btn-primary pull-left' %>
+  <%= link_to t('download.csv'), admin_driver_index_path(format: :csv, page: params[:page]), :class => 'btn btn-primary pull-left' %>
+
+</div>
+
+<h1><%= t 'driver.drivers' %></h1>
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <div class="pull-left">
+        <%= "#{t('general.found')} #{data.count} #{t('driver.drivers')}" %>
+      </div>
+
+      <% unless data.empty? %>
+        <div class="pull-right">
+          <%= render 'admin/shared/paginate', :tab => :drivers %>
+        </div>
+      <% end %>
+    </div>
+
+    <% unless data.empty? %>
+      <table class="table-filter footable table table-striped table-bordered table-white table-primary">
+        <thead>
+        <tr>
+          <th data-class="expand"><%= t 'driver.username' %></th>
+          <th data-hide="phone,tablet"><%= t 'driver.first_name' %></th>
+          <th data-hide="phone,tablet"><%= t 'driver.last_name' %></th>
+          <th data-hide="phone,tablet" filter-type="ddl"><%= t 'driver.gender' %></th>
+          <th data-hide="phone"><%= t 'driver.email' %></th>
+          <th data-hide="phone"><%= t 'driver.phone' %></th>
+          <th data-hide="phone"><%= t 'driver.rate' %></th>
+          <th filter-type="ddl"><%= t 'driver.status' %></th>
+          <th style="width: 50px;" filter="false"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% data.each do |driver| %>
+          <tr>
+            <td><%= driver.user.username rescue nil %> </td>
+            <td><%= driver.first_name %></td>
+            <td><%= driver.last_name %></td>
+            <td><%= driver.gender %></td>
+            <td><%= driver.email %></td>
+            <td><%= driver.phone %></td>
+            <td><%= driver.rate %></td>
+            <td>
+              <%= driver.lock? ? 'locked' : (driver.online.blank? ? 'logoff' : driver.status) %>
+            </td>
+            <td>
+              <div class="dropdown">
+                <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <%= link_to t('driver.show'), "/admin/driver/#{driver.id}", :remote => true, 'data-toggle' => :modal, 'data-target' => '#showDriver' %>
+                  </li>
+                  <li>
+                    <%= link_to t('driver.edit'), "/admin/driver/#{driver.id}/edit", :remote => true, 'data-toggle' => :modal, 'data-target' => '#editDriver' %>
+                  </li>
+                  <li>
+                    <% if driver.lock? %>
+                      <%= link_to t('driver.unlock'), "/admin/driver/#{driver.id}/lock/0", :remote => true, 'data-reload' => true %>
+                    <% else %>
+                      <%= link_to t('driver.lock'), "/admin/driver/#{driver.id}/lock/1", :remote => true, 'data-reload' => true %>
+                    <% end %>
+                  </li>
+                  <% unless driver.online.blank? %>
+                    <li>
+                      <%= link_to t('driver.logoff'), "/admin/driver/#{driver.id}/logoff", :remote => true, 'data-reload' => true %>
+                    </li>
+                  <% end %>
+                  <li>
+                    <%= link_to t('driver.destroy'), "/admin/driver/#{driver.id}", method: :delete, data: {confirm: t('messages.sure')}, :remote => true, 'data-reload' => true %>
+                  </li>
+                  <li>
+                    <%= link_to t('driver.requests'), "/admin/driver/#{driver.id}/requests", :remote => true, 'data-toggle' => :modal, 'data-target' => '#showRequest' %>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="paginators">
+        <%= will_paginate data, :remote => true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'admin/shared/modal', :text => t('admin.driver.add'), :label => :newDriverLabel, :id => :newDriver %>
+<%= render 'admin/shared/modal', :text => t('admin.driver.edit'), :label => :editDriverLabel, :id => :editDriver %>
+<%= render 'admin/shared/modal', :text => t('admin.driver.show'), :label => :showDriverLabel, :id => :showDriver, :buttons => false %>
+<%= render 'admin/shared/modal', :text => t('admin.driver.requests'), :label => :showRequestLabel, :id => :showRequest, :buttons => false %>

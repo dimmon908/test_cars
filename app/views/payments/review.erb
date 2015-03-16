@@ -1,0 +1,23 @@
+<h2>Order</h2>
+<table>
+  <tfoot>
+    <tr>
+      <td>Total</td>
+      <td><%=h number_to_currency @total %></td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr>
+      <td><%=h @size.titlecase %> Coffee</td>
+      <td><%=h number_to_currency @amount %></td>
+    </tr>
+    <tr>
+      <td>Tax (9.5%)</td>
+      <td><%=h number_to_currency @tax %></td>
+    </tr>
+  </tbody>
+</table>
+<% form_for :order, :url => payment_path do |f| %>
+  <%= hidden_field_tag 'size', @size %>
+  <%= image_submit_tag 'purchase.png', :class => 'purchase'%>
+<% end %>

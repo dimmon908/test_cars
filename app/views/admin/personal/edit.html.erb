@@ -1,0 +1,17 @@
+<% content_for :scripts do %>
+    <script type="text/javascript">
+      //<![CDATA[
+        window.resource_name = '<%= resource_name %>';
+      //]]>
+    </script>
+    <%= javascript_include_tag  'regex-mask-plugin', :profile_page, 'custom_validators', 'custimize_validator' %>
+<% end %>
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for(resource, :as => :user, :url => "/admin/personal/#{resource.id}", :validate => true) do |f| %>
+      <%= render 'shared/summary_errors' %>
+
+      <%= render '/admin/personal/form_fields', :f => f, :focus => true, :need_pass => false %>
+    <% end %>
+  </div>
+</div>

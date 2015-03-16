@@ -1,0 +1,86 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag 'custom_validators', 'custimize_validator' %>
+<% end %>
+
+
+<%= form_for(resource, :as => resource_name, :url => admin_car_index_path, :validate => true) do |f| %>
+  <div class="row">
+    <div class="col-xs-5">
+      <% Configurations[:max_car_photos].times do |i| %>
+        <div class="avatar" style="top: <%=10+30*i%>px;">
+          <%= f.file_field "car_photoses[#{i}]" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-xs-7">
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :place_number %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :vehicle_id, t('car.category') %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 form-group">
+          <%= f.text_field :place_number, :placeholder => t('placeholders.car.place_number'), :autofocus => true, :class => 'form-control validate[required]' %>
+        </div>
+        <div class="col-xs-6 form-group">
+          <%= f.select :vehicle_id, options_for_select(Vehicle::admin_select), {}, {:class => 'form-control validate[required]'} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :manufacturer %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :model_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 form-group">
+          <%= f.select :manufacturer, Configurations[:manufacturers], {}, {:class => 'form-control validate[required]'} %>
+        </div>
+        <div class="col-xs-6 form-group">
+          <%= f.select :model_name, Configurations[:models], {}, {:class => 'form-control validate[required]'} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :model_year %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :color %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 form-group">
+          <%= f.select :model_year, Configurations[:model_year], {}, {:class => 'form-control validate[required]'} %>
+        </div>
+        <div class="col-xs-6 form-group">
+          <%= f.select :color, Configurations[:car_colors], {}, {:class => 'form-control validate[required]'} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :passenger_capacity %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :fuel_type %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 form-group">
+          <%= f.select :passenger_capacity, Configurations[:car_passengers], {}, {:class => 'form-control validate[required]'} %>
+        </div>
+        <div class="col-xs-6 form-group">
+          <%= f.select :fuel_type, Configurations[:fuel_types].to_a, {:include_blank => true}, {:class => 'form-control'} %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,18 @@
+<div class="logo_wrap text-center">
+  <div class="logo">
+    <a href="/" class="relative">
+      <img class="logo_img" src="/img/logo.png" alt="<%= t 'general.logo' %>"/>
+      <span class="logo_sub_text">
+        <% if controller_name == 'personal' %>
+          <%= t('top.header.user_type.personal') %>
+        <% elsif controller_name == 'business' %>
+          <%= t('top.header.user_type.business') %>
+        <% end %>
+      </span>
+    </a>
+  </div>
+  <!--<% if user_signed_in? %>-->
+  <!--<% else %>-->
+    <!--<p class="text-center"><%= t('top.text.landing_page_logo_subtext') %></p>-->
+  <!--<% end %>-->
+</div>

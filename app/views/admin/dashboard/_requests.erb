@@ -1,0 +1,22 @@
+<% requests = Request.where('created_at > ? ', Time.now.beginning_of_day).order('created_at DESC') %>
+
+<div class="col-md-4 border-right innerAll">
+  <div class="padding-bottom-none-phone">
+    <%= link_to({:controller => 'admin/request', :action => :index, :remote => true}, {'data-tab' => :requests, :class => 'widget-stats widget-stats-default widget-stats-4'}) do %>
+      <span class="txt"><%= t 'admin.dashboard.request.header' %></span>
+      <span class="count"><%= requests.count %></span>
+      <span class="glyphicons tags"><i></i></span>
+      <div class="clearfix"></div>
+      <i class="icon-play-circle"></i>
+    <% end %>
+
+    <% requests = requests.limit(2).all %>
+    <% unless requests.empty? %>
+      <div class="innerT">
+        <% requests.each do |request| %>
+          <%= render 'admin/request/row', :request => request %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

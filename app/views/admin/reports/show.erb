@@ -1,0 +1,75 @@
+<div class="row" style="width: 500px;">
+  <div class="col-xs-12">
+    <h5><%= t 'reports.report_type' %></h5>
+  </div>
+</div>
+<div class="innerB border-top">
+  <%= form_for(resource, :as => resource_name, :url => admin_car_path(resource), :validate => true) do |f| %>
+    <% if resource.sales.to_i > 0 %>
+      <h1><%= t('admin.reports.sales')%></h1>
+      <table class="footable table table-striped table-bordered table-white table-primary footable-loaded default">
+        <thead>
+        <tr>
+        <% resource.sale_report.columns.each do |column| %>
+            <th><%= column %></th>
+        <% end %>
+        </tr>
+        </thead>
+        <tbody>
+        <% resource.a_results['sales'].each do |sale| %>
+        <tr>
+          <% sale.each_value do |elem| %>
+            <td><%= elem %></td>
+          <% end %>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <% if resource.refund.to_i > 0 %>
+      <h1><%= t('admin.reports.refund')%></h1>
+      <table class="footable table table-striped table-bordered table-white table-primary footable-loaded default">
+        <thead>
+        <tr>
+          <% resource.refund_report.columns.each do |column| %>
+            <th><%=column%></th>
+          <% end %>
+        </tr>
+        </thead>
+        <tbody>
+        <% resource.a_results['refund'].each do |refund|%>
+        <tr>
+          <% refund.each_value do |elem| %>
+            <td><%=elem%></td>
+          <% end %>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <% if resource.driver.to_i > 0 %>
+      <h1><%= t('admin.reports.driver')%></h1>
+      <table class="footable table table-striped table-bordered table-white table-primary footable-loaded default">
+        <thead>
+        <tr>
+          <% resource.driver_report.columns.each do |column| %>
+            <th><%= column %></th>
+          <% end %>
+        </tr>
+        </thead>
+        <tbody>
+        <% resource.a_results['driver'].each do |driver|%>
+        <tr>
+          <% driver.each_value do |elem| %>
+            <td><%=elem%></td>
+          <% end %>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+  <% end %>
+</div>

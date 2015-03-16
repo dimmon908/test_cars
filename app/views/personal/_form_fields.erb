@@ -1,0 +1,122 @@
+<% f ||= {} %>
+<% if f.is_a?ActionView::Helpers::FormBuilder %>
+  <div class="step step_active" data-step="1">
+    <p class="lead"><span class="icons icons-personal_information"></span><%= t 'forms.user.personal_info' %></p>
+    <div class="row">
+      <div class="col-xs-6">
+        <%= f.label :first_name %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-xs-3">
+        <%= f.text_field :first_name, :placeholder => t('placeholders.user.first_name'), :class => 'form-control validate[required]' %>
+      </div>
+      <div class="col-xs-3">
+        <%= f.text_field :last_name, :placeholder => t('placeholders.user.last_name'), :class => 'form-control validate[required]' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">
+        <%= f.label :phone %>
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-xs-4 input-group">
+        <span class="input-group-addon">
+          <%= f.select :phone_code, options_for_select(ApplicationHelper::PHONE_CODES.collect { |i| [i[:name], i[:name]]}), {}, {:style => 'width: 100px;'} %>
+        </span>
+        <%= f.telephone_field :phone, :class => 'form-control validate[required]' %>
+      </div>
+    </div>
+
+    <div class="row step_navigation">
+      <div class="col-xs-12">
+        <button type="button" class="step_next btn btn-default" data-to-step="2">NEXT<span class="icons icons-next"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" data-step="3">
+    <p class="lead"><span class="icons icons-account_information"></span><%= t 'forms.user.account_info' %></p>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <%= f.label :email %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-xs-6">
+        <%= f.email_field :email, :placeholder => t('placeholders.general.email'), :class => 'form-control validate[required,custom[email]]' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.label :password %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-xs-3">
+        <%= f.password_field :password, :autocomplete => 'off', :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]]', :validate => { :presence => true, :confirmation => true } %>
+      </div>
+      <div class="col-xs-1">
+        <div class="row">
+          <a href="#" class="info" data-toggle="tooltip" data-placement="top"  data-original-title="<%= t 'forms.user.password_case_sensitive' %>" style="margin-top: 13px;">?</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.label :password_confirmation %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-xs-3">
+        <%= f.password_field :password_confirmation, :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]] none_focused', :validate => { :presence => true } %>
+      </div>
+    </div>
+
+    <div class="row step_navigation">
+      <div class="col-xs-12">
+        <button type="button" class="step_prev btn btn-default" data-to-step="1"><span class="icons icons-prev"></span>BACK</button>
+        <button type="button" class="step_next btn btn-default" data-to-step="3">NEXT<span class="icons icons-next"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="step" data-step="4">
+    <% if controller_name == 'business' %>
+      <div class="options_selector">
+        <ul>
+          <li id="card_info_option" class="selected"><%= t 'forms.user.creditCardInfo' %></li>
+          <li id="net_terms_options"><%= t 'forms.user.net_terms' %></li>
+        </ul>
+      </div>
+
+      <div class="options_selector_content">
+        <div class="row selected" id="card_info_block">
+          <%= render 'personal/card', :f => f %>
+        </div>
+
+        <div class="row" id="net_terms_block">
+          <%= render 'business/net_terms', :f => f %>
+        </div>
+      </div>
+
+    <% else %>
+      <%= hidden_field_tag 'user[payment]', :CC %>
+      <%= render 'personal/card', :f => f %>
+    <% end %>
+
+
+    <div class="row step_navigation">
+      <div class="col-xs-12">
+        <button type="button" class="step_prev btn btn-default" data-to-step="2"><span class="icons icons-prev"></span>BACK</button>
+        <button type="submit" class="btn btn-default"><%= t('button.complete_sign_up') %><span class="icons icons-next"></span></button>
+      </div>
+    </div>
+  </div>
+<% end %>

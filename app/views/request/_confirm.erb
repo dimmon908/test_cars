@@ -1,0 +1,86 @@
+<%= form_for resource, :as => resource_name, :url => '/request/confirm/' + resource.id.to_s,  :html => {:id => 'edit_Request'}, :validate => true do |f| %>
+  <%= render 'shared/summary_errors' %>
+
+  <%= hidden_field_tag :notify_max_count, Configurations[:max_notify_count], :id => 'max_notify_count' %>
+  <%= hidden_field_tag :method, 'confirm' %>
+  <%= hidden_field_tag :request_id, resource.id.to_s, :id => 'request_id' %>
+  <%= hidden_field_tag :to, "/request/confirm/book/#{resource.id}", :id => 'route_to' %>
+  <%= hidden_field_tag :url_to, "/request/confirm/book/#{resource.id}", :id => 'url_to' %>
+
+  <% if can? :admin, :all %>
+    <%= render 'admin_info', :request => resource %>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-10">
+      <p class="f18 museoSans500"><%= t 'forms.request.labels.one_step_away_to_book' %></p>
+      <p class="f14 museoSans100"><%= t 'forms.request.labels.one_step_away_to_book_sub_text'%></p>
+    </div>
+    <div class="col-md-2 text-right">
+      <%= link_to t('links.edit_trip'), '#edit_trip', :class => 'edit_trip' %>
+    </div>
+  </div>
+
+  <div class="row divider">
+    <div class="col-md-12">
+      <p class="title">
+        <span class="icons icons-destination"></span>
+        <span class="text"><%= t('forms.request.labels.review') %></span>
+      </p>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-12">
+      <p><%= t('forms.request.labels.pickup_location') %></p>
+      <p class="f12 museoSans100"><%= resource.from %></p>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-12">
+      <p><%= t('forms.request.labels.destination_location') %></p>
+      <p class="f12 museoSans100"><%= resource.to.last %></p>
+    </div>
+  </div>
+
+  <!--<div class="row" style="margin-top: 20px;">
+    <div class="col-md-12">
+      <p><%= t('forms.request.labels.passenger_number') %></p>
+      <p class="f12 museoSans100"><%= resource.passengers %></p>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-12">
+      <p><%= t('forms.request.labels.luggage') %></p>
+      <p class="f12 museoSans100"><%= resource.luggage.to_i %></p>
+    </div>
+  </div>-->
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-12 request_total">
+      <div class="row">
+        <div class="col-md-10">
+          <p class="f16 museoSans300"><%= "#{t('forms.request.labels.rate')}:"  %></p>
+          <p class="f22 museoSans700"><%= number_to_currency resource.rate %></p>
+        </div>
+        <div class="col-md-2 text-right">
+          <p><%= link_to t('links.edit_trip'), '#edit_trip', :class => 'edit_trip' %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <span class="qunit-fail" id="errors_block" style="display: none; margin-top: 20px;">
+      <p></p>
+    </span>
+  <span class="qunit-fail" id="errors_submit_block" style="display: none; margin-top: 20px;">
+  </span>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-6">
+      <%= f.submit t('button.book'), :class => 'btn btn-default text-upper' %>
+    </div>
+  </div>
+<% end %>

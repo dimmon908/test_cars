@@ -1,0 +1,104 @@
+<%= javascript_include_tag  'regex-mask-plugin', :profile_page, 'custom_validators' %>
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-6 col-xs-6 col-sm-6 ">
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <p class="lead"><%= t 'forms.user.personal_info' %></p>
+
+      <div class="form-group">
+        <%= f.label :first_name %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= f.text_field :first_name, :placeholder => t(:first_name_holder), :autofocus => true, :class => 'form-control validate[required]' %>
+          </div>
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= f.text_field :last_name, :placeholder => t(:last_name_holder), :class => 'form-control validate[required]' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-10 col-xs-10 col-sm-10">
+          <%= f.label :country %>
+          <%= f.select :country, ApplicationHelper::COUNTRIES, { :selected => "United States" },  { :class => 'form-control' } %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-5 col-xs-5 col-sm-5">
+          <%= f.label :zip_code %>
+          <%= f.text_field :zip_code, :placeholder => "400200", :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6 col-xs-6 col-sm-6">
+          <%= f.label :phone %>
+          <%= f.telephone_field :phone, :placeholder => "+1 (720) 700-7200", :class => 'form-control validate[required]' %>
+        </div>
+      </div>
+
+      <p class="lead"><%= t 'forms.user.account_info' %></p>
+
+      <div class="row">
+        <div class="form-group col-md-10 col-xs-10 col-sm-10">
+          <%= f.label :email %>
+          <%= f.email_field :email, :placeholder => 'john.doe@test.cc', :class => 'form-control validate[required,custom[email]]' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-10 col-xs-10 col-sm-10">
+          <%= f.password_field :password, :placeholder => t('placeholders.leave_blank'), :class => 'form-control validate[required,minSize[5]]', :autocomplete => "off" %>
+        </div>
+      </div>
+
+      <p class="lead"><%= t 'forms.user.credit_info' %></p>
+
+      <div class="row">
+        <div class="form-group col-md-8 col-xs-8 col-sm-8">
+          <%= f.label :credit_card %>
+          <%= f.text_field :credit_card, :placeholder => '1234567890123456', :class => 'form-control', :maxlength => 16 %>
+        </div>
+        <div class="form-group col-md-2 col-xs-2 col-sm-2">
+          <%= f.label :cvv %>
+          <%= f.text_field :cvv, :placeholder => '123', :class => 'form-control', :maxlength => 3 %>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="form-group col-md-4 col-xs-4 col-sm-4">
+          <%= f.label :expiration_date %>
+          <%= f.text_field :expiration_date, :placeholder => 'MM/YY', :class => 'form-control', :maxlength => 5, :id => 'user_credit_card_date'%>
+        </div>
+
+        <div class="form-group col-md-3 col-xs-3 col-sm-3">
+          <%= f.label :postal_code %>
+          <%= f.text_field :postal_code, :placeholder => '12345', :class => 'form-control' %>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <p class="col-md-10 col-xs-10 col-sm-10">
+          <%= t :aggree_terms %> <%= link_to t(:terms_and_conditions), '/article/terms_and_conditions', :target => '_blank' %> <%= t :and %> <%= link_to t(:privacy_policy), '/article/privacy_policy', :target => '_blank'%>
+        </p>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-10 col-xs-10 col-sm-10">
+          <%= f.submit t('button.update'), :class => 'btn btn-lg btn-primary btn-block' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!--<h3>Cancel my account</h3>-->
+
+<!--<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>-->
+
+<%= link_to "Back", :back %>

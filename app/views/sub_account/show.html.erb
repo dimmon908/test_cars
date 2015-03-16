@@ -1,0 +1,41 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11">
+    <%= form_for(resource, :as => resource_name, :url => sub_account_path(resource)) do |f| %>
+      <div class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+        <p class="lead"><span class="icons icons-personal_information"></span><%= t 'forms.user.sub_account_info' %></p>
+
+        <div class="form-group">
+          <%= f.label :first_name %>
+          <div class="row">
+            <div class="col-md-3 col-xs-3 col-sm-3">
+              <%= resource.first_name  %>
+              <%= resource.last_name  %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-3 col-xs-3 col-sm-3">
+            <%= f.label :phone %>
+            <%= resource.phone  %>
+          </div>
+        </div>
+
+        <div class="avatar">
+          <%= image_tag resource.profile.photo.url(:medium) %>
+          <%= f.file_field :photo %>
+          <%= submit_tag 'Upload' %>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6 col-xs-6 col-sm-6">
+            <%= f.label :email %>
+            <%= resource.email  %>
+          </div>
+        </div>
+
+      </div>
+    <% end %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

@@ -1,0 +1,186 @@
+<%= form_for(resource, :as => resource_name, :url => "/admin/business/#{resource.id}", :validate => true, :remote => true) do |f| %>
+  <div class="row">
+    <div class="col-xs-10">
+      <div class="row">
+        <div class="col-xs-12 form-group">
+          <%= f.text_field :business_name, :class => 'form-control validate[required]', :placeholder => t('admin.company.company_name') %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <%= f.label :company_address %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 form-group">
+          <%= f.text_field :company_address, :class => 'form-control validate[required]', :placeholder => t('admin.company.street_address') %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 form-group">
+          <%= f.text_field :city, :class => 'form-control validate[required]', :placeholder => t('admin.company.city') %>
+        </div>
+        <div class="col-xs-3 form-group">
+          <%= f.select :country, options_for_select(ApplicationHelper::COUNTRIES, resource.country), {}, :class => 'form-control' %>
+        </div>
+        <div class="col-xs-3 form-group">
+          <%= f.text_field :business_zip_code, :class => 'form-control validate[required]', :placeholder => t('admin.company.zip') %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <label><%= t('admin.copmany.contact_person') %></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 form-group">
+          <%= f.text_field :first_name, :placeholder => t('admin.company.first_name'), :class => 'form-control validate[required]' %>
+        </div>
+        <div class="col-xs-6 form-group">
+          <%= f.text_field :last_name, :placeholder => t('admin.company.last_name'), :class => 'form-control validate[required]' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 form-group">
+          <%= f.text_field :email, :placeholder => t('admin.company.email'), :class => 'form-control validate[required]' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 form-group">
+          <%= f.text_field :phone, :placeholder => t('admin.company.phone'), :class => 'form-control validate[required]' %>
+        </div>
+        <div class="col-xs-6 form-group">
+          <%= f.text_field :business_phone, :placeholder => t('admin.company.business_phone'), :class => 'form-control validate[required]' %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-2">
+      <a href="#" class="resetForm">Reset</a>
+    </div>
+  </div>
+
+  <div class="separator-line"></div>
+
+  <p class="lead"><%= t('admin.company.edit_users') %></p>
+
+  <% users = Classes::SubAccount::users resource %>
+  <% unless users.blank? %>
+  <table class="table table-striped table-bordered table-white table-primary">
+    <thead>
+    <tr>
+      <th><%= t('admin.company.user.full_name') %></th>
+      <th><%= t('admin.company.user.email') %></th>
+      <th><%= t('admin.company.user.phone') %></th>
+      <th><%= t('admin.company.user.username') %></th>
+      <th style="width: 50px;"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% users.each do |user|  %>
+    <tr>
+      <td><%= user.full_name %></td>
+      <td><a href="mailto::<%=user.email%>james.walker@abc.com"><%=user.email%></a></td>
+      <td><%= user.phone %></td>
+      <td><%= user.username %></td>
+      <td>
+        <div class="dropdown">
+          <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <%= link_to 'Edit', "/admin/users/#{user.id}/edit", :remote => true, 'data-toggle' => :modal, 'data-target' => '#editUser', 'data-window-reload' => true %>
+            </li>
+            <li>
+              <% if user.status.to_i < 1 %>
+                <%= link_to 'Enable', "/admin/users/#{user.id}/status/1", :remote => true, 'data-window-reload' => true %>
+              <% else %>
+                <%= link_to 'Disable', "/admin/users/#{user.id}/status/0", :remote => true, 'data-window-reload' => true %>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to 'Set Spending Limit', "/admin/users/#{user.id}/limit", :remote => true, 'data-toggle' => :modal, 'data-target' => '#setSpendingLimit', 'data-window-reload' => true %>
+            </li>
+            <li>
+              <%= link_to 'Delete', "/admin/users/#{user.id}", :remote => true, :method => :delete, 'data-window-reload' => true %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% end %>
+
+  <div class="innerLR innerB">
+    <%= link_to 'View All', '#', :remote => true %> or <%= link_to 'Add New User', '#', :remote => true%>
+  </div>
+
+  <div class="separator-line"></div>
+
+  <p class="lead"><%= t('admin.company.edit_payment') %></p>
+
+  <% cards = Card::find_all_by_user_id resource.partner_id %>
+  <% unless cards.blank? %>
+  <table class="table table-striped table-bordered table-white table-primary">
+    <tbody>
+    <% cards.each do |card| %>
+    <tr>
+      <td><i class="icon-credit-card"></i></td>
+      <td><%= card.show_card %></td>
+      <td>Exp <%= card.card_expire.strftime '%m/%Y' %></td>
+      <td><%= card.owner %></td>
+      <td style="width: 50px;">
+        <div class="dropdown">
+          <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <%= link_to 'Edit', "/admin/card/#{card.id}/edit", :remote => true %>
+            </li>
+            <li>
+              <%= link_to 'Add New', '/admin/card/new', :remote => true %>
+            </li>
+            <li>
+              <%= link_to 'Delete', "/admin/card/#{card.id}", :remote => true, :method => :delete %>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% end %>
+
+  <div class="separator"></div>
+
+  <p><%= t('admin.company.net_terms') %></p>
+
+  <table class="table table-white table-primary">
+    <tbody>
+    <tr>
+      <td class="v-middle"><label>
+        <%= f.check_box :approve %> <%= t('admin.company.approve') %>
+      </label></td>
+      <td>
+        <span class="v-middle"><%= t('admin.company.limit_set') %></span>
+        <%= f.text_field :credit_limit, :class => 'form-control inline-block', :style => 'width: 100px;' %>
+      <td>
+        <span class="v-middle"><%= t('admin.company.terms') %></span>
+        <%= f.select :terms,
+               options_for_select(BusinessHelper::NET_TERMS.invert, resource.terms),
+               :class => 'form-control inline-block',
+               :style => 'width: 100px;' %>
+      </td>
+      <td class="v-middle">
+        <%= link_to 'Edit/View Application', '#' %>
+      </td>
+    </tr>
+    <tr>
+      <td class="v-middle" colspan="2"><label>
+        <%= f.check_box :can_receive_request %> <%= t('admin.company.can_receive_request') %>
+      </label></td>
+    </tr>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,49 @@
+<% f ||= {} %>
+<% focus ||= true if focus.nil? %>
+<% if f.is_a?ActionView::Helpers::FormBuilder %>
+  <div class="row">
+    <div class="col-xs-12 form-group">
+      <%= f.label :username %>
+      <%= f.text_field :username, :class => 'form-control validate[required]', :placeholder => 'username' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, :placeholder => t('placeholders.general.email'), :class => 'form-control validate[required,custom[email]]' %>
+    </div>
+    <div class="col-xs-6 form-group">
+      <%= f.label :phone %>
+      <%= f.telephone_field :phone, :placeholder => t('placeholders.general.phone'), :class => 'form-control validate[required]' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 form-group">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, :placeholder => t(:first_name_holder), :class => 'form-control validate[required]' %>
+    </div>
+    <div class="col-xs-6 form-group">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, :placeholder => t(:last_name_holder), :class => 'form-control validate[required]' %>
+    </div>
+  </div>
+
+  <% unless resource.id %>
+  <div class="row">
+    <div class="col-xs-12 form-group">
+      <%= f.label :password %>
+
+      <%= f.password_field :password, :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]]' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 form-group">
+      <%= f.label :password_confirmation %>
+
+      <%= f.password_field :password_confirmation, :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]]' %>
+    </div>
+  </div>
+  <% end %>
+<% end %>

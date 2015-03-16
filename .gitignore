@@ -1,0 +1,10 @@
+.idea/
+log/
+tmp/
+public/img/upload/
+*.swp
+*.swo
+*.swn
+*database.yml
+development.rb
+Gemfile.lock

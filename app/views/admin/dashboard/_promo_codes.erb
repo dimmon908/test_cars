@@ -1,0 +1,13 @@
+<% promo = PromoCode::where(:enabled => 1) %>
+<div class="col-md-4 border-right innerAll">
+  <div class="padding-bottom-none-phone">
+    <div class="widget-stats widget-stats-gray widget-stats-5">
+      <%= link_to t('admin.links.see_all'), { :controller => 'admin', :action => :promo_codes}, { :remote => true, 'data-tab' => :promo_codes, :class => 'pull-right'} %>
+
+      <h4><%= t('admin.dashboard.promo_codes') %></h4>
+      <p><%= "#{promo.count} #{t('general.available')}" %></p>
+
+      <%= link_to t('admin.links.new_promo'), '/admin/promo_codes#new', { 'data-tab' => :promo_codes, :class => 'btn btn-primary'} %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag  'tables/FooTable/footable.js', 'admin/tables_responsive', 'tables/TableFilter/picnet.table.filter.min.js' %>
+<% end %>
+
+<%
+   data = PromoCode.paginate(:page => params[:page], :per_page => params[:per_page]) rescue nil
+   data ||= []
+%>
+
+<div class="pull-right innerLR">
+  <%= link_to t('promo_code.add'), '/admin/promo_codes/new', :remote => true, 'data-toggle' => 'modal', 'data-target' => '#newPromoCode', :class => 'btn btn-primary pull-left link_to_new' %>
+</div>
+
+<h1><%= t 'admin.tabs.promo_codes' %></h1>
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <div class="pull-left">
+        <%= "#{t('general.found')} #{data.count} #{t('admin.tabs.promo_codes')}" %>
+      </div>
+
+      <% unless data.empty? %>
+        <div class="pull-right">
+          <%= render 'admin/shared/paginate', :tab => :cars %>
+        </div>
+      <% end %>
+    </div>
+
+    <% unless data.empty? %>
+      <table class="table-filter footable table table-striped table-bordered table-white table-primary">
+        <thead>
+        <tr>
+          <th data-class="expand"><%= t 'promo_code.name' %></th>
+          <th data-hide="phone,tablet" filter-type="ddl"><%= t 'promo_code.type' %></th>
+          <th data-hide="phone"><%= t 'promo_code.discount' %></th>
+          <th data-hide="phone"><%= t 'promo_code.code' %></th>
+          <th data-hide="phone,tablet"><%= t 'promo_code.valid_dates' %></th>
+          <th filter-type="ddl"><%= t 'promo_code.status' %></th>
+          <th style="width: 50px;" filter="false"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% data.each do |promo| %>
+          <tr>
+            <td><%= promo.name %> </td>
+            <td><%= promo.type_name %></td>
+            <td><%= promo.value %></td>
+            <td><%= promo.code %></td>
+            <td><%= promo.valid_dates %></td>
+            <td><%= promo.status_name %></td>
+            <td>
+              <div class="dropdown">
+                <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <%= link_to t('driver.edit'), "/admin/promo_codes/#{promo.id}/edit", :remote => true, 'data-toggle' => 'modal', 'data-target' => '#editPromoCode' %>
+                  </li>
+                  <li>
+                    <%= link_to t('driver.destroy'), "/admin/promo_codes/#{promo.id}", method: :delete, data: { confirm: t('messages.sure') } %>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="paginators">
+        <%= will_paginate data, :remote => true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'admin/shared/modal', :text => t('admin.promo_code.add'), :label => 'newPromoCodeLabel', :id => 'newPromoCode' %>
+<%= render 'admin/shared/modal', :text => t('admin.promo_code.edit'), :label => 'editPromoCodeLabel', :id => 'editPromoCode' %>

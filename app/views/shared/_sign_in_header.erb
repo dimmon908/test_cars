@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-xs-12">
+    <%= render 'shared/logo' %>
+  </div>
+</div>
+
+<div class="divider row" style="margin-top: 20px;">
+  <div class="col-xs-12">
+    <p class="title text-left" style="text-transform: uppercase;"><%= t 'top.login.sign_in_header' %></p>
+  </div>
+
+  <div class="col-xs-12">
+    <div class="pull-left">
+      <p class="description"><%= t 'top.login.dont_have_account' %> <%= link_to t(:click_here), new_personal_path %></p>
+    </div>
+  </div>
+</div>
+

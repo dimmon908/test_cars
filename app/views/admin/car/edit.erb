@@ -1,0 +1,80 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag 'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for(resource, :as => resource_name, :url => "/admin/car/#{resource.id}", :validate => true) do |f| %>
+      <%= error_messages! %>
+      <p class="lead"><%= t 'forms.car.info' %></p>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :place_number %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :vehicle_id %>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-6">
+          <%= f.text_field :place_number, :placeholder => t('placeholders.car.place_number'), :autofocus => true, :class => 'form-control validate[required]' %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.select :vehicle_id, options_for_select(Vehicle::admin_select), {}, {:class => 'form-control validate[required]'} %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :manufacturer %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :model_name %>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-6">
+          <%= f.text_field :manufacturer, :placeholder => t('placeholders.car.manufacturer'), :class => 'form-control validate[required]' %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.text_field :model_name, :placeholder => t('placeholders.car.model_name'), :class => 'form-control validate[required]' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :model_year %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :color %>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-6">
+          <%= f.text_field :model_year, :placeholder => t('placeholders.car.model_year'), :class => 'form-control validate[required]' %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.text_field :color, :placeholder => t('placeholders.car.color'), :class => 'form-control validate[required]' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :passenger_capacity %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :fuel_type %>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-6">
+          <%= f.text_field :passenger_capacity, :placeholder => t('placeholders.car.passenger_capacity'), :class => 'form-control validate[required]' %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.select :fuel_type, Configurations[:fuel_types].to_a, {:include_blank => true}, {:class => 'form-control'} %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

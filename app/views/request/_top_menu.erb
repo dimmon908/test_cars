@@ -1,0 +1,41 @@
+<% if controller_name == 'request'%>
+  <div class="row top_header_stream">
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-3">
+          <span class="icon-menu pull-left pointer show_menu" style="margin-top: 15px;">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </span>
+          <span class="f12 museoSans100 text-upper pull-left pointer show_menu" style="margin-top: 15px;margin-left: 8px;"><%= t 'menu' %></span>
+        </div>
+        <div class="col-xs-3 text-right">
+          <img src="/img/logo_mini.png" alt="<%= t 'general.logo' %>"/>
+        </div>
+        <div class="col-xs-6 text-right">
+          <div class="dropdown pull-right">
+            <div class="user_info" data-toggle="dropdown" style="position: relative; margin-left: 10px;">
+              <%= image_tag(current_user.profile.photo.url(:small), :alt => current_user.full_name, class: 'img-circle user_avatar', :width => 45, title: current_user.full_name) %>
+              <span class="icons icons-dropdown"></span>
+            </div>
+            <ul class="dropdown-menu" role="menu">
+              <li data-target="#account_settings" data-toggle="modal">
+                <a href="#">Settings</a>
+              </li>
+              <li>
+                <%= link_to t('top.text.logout'), destroy_session_path(current_user) %>
+              </li>
+            </ul>
+          </div>
+
+
+          <div class="pull-right">
+            <p class="f16" style="margin-top: 8px;"><%= "#{current_user.full_name}" %></p>
+            <p class="f12" style="color: #b0a69e;"><%= t "role.#{current_user.role.internal_name}" %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

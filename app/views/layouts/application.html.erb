@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% content_for :styles do %>
+    <%= stylesheet_link_tag 'gmaps4rails' %>
+  <% end %>
+  <!--[if lte IE 8]>
+    <%= stylesheet_link_tag 'application-ie' %>
+  <![endif]-->
+  <%= render 'layouts/head' %>
+  <!--[if lt IE 7]>
+  <script src="/pie/PIE_IE678.js"></script>
+  <![endif]-->
+
+  <!--[if lt IE 8]>
+  <script src="/pie/PIE_IE678.js"></script>
+  <![endif]-->
+
+  <!--[if lt IE 8]>
+  <script src="/pie/PIE_IE9.js"></script>
+  <![endif]-->
+
+  <!--[if lte IE 8]>
+    <%= javascript_include_tag 'html5shiv' %>
+    <%= javascript_include_tag 'respond.min.js' %>
+  <![endif]-->
+</head>
+<body>
+<div>
+  <div>
+    <div>
+      <%= render 'layouts/header' %>
+
+      <div class="left_block container">
+        <%= render 'request/top_menu' %>
+        <%= yield %>
+      </div>
+
+      <%= render 'shared/google_map' %>
+
+      <%= yield :scripts %>
+      <%= yield(:user_validators) %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

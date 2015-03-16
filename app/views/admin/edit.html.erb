@@ -1,0 +1,23 @@
+<% content_for :scripts do %>
+    <script type="text/javascript">
+      //<![CDATA[
+        window.resource_name = '<%= resource_name %>';
+      //]]>
+    </script>
+    <%= javascript_include_tag  'regex-mask-plugin', :profile_page, 'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for(resource, :as => resource_name, :url => "/admin/#{resource.id}", :html => { :method => :put }) do |f| %>
+      <%= render 'form_fields', :f => f, :focus => true %>
+
+      <div class="row">
+        <div class="col-xs-12 form-group">
+          <%= f.check_box :need_notify, :class => 'validate[required]', :checked => resource.need_notify? %>
+          <%= f.label :need_notify %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+    <h1><%= t 'request.reasons' %>:</h1>
+    <table border="1" class="list" width="100%">
+      <tr>
+        <th><%= t 'request.id'%></th>
+        <th><%= t 'request.reason' %></th>
+        <th><%= t 'request.actions' %></th>
+      </tr>
+      <% RequestCancelReason.all.each do |reasons| %>
+        <tr>
+          <td><%= reasons.id %> </td>
+          <td><%= reasons.reason %></td>
+          <td>
+            <%= link_to  t('car.show'), "/admin/request/reason/#{reasons.id}" %>
+            <br/>
+            <%= link_to  t('car.edit'), "/admin/request/reason/#{reasons.id}/edit" %>
+            <br/>
+            <%= link_to t('car.destroy'), "/admin/request/reason/#{reasons.id}", method: :delete, data: { confirm: t('messages.sure') }%>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <%= link_to t('request.reasons_add'), '/admin/request/reason/new' %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

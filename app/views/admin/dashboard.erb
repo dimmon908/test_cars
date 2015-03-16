@@ -1,0 +1,21 @@
+<h1><%= t('admin.tabs.dashboard') %></h1>
+
+<div id="content-notification">
+  <div class="notyfy_wrapper notyfy_dark"></div>
+</div>
+<div class="row border-top border-bottom innerL">
+  <%= render 'admin/dashboard/requests' %>
+  <%= render 'admin/dashboard/next_trips' %>
+  <% if can? :admin, :all %>
+    <%= render 'admin/dashboard/statistic' %>
+  <% end %>
+</div>
+
+<% if can? :admin, :all %>
+  <h2><%= t('admin.dashboard.quick_links') %></h2>
+  <div class="row border-top border-bottom innerL">
+    <%= render 'admin/dashboard/promo_codes' %>
+    <%= render 'admin/dashboard/companies' %>
+    <%= render 'admin/dashboard/admins' %>
+  </div>
+<% end %>

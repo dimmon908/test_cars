@@ -1,0 +1,101 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag 'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for(resource, :as => resource_name, :url => admin_driver_path(resource), :validate => true) do |f| %>
+      <p class="lead"><%= t 'forms.driver.info' %></p>
+
+      <div class="row">
+        <div class="col-xs-2">
+          Avatar
+        </div>
+        <div class="col-xs-5">
+          <%= f.label :first_name %>
+        </div>
+        <div class="col-xs-5">
+          <%= f.label :last_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2">
+          <%= image_tag resource.user.profile.photo.url(:medium), :style => 'width: 100%;' %>
+        </div>
+        <div class="col-xs-5">
+          <%= resource.first_name %>
+        </div>
+        <div class="col-xs-5">
+          <%= resource.last_name %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :email %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :phone %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.email %>
+        </div>
+        <div class="col-xs-6">
+          <%= resource.phone %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :license_number %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :license_expore %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.license_number %>
+        </div>
+        <div class="col-xs-6">
+          <% if resource.license_expore %>
+            <%= resource.license_expore.strftime('%Y-%m-%d') %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="row">
+        <div class="col-xs-4">
+          <%= f.label :gender %>
+        </div>
+        <div class="col-xs-4">
+          <%= f.label :age_group %>
+        </div>
+        <div class="col-xs-4">
+          <%= f.label :second_lang %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <%= resource.gender %>
+        </div>
+        <div class="col-xs-4">
+          <%= resource.age_group %>
+        </div>
+        <div class="col-xs-4">
+          <%= resource.second_lang %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="separator"></div>

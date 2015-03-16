@@ -1,0 +1,16 @@
+<%= form_for(@resource, :as => 'config', :url => "/admin/config/#{@resource.id}", :validate => true, :remote => true) do |f| %>
+  <div class="row">
+    <div class="col-xs-10">
+      <div class="row">
+        <div class="col-xs-12">
+          <%= f.label :text_value %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 form-group">
+          <%= f.text_field :text_value, :class => 'form-control validate[required]' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

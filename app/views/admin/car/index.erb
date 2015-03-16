@@ -1,0 +1,98 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag 'tables/FooTable/footable.js', 'admin/tables_responsive', 'tables/TableFilter/picnet.table.filter.min.js' %>
+<% end %>
+
+<%
+   data = Car.paginate(:page => params[:page], :per_page => params[:per_page]) rescue nil
+   data ||= []
+%>
+
+<div class="pull-right innerLR">
+  <%= link_to t('car.add'), "/admin/car/new", :remote => true, 'data-toggle' => 'modal', 'data-target' => '#newCar', :class => 'btn btn-primary pull-left' %>
+  <%= link_to t('download.csv'), admin_car_index_path(format: :csv, page: params[:page]), :class => 'btn btn-primary pull-left' %>
+</div>
+
+<h1><%= t 'admin.tabs.cars' %></h1>
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <div class="pull-left">
+        <%= "#{t('general.found')} #{data.count} #{t('car.cars')}" %>
+      </div>
+
+      <% unless data.empty? %>
+        <div class="pull-right">
+          <%= render 'admin/shared/paginate', :tab => :cars %>
+        </div>
+      <% end %>
+    </div>
+
+    <% unless data.empty? %>
+      <table class="table-filter footable table table-striped table-bordered table-white table-primary">
+        <thead>
+        <tr>
+          <th><%= t 'car.plate'%></th>
+          <th filter-type="ddl" data-class="expand"><%= t 'car.manufacturer' %></th>
+          <th filter-type="ddl" data-hide="phone"><%= t 'car.category' %></th>
+          <th filter-type="ddl" data-hide="phone"><%= t 'car.model_name' %></th>
+          <th filter-type="ddl" data-hide="phone,tablet"><%= t 'car.model_year' %></th>
+          <th filter-type="ddl" data-hide="phone,tablet"><%= t 'car.color' %></th>
+          <th filter-type="ddl" data-hide="phone,tablet"><%= t 'car.passengers' %></th>
+          <th data-hide="phone,tablet"><%= t 'car.photos' %></th>
+          <th filter-type="ddl" data-hide="phone,tablet"><%= t 'car.fuel' %></th>
+          <th filter-type="ddl"><%= t 'car.status' %></th>
+          <th style="width: 50px;" filter="false"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% data.each do |car| %>
+          <tr>
+            <td><%= car.place_number %> </td>
+            <td><%= car.manufacturer %></td>
+            <td><%= car.vehicle.name %></td>
+            <td><%= car.model_name %></td>
+            <td><%= car.model_year %></td>
+            <td><%= car.color %></td>
+            <td><%= car.passenger_capacity %></td>
+            <td>
+              <% car.car_photoses.each do |photo|%>
+                <%= image_tag photo.photo.url(:small), :style => 'width: auto;' %>
+              <%end%>
+            </td>
+            <td><%= car.fuel_type %></td>
+            <td><%= car.status %></td>
+            <td>
+              <div class="dropdown">
+                <span class="glyphicons cogwheel" data-toggle="dropdown"><i></i></span>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <%= link_to  t('car.show'), "/admin/car/#{car.id}", :remote => true, 'data-toggle' => 'modal', 'data-target' => '#showCar' %>
+                  </li>
+                  <li>
+                    <%= link_to  t('car.edit'), "/admin/car/#{car.id}/edit", :remote => true, 'data-toggle' => 'modal', 'data-target' => '#editCar' %>
+                  </li>
+                  <li>
+                    <%= link_to t('car.destroy'), "/admin/car/#{car.id}", method: :delete, data: { confirm: t('messages.sure') } %>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="paginators">
+        <%= will_paginate data, :remote => true %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'admin/shared/modal', :text => t('admin.car.add'), :label => 'newCarLabel', :id => 'newCar' %>
+<%= render 'admin/shared/modal', :text => t('admin.car.edit'), :label => 'editCarLabel', :id => 'editCar' %>
+<%= render 'admin/shared/modal', :text => t('admin.car.show'), :label => 'showCarLabel', :id => 'showCar', :buttons => false %>

@@ -1,0 +1,67 @@
+#admin_messages_window {
+  width: 600px;
+  max-height: 350px;
+  position: absolute;
+  right: 30px;
+  top: 50px;
+  overflow: auto;
+  display: none;
+  border: 1px solid black;
+  padding: 4px;
+  background: moccasin;
+}
+
+h3 .datetime {
+  color: rgb(77, 77, 77);
+  font-family: 'Roboto Slab', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  margin: 0 0 5px;
+  top: 0;
+}
+
+.admin_notify_list {
+  .reply-btn {
+    margin-right: 30px;
+  }
+  .hide-btn {
+    margin-right: 15px;
+    margin-top: 8px;
+  }
+}
+
+
+#adminReplyMessage {
+  textarea {
+    width: 760px;
+    resize: none;
+    height: 200px;
+  }
+
+  #admin_message {
+    height: 100px;
+  }
+
+  .btn {
+    position: absolute;
+    top: 285px;
+    padding: 0;
+    padding-right: 5px;
+  }
+  span {
+    font-size: 24px;
+    padding: 0 10px;
+  }
+  .btn-cancel {
+    right: 15px;
+    padding-right: 0;
+  }
+  .btn-ok {
+    right: 75px;
+    span {
+      padding-right: 5px;
+    }
+  }
+}
+

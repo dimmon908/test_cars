@@ -1,0 +1,30 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag  'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+    <%= form_for(resource, :as => resource_name, :url => admin_car_path(resource),  :validate => true) do |f| %>
+      <p class="lead"><%= t 'forms.request.cancel_reason.header' %></p>
+
+      <div class="form-group">
+        <%= f.label :reason %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <%= resource.reason %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :comment %>
+        <div class="row">
+          <div class="col-md-6 col-xs-6 col-sm-6">
+            <pre><%= resource.comment %></pre>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

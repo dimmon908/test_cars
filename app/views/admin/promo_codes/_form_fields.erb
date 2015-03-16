@@ -1,0 +1,108 @@
+<% f ||= {} %>
+<% if f.is_a? ActionView::Helpers::FormBuilder %>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :name %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-10 form-group">
+      <%= f.text_field :name, :placeholder => t('placeholders.promo.name'), :class => 'form-control validate[required]' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :code %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-10 form-group">
+      <%= f.text_field :code, :placeholder => t('placeholders.promo.code'), :class => 'form-control validate[required]' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :promo_type, 'Discount Type' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5 form-group">
+      <%= f.radio_button :promo_type, 0 %>
+      <%= f.label :promo_type_0, 'USD' %>
+      <span style="margin-left: 30px;"></span>
+      <%= f.radio_button :promo_type, 1 %>
+      <%= f.label :promo_type_1, 'Percentage' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :value, 'Discount value' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5 form-group">
+      <%= f.text_field :value, :class => 'form-control validate[required]' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-5">
+      <%= f.label :from %>
+    </div>
+    <div class="col-xs-5">
+      <%= f.label :until %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5 form-group">
+      <div class="input-group datepicker" <%if resource.from%>data-date="<%=resource.from.strftime(HelperTools::JS_DATE)%>"<%end%>>
+        <%= f.text_field :from, :class => 'form-control validate[required] input-append add-on' %>
+        <span class="input-group-addon">
+          <i class="icon-th"></i>
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-5 form-group">
+      <div class="input-group datepicker" <%if resource.until%>data-date="<%=resource.until.strftime(HelperTools::JS_DATE)%>"<%end%>>
+        <%= f.text_field :until, :class => 'form-control validate[required] input-append add-on' %>
+        <span class="input-group-addon">
+          <i class="icon-th"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-3">
+      <%= f.label :enabled %>
+    </div>
+    <div class="col-xs-3">
+      <%= f.label :orders_type, 'Orders' %>
+      <span class="label label-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-html="true" data-title="Orders" data-content="<p>all orders - coupon will be applied to all orders regardless of their totals.</p><p>orders over $N - coupon will be applied only to orders which totals are greater than $N</p>">?</span>
+    </div>
+    <div class="col-xs-3">
+      <%= f.label :max_uses_number %>
+      <span class="label label-info" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-html="true" data-title="Number of Uses" data-content="<p>unlimited - no limits. Each customer can apply such coupon numerous times.</p><p>once per customer - each customer can apply a coupon only once per e-mail, however the coupon can be applied numerous times.</p><p>single use - coupon can be applied only once.</p>">?</span>
+    </div>
+    <div class="col-xs-3 over_value" <%if resource.orders_type.to_i != 1%>style="display: none;"<%end%>>
+      <%= f.label :over_value %>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 5px;">
+    <div class="col-xs-3 form-group">
+      <%= f.select :enabled, options_for_select([['Disabled', 0], ['Active', 1]], resource.enabled), {}, {:class => 'form-control'} %>
+    </div>
+    <div class="col-xs-3 form-group">
+      <%= f.select :orders_type, options_for_select([['All Orders', 0],['Order over $N', 1]], resource.orders_type), {}, {:class => 'form-control validate[required] orders_type'} %>
+    </div>
+    <div class="col-xs-3 form-group">
+      <%= f.select :max_uses_number, options_for_select([[:unlimited, :unlimited],['once per user', :once_per_user], ['single use', :single]], resource.max_uses_number), {}, {:class => 'form-control validate[required]'} %>
+    </div>
+    <div class="col-xs-3 form-group over_value" <%if resource.orders_type.to_i != 1%>style="display: none;"<%end%>>
+      <%= f.text_field :over_value, :class => 'form-control validate[required] input-append add-on', :placeholder => 'over order value' %>
+    </div>
+  </div>
+<% end %>

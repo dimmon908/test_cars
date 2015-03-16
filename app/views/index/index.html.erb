@@ -1,0 +1,112 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag 'switcher' %>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="text-center landing-page-slider">
+      <div class="landing-page-slider-bg"></div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <h1><%= t 'top.text.landing_page_logo_subtext' %></h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+          <p class="title thin"><%= t 'top.text.landing_page_logo_subtext2' %></p>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-xs-12">
+          <p class="josefinSlabBold f20"><%= t 'links.find_out_more' %></p>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 101px;">
+        <div class="col-xs-12">
+          <p class="museoSans300 f16"><%= t 'please_select_account_type' %></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="switcher text-upper">
+            <div class="pull-left switcher_tab switcher_tab_left switcher_tab_active"><%= t 'account_type_personal' %></div>
+            <div class="pull-left switcher_tab switcher_tab_right"><%= t 'account_type_business' %></div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row account personal_account">
+  <div class="white_bg"></div>
+  <div class="col-xs-12 col-sm-6" style="margin-top: 20px;">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-11 col-md-offset-1 col-lg-9 col-lg-offset-3">
+        <p class="title f20"><%= t 'top.login.dont_have_account' %></p>
+        <p class="museoSans100 f14"><%= t(:sign_up_now, :account_type => t(:account_type_personal)) %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-5 col-md-4 col-md-offset-1 col-lg-3 col-lg-offset-3">
+        <%= link_to t(:registration), new_personal_path, :class => 'btn btn-default text-upper btn-block' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6" style="margin-top: 20px;">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-11 col-md-offset-1 col-lg-9 col-lg-offset-3">
+        <p class="title f20"><%= t(:already_member, :member_type => t(:member_type_personal)) %></p>
+        <p class="museoSans100 f14"><%= t(:sign_in_and_enjoy) %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-5 col-md-4 col-md-offset-1 col-lg-3 col-lg-offset-3">
+        <%= link_to t('button.sign_in'), personal_login_path, :class => 'btn btn-default text-upper btn-block' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row account business_account" style="display: none;">
+  <div class="white_bg"></div>
+  <div class="col-xs-12 col-sm-6" style="margin-top: 20px;">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-11 col-md-offset-1 col-lg-9 col-lg-offset-3">
+        <p class="title f20"><%= t(:dont_have_business_account) %></p>
+        <p class="museoSans100 f14"><%= t(:sign_up_now, :account_type => t(:account_type_business)) %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-5 col-md-4 col-md-offset-1 col-lg-3 col-lg-offset-3">
+        <%= link_to t(:registration), new_busines_path, :class => 'btn btn-default btn-block text-upper' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6" style="margin-top: 20px;">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-11 col-md-offset-1 col-lg-9 col-lg-offset-3">
+        <p class="title f20"><%= t(:already_member, :member_type => t(:member_type_business)) %></p>
+        <p class="museoSans100 f14"><%= t(:sign_in_and_enjoy) %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-5 col-md-4 col-md-offset-1 col-lg-3 col-lg-offset-3">
+        <%= link_to t('button.sign_in'), business_login_path, :class => 'btn btn-default btn-block text-upper' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider row"></div>
+<div class="divider row" style="margin-bottom: 20px;"></div>
+
+<%= render 'shared/footer' %>

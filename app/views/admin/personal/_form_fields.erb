@@ -1,0 +1,116 @@
+<%
+   f ||= {}
+   need_pass = true if need_pass.nil?
+   if f.is_a?ActionView::Helpers::FormBuilder
+%>
+  <%= f.hidden_field :phone_code %>
+
+  <div class="row">
+    <div class="col-xs-4">
+      <%= f.label :first_name %>
+    </div>
+    <div class="col-xs-4">
+      <%= f.label :last_name %>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-xs-4">
+      <%= f.text_field :first_name, :placeholder => t('placeholders.user.first_name'), :class => 'form-control validate[required]' %>
+    </div>
+    <div class="col-xs-4">
+      <%= f.text_field :last_name, :placeholder => t('placeholders.user.last_name'), :class => 'form-control validate[required]' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :phone %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 input-group">
+      <span class="input-group-addon">
+        <%= f.select :phone_code, options_for_select(ApplicationHelper::PHONE_CODES.collect { |i| [i[:name], i[:name]]}, resource.phone_code), {}, {:style => 'height: 20px;'} %>
+      </span>
+      <%= f.telephone_field :phone, :placeholder => t('placeholders.general.phone'), :class => 'form-control validate[required]' %>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-xs-12">
+      <%= f.label :email %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 form-group">
+      <%= f.email_field :email, :placeholder => t('placeholders.general.email'), :class => 'form-control validate[required,custom[email]]' %>
+    </div>
+  </div>
+
+  <% if need_pass %>
+  <div class="row">
+    <div class="col-xs-6">
+      <%= f.label :password %>
+    </div>
+    <div class="col-xs-6">
+      <%= f.label :password_confirmation %>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-xs-6">
+      <%= f.password_field :password, :autocomplete => 'off', :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]]', :validate => { :presence => true, :confirmation => true } %>
+    </div>
+    <div class="col-xs-6">
+      <%= f.password_field :password_confirmation, :placeholder => t('placeholders.user.password'), :class => 'form-control validate[required,minSize[5]] valid' %>
+    </div>
+  </div>
+    <% end %>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <%= f.label :credit_card %>
+    </div>
+    <div class="col-xs-3">
+      <%= f.label :cvv %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 form-group">
+      <%= text_field_tag :credit_card, resource.show_card, :disabled => :disabled, :class => 'form-control' %>
+    </div>
+    <div class="col-xs-3 form-group">
+      <%= text_field_tag :cvv, resource.cvv, :disabled => :disabled,  :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :expiration_date %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 form-group">
+      <div class="row">
+        <div class="col-md-7">
+          <%= f.select :expiration_date_month, months, {}, { :class => 'form-control', :disabled => :disabled, include_blank: true } %>
+        </div>
+        <div class="col-md-5">
+          <%= f.select :expiration_date_year, years, {}, { :class => 'form-control', :disabled => :disabled, include_blank: true } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% unless controller_name == 'business' %>
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.label :postal_code, 'Zip Code' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 form-group">
+        <%= f.text_field :postal_code, :placeholder => '400200', :class => 'form-control' %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

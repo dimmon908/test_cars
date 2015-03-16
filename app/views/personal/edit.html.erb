@@ -1,0 +1,27 @@
+<% content_for :scripts do %>
+    <script type="text/javascript">
+      //<![CDATA[
+        window.resource_name = '<%= resource_name %>';
+      //]]>
+    </script>
+    <%= javascript_include_tag  'regex-mask-plugin', :profile_page, 'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-6 col-xs-6 col-sm-6 ">
+    <%= form_for(resource, :as => resource_name, :url => "/#{resource_name}", :html => { :method => :put }) do |f| %>
+      <%= devise_error_messages! %>
+      <%= render 'shared/summary_errors' %>
+
+      <%= render 'personal/form_fields', :f => f, :focus => true %>
+
+      <div class="row">
+        <div class="col-md-10 col-xs-10 col-sm-10">
+          <%= f.submit t('button.update'), :class => 'btn btn-lg btn-primary btn-block' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to "Back", :back %>

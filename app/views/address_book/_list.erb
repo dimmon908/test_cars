@@ -1,0 +1,58 @@
+<%
+   @list ||= []
+   @selected ||= 0
+%>
+<% if @list.empty? %>
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-12">
+      <p>No "Favorites" in address book</p>
+    </div>
+  </div>
+<% else %>
+  <% @list.each do |address| %>
+    <div class="row address_book_item <% if address.id == @selected %> active <% end %>" data-address="<%= address.address %>" data-id="<%=address.id%>">
+      <div class="col-md-1">
+        <span class="icons icons-address"></span>
+      </div>
+      <div class="col-md-10">
+        <p class="f14 museoSans300"><%= address.street %></p>
+        <p class="f12 museoSans300"><%= address.name %></p>
+        <p class="f12 museoSans100"><%= address.city %></p>
+
+        <div class="row address_book_item_buttons" style="margin-top: 15px; margin-bottom: 10px;">
+          <div class="col-md-11">
+            <%= link_to t('links.set_pick_up'), '#pickup',
+                  class: 'pickup_link btn btn-default btn-block text-upper f12',
+                  'data-lng' => address.longitude,
+                  'data-lat' => address.latitude,
+                  'data-city' => address.city,
+                  'data-street' => address.street,
+                  'data-name' => address.name,
+                  'data-address' => address.address
+            %>
+          </div>
+        </div>
+        <div class="row address_book_item_buttons">
+          <div class="col-md-11">
+            <%= link_to t('links.set_dest'), '#dest',
+                  class: 'dest_link btn btn-default btn-block text-upper f12',
+                  'data-lng' => address.longitude,
+                  'data-lat' => address.latitude,
+                  'data-city' => address.city,
+                  'data-street' => address.street,
+                  'data-name' => address.name,
+                  'data-address' => address.address
+            %>
+          </div>
+        </div>
+      </div>
+
+      <span class="delete_favorite" data-id="<%=address.id%>">
+        <img src="http://www.google.com/intl/en_us/mapfiles/close.gif" alt="delete"/>
+      </span>
+    </div>
+    <div class="row">
+      <div class="divider"></div>
+    </div>
+  <% end %>
+<% end %>

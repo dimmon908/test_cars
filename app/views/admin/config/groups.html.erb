@@ -1,0 +1,37 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag 'tables/FooTable/footable.js', 'admin/tables_responsive', 'tables/TableFilter/picnet.table.filter.min.js' %>
+<% end %>
+
+<h1><%= t 'admin.tabs.rates' %></h1>
+
+
+<div class="row innerLR">
+  <div class="col-md-12">
+
+    <table class="table-filter footable table table-striped table-bordered table-white table-primary list">
+      <tr>
+        <th><%= t 'config.id' %></th>
+        <th><%= t 'config.internal_name' %></th>
+        <th><%= t 'config.name' %></th>
+        <th><%= t 'config.action' %></th>
+      </tr>
+      <% ConfigGroup.all.each do |group| %>
+        <tr>
+          <td><%= group.id %> </td>
+          <td><%= group.internal_name %></td>
+          <td><%= group.public_name %></td>
+          <td>
+            <%= link_to t('config.actions.list'), "/admin/config/list/#{group.internal_name}" %>
+            <br/>
+            <%= link_to t('config.actions.edit'), "/admin/config/#{group.internal_name}" %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+  </div>
+</div>

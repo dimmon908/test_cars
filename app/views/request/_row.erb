@@ -1,0 +1,105 @@
+<% request ||= Request.new %>
+<div class="row request_item
+  <% if @selected && @selected.to_i == request.id %>active
+  <% end %>" data-id="<%= request.id %>" id="request_id_<%= request.id %>">
+  <div class="col-xs-12">
+    <% if @tab.to_s == 'active' && Trip::Status::active_tab?(request) %>
+
+      <%= hidden_field :request, :booked, :id => "booked_time_#{request.id}", :value => (request.booked.strftime('%Y-%m-%dT%H:%M:%S%:z') rescue nil) %>
+
+      <% if Trip::Status::accepted? request %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.accept') %></p>
+        <p class="red2 museoSans500 f14"><%= t('request.messages.accepted') %></p>
+        <%= render 'driver_info', :request => request %>
+      <% elsif Trip::Status::started? request %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.started') %></p>
+        <%= render 'driver_info', :request => request %>
+      <% elsif Trip::Status::instant? request %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.instant') %></p>
+      <% elsif Trip::Status::waiting? request %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.waiting') %></p>
+        <%= render 'driver_info', :request => request %>
+      <% elsif Trip::Status::future? request %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.future') %></p>
+      <% elsif Trip::Status::finished? request %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.finished') %></p>
+        <%= render 'driver_info', :request => request %>
+      <% elsif request.client_canceled? %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.client_cancelled') %></p>
+      <% elsif request.driver_canceled? %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.driver_cancelled') %></p>
+        <%= render 'driver_info', :request => request %>
+      <% elsif request.admin_canceled? %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.admin_cancelled') %></p>
+      <% elsif Trip::Status::canceled? request %>
+        <p class="pull-right f12 museoSans500 text-upper waiting_pickup"><%= t('request.statuses.cancelled') %></p>
+      <% end %>
+
+      <% if can? :timer_on_active, :all %>
+        <% cancel_time = request.before_cancel_time.to_i %>
+        <% if cancel_time > 0 %>
+          <p class="f12 museoSans100">
+            <%= t 'forms.request.labels.time_left' %>:
+            <span class="orange cancel_time" id="cancel_time_<%= request.id %>"><%= HelperTools.format_time cancel_time%></span>
+          </p>
+        <% end %>
+      <% end %>
+    <% end %>
+
+  <p class="f14 museoSans500 date_transform datetime"  data-date="<%= request.date.strftime(HelperTools::JS_DATE) %>"></p>
+
+    <% if @tab.to_s == 'active' && Trip::Status.active_tab?(request) %>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-xs-12">
+      <p class="f14 museoSans500"><span style="color: #ed1c24;">Note:</span>
+        Click on Car icon to get information about your request</p>
+    </div>
+  </div>
+    <% end %>
+
+  <% if can? :admin, :all %>
+    <%= render 'admin_info', :request => request %>
+  <% end %>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-xs-12">
+      <img src="/img/icon/pickup_home.png" alt="<%= t 'forms.request.labels.pickup_location' %>" class="pull-left" style="margin-right: 10px;"/>
+
+      <p class="f14 museoSans300"><%= t 'forms.request.labels.pickup_location' %></p>
+
+      <p class="f12 museoSans100"><%= request.from %></p>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-xs-12">
+      <img src="/img/icon/destination_thick.png" alt="<%= t('forms.request.labels.destination_location') %>" class="pull-left" style="margin-right: 10px;"/>
+
+      <p class="f14 museoSans300"><%= t('forms.request.labels.destination_location') %></p>
+
+      <p class="f12 museoSans100"><%= request.to.last %></p>
+    </div>
+  </div>
+
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-12">
+      <p class="museoSans700 f16 pull-left" style="margin-top: 5px;">
+        <%= t 'forms.request.labels.trip_rate' %>:
+        <span class="museoSans300">
+          <% if @tab.to_s == 'active' && (Trip::Status::active_tab?(request) || Trip::Status::future?(request)) %>
+            <%= number_to_currency request.rate %>
+          <% elsif @tab.to_s == 'past' && request.transaction  %>
+            <%= number_to_currency request.charged_price %>
+          <% end %>
+        </span>
+      </p>
+
+      <% unless Trip::Status::cant_canceled? request %>
+        <%= button_tag t('button.cancel_request'), :id => "request_cancel_#{request.id}", :class => 'btn btn-default text-upper f12 museoSan500 pull-right cancel_button', :type => :button %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+</div>

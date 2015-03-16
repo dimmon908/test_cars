@@ -1,0 +1,33 @@
+.map_container {
+  -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
+  position: fixed;
+  left: 33%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+}
+
+.gmaps4rails_map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.bing_map {
+   position: absolute;
+   width: 400px;
+   height: 400px;
+   border:#555555 2px solid;
+}
+
+.container-fluid #google_drivers_map .map_container {
+  left: 460px;
+}
+.container-fluid.menu-hidden #google_drivers_map .map_container {
+  left: 370px;
+}

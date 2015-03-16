@@ -1,0 +1,179 @@
+.icons {
+  display: inline-block;
+}
+.icons-personal_information, .icons-account_information, .icons-credit_card_information, .icons-business_information {
+  margin-right: 20px;
+  vertical-align: bottom;
+}
+.icons-personal_information {
+  background: url(/img/icon/personal_information.png) no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.icons-account_information {
+  background: url(/img/icon/account_information.png) no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.icons-credit_card_information {
+  background: url(/img/icon/credit_card_information.png) no-repeat;
+  width: 33px;
+  height: 22px;
+}
+.icons-business_information {
+  background: url(/img/icon/business_information.png) no-repeat;
+  width: 30px;
+  height: 25px;
+  vertical-align: baseline;
+}
+.icons-next {
+  width: 7px;
+  height: 14px;
+  background: url("/img/icon/arrow_right_black.png") no-repeat;
+  vertical-align: top;
+  margin: 0 0 0 10px;
+}
+.icons-prev {
+  width: 7px;
+  height: 14px;
+  background: url("/img/icon/arrow_left_black.png") no-repeat;
+  vertical-align: top;
+  margin: 0 10px 0 0;
+}
+.icons-credit_card {
+  background: url("/img/icon/credit_cards.png") no-repeat;
+  width: 32px;
+  height: 22px;
+  margin: 12px 5px 0 0;
+}
+.icons-visa {
+  background-position: 0 0;
+}
+.icons-master_card {
+  background-position: -32px 0;
+}
+.icons-american_express {
+  background-position: -64px 0;
+}
+
+.icons-visa.disabled {
+  background-position: 0 -24px;
+}
+.icons-master_card.disabled {
+  background-position: -32px -24px;
+}
+.icons-american_express.disabled {
+  background-position: -64px -24px;
+}
+
+.icons-social_media {
+  height: 27px;
+  width: 27px;
+  background: url("/img/icon/social_media_black.png") no-repeat;
+  margin: 3px;
+}
+.icons-facebook {
+  background-position: 0 0;
+}
+.icons-twitter {
+  background-position: -27px 0;
+}
+.icons-linkedin {
+  background-position: -54px 0;
+}
+.icons-dropdown {
+  width: 22px;
+  height: 22px;
+  background: url("/img/icon/button_arrow_down.png") no-repeat -22px 0;
+}
+.icons-dropdown:hover {
+  background: url("/img/icon/button_arrow_down.png") no-repeat 0 0;
+}
+.icons-calendar {
+  background: url("/img/icon/calendar.png") no-repeat;
+  width: 17px;
+  height: 17px;
+}
+.icons-destination {
+  background: url("/img/icon/pick_destination.png") no-repeat;
+  width: 22px;
+  height: 24px;
+}
+.icons-black_dots {
+  background: url("/img/icon/black_dots.png") no-repeat;
+  width: 19px;
+  height: 5px;
+}
+.icons-additional_info {
+  background: url("/img/icon/additional_info.png") no-repeat;
+  width: 21px;
+  height: 19px;
+}
+.icons-black_thick {
+  background: url("/img/icon/black_tick.png") no-repeat;
+  width: 20px;
+  height: 16px;
+}
+.icons-white_thick {
+  background: url("/img/icon/white_tick.png") no-repeat;
+  width: 20px;
+  height: 16px;
+}
+.icons-archive {
+  background: url("/img/icon/archive.png") no-repeat;
+  width: 18px;
+  height: 17px;
+}
+.icons-upload_image {
+  background: url("/img/icon/upload_image.png") no-repeat;
+  width: 25px;
+  height: 17px;
+}
+.icons-address {
+  background: url("/img/icon/address.png") no-repeat;
+  width: 19px;
+  height: 23px;
+}
+.icons-facebook2 {
+  background: url("/img/icon/facebook2.png") no-repeat;
+  width: 35px;
+  height: 35px;
+}
+.icons-twitter2 {
+  background: url("/img/icon/twitter2.png") no-repeat;
+  width: 35px;
+  height: 35px;
+}
+.icons-attention {
+  background: url("/img/icon/attention.png") no-repeat;
+  width: 19px;
+  height: 20px;
+}
+.request_details ul.tabs .icons {
+  background-image: url("/img/icon/request_details.png");
+  background-repeat: no-repeat;
+}
+.icons-car {
+  width: 24px;
+  height: 19px;
+  background-position: 0 0;
+}
+.icons-car:hover, .request_details ul.tabs li.active .icons-car, .request_details ul.tabs li:hover .icons-car {
+  background-position: 0 -19px;
+}
+.icons-time {
+  width: 24px;
+  height: 24px;
+  background-position: -24px 0;
+}
+.icons-time:hover, .request_details ul.tabs li.active .icons-time, .request_details ul.tabs li:hover .icons-time {
+  background-position: -24px -24px;
+}
+.icons-money {
+  width: 24px;
+  height: 24px;
+  background-position: -48px 0;
+}
+.icons-money:hover, .request_details ul.tabs li.active .icons-money, .request_details ul.tabs li:hover .icons-money {
+  background-position: -48px -24px;
+}

@@ -1,0 +1,62 @@
+<%
+   f ||= {}
+   card = resource if card.nil?
+%>
+<% if f.is_a? ActionView::Helpers::FormBuilder %>
+  <%= hidden_field_tag 'card[user_id]', current_user.partner_id %>
+
+  <div class="row">
+    <div class="col-xs-8 col-md-7">
+      <%= f.label(:owner, t('owner_name')) %>
+    </div>
+    <div class="col-xs-4 col-md-3">
+      <%= f.label(:postal_code, t('activerecord.attributes.user.zip_code')) %>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-xs-8 col-md-7">
+      <%= f.text_field :owner, {:class => 'form-control'} %>
+    </div>
+    <div class="col-xs-4 col-md-3">
+      <%= f.text_field :postal_code, {:placeholder => '400200', :class => 'form-control'} %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-4 col-md-4">
+      <%= f.label(:type_name, t('credit_card_type')) %>
+    </div>
+    <div class="col-xs-5 col-md-4">
+      <%= f.label(:card_number, t('credit_card_number')) %>
+    </div>
+    <div class="col-xs-3 col-md-2">
+      <%= f.label(:cvv, t('cvv')) %>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-xs-4 col-md-4">
+      <%= f.select :type_name, options_for_select(Card::CARD_TYPES.invert, card.type_name), {}, {:class => 'form-control'} %>
+    </div>
+    <div class="col-xs-5 col-md-4">
+      <%= f.text_field :card_number, {:placeholder => '1234567890123456', :class => 'form-control', :maxlength => 16, :id => 'user_credit_card'} %>
+    </div>
+    <div class="col-xs-3 col-md-2">
+      <%= f.text_field :cvv, {:placeholder => '1234', :class => 'form-control', :maxlength => 4} %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label(:expiration_date, t('expiry_date')) %>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-xs-6 col-md-4">
+      <%= f.select :expiration_date_month, months, {}, {:class => 'form-control', include_blank: true, :prompt => 'Month'} %>
+    </div>
+    <div class="col-xs-4 col-md-3">
+      <%= f.select :expiration_date_year, years, {}, {:class => 'form-control', include_blank: true, :prompt => 'Year'} %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,71 @@
+<% f ||= FormBuilder %>
+<p class="lead"><span class="icons icons-credit_card_information"></span><%= t 'forms.user.credit_info' %></p>
+<div class="row">
+  <div class="col-xs-4">
+    <%= f.label :credit_card %>
+  </div>
+  <div class="col-xs-2">
+    <%= f.label :cvv %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-4 form-group">
+    <%= f.hidden_field :credit_card_type %>
+    <%= f.text_field :credit_card, :placeholder => '1234567890123456', :class => 'form-control', :maxlength => 16, :id => 'user_credit_card' %>
+  </div>
+  <div class="col-xs-2 form-group">
+    <%= f.text_field :cvv, :placeholder => '1234', :class => 'form-control', :maxlength => 4 %>
+  </div>
+  <div class="col-xs-2">
+    <span class="icons icons-credit_card icons-visa"></span>
+    <span class="icons icons-credit_card icons-master_card"></span>
+    <span class="icons icons-credit_card icons-american_express"></span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= f.label :expiration_date %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-4 form-group">
+    <div class="row">
+      <div class="col-xs-7">
+        <%= f.select :expiration_date_month, months, {}, { :class => 'form-control', :prompt => t('credit_card_expiry_month'), include_blank: true} %>
+      </div>
+      <div class="col-xs-5">
+        <%= f.select :expiration_date_year, years, {}, { :class => 'form-control', :prompt => t('credit_card_expiryyear'), include_blank: true} %>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-6 form-group">
+    <div class="row">
+      <div class="first_nameformError parentFormregistration_form formError" id="popup_cc_validation_error"  data-validate-type="custom" style="display: none;">
+        <div class="formErrorContent" style="white-space: normal;">
+          <%= t 'errors.messages.declined_cc' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% unless controller_name == 'business' %>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :postal_code %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-2 form-group">
+      <%= f.text_field :postal_code, :class => 'form-control' %>
+    </div>
+  </div>
+<% end %>
+
+<div class="row" id="loader_gif" style="display: none;">
+  <div class="col-xs-2 form-group">
+    <img src="/img/loader.gif" style="width: 30px; height: 30px;"/>
+  </div>
+</div>

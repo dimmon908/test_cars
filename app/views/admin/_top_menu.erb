@@ -1,0 +1,106 @@
+<!-- Top navbar -->
+<div class="navbar main hidden-print">
+
+  <!-- Menu Toggle Button -->
+  <button type="button" class="btn btn-navbar pull-left visible-xs">
+    <span class="icon-bar"></span> <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <!-- // Menu Toggle Button END -->
+
+  <!-- Not Blank page -->
+
+  <!-- Full Top Style -->
+  <ul class="topnav pull-left">
+    <li class="widget-search form-inline">
+      <div class="input-group">
+        <input type="text" value="" class="form-control" placeholder="Type your keywords ..">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-primary"><span class="hidden-md hidden-sm hidden-desktop-1 hidden-xs inline-block"><%= t 'general.search' %>&nbsp;</span><i class="icon-search"></i></button>
+        </span>
+      </div>
+      <!-- /input-group -->
+    </li>
+  </ul>
+  <!-- // Full Top Style END -->
+
+  <!-- // Not Blank Page END -->
+
+
+  <!-- Top Menu Right -->
+  <ul class="topnav pull-right">
+    <!-- Profile / Logout menu -->
+    <li class="account dropdown dd-1">
+      <a data-toggle="dropdown" href="" class="glyphicons logout lock"><span class="hidden-md hidden-sm hidden-desktop-1 hidden-xs"><%= current_user.full_name %></span><i></i></a>
+      <ul class="dropdown-menu pull-right">
+        <li class="profile">
+          <span>
+            <span class="heading">
+              <%= t 'general.profile' %>
+              <%= link_to t('links.edit'), "/#{current_user.role.internal_name}/#{current_user.id}/edit", :class => 'pull-right text-primary text-weight-regular text-lowercase', :remote => true, 'data-toggle' => :modal, 'data-target' => '#adminProfile' %>
+            </span>
+
+            <%= link_to "/#{current_user.role.internal_name}/#{current_user.id}/edit", :class => 'img thumb', :remote => true, 'data-toggle' => :modal, 'data-target' => '#adminProfile' do %>
+              <%= image_tag(current_user.profile.photo.url(:small), :size => '51x51', :alt => current_user.full_name, title: current_user.full_name) unless ApplicationHelper::pdf? request %>
+            <% end %>
+
+            <span class="details">
+              <span class="strong text-regular"><%= current_user.full_name %></span>
+              <span><%= current_user.email %></span>
+            </span>
+            <span class="clearfix"></span>
+          </span>
+        </li>
+        <li>
+          <span>
+            <%= link_to t('button.sign_out'), destroy_session_path(current_user), :class => 'btn btn-default btn-mini pull-right' %>
+          </span>
+        </li>
+      </ul>
+    </li>
+    <!-- // Profile / Logout menu END -->
+  </ul>
+  <!-- // Top Menu Right END -->
+
+  <ul class="topnav pull-right">
+    <li>
+      <a href="#messages" class="glyphicons envelope single-icon" id="admin_messages">
+        <i></i>
+        <span class="hidden-md hidden-sm hidden-desktop-1 hidden-xs pull-left">Messages</span>
+        <% cnt = NotificationPull::only_new(current_user.id).count %>
+        <span class="badge fix badge-primary" id="admin_messages_count"><%if cnt > 0%><%=cnt%><%end%></span>
+      </a>
+    </li>
+  </ul>
+  <div class="clearfix"></div>
+
+
+  <div class="admin_messages_window" id="admin_messages_window">
+    <ul class="topnav pull-right admin_notify_list"></ul>
+
+  </div>
+
+  <ul class="template" id="notification_template">
+    <li class="admin_notify __readed__" id="admin_notify___id__">
+      <span class="message-text">__message__</span>
+      <button type="button" class="close hide-btn" aria-hidden="true" data-id="__id__"><span class="icon icon-remove-sign"></span></button>
+      <button class="btn btn-mini reply-btn pull-right" data-id="__id__" data-toggle="modal" data-target="#adminReplyMessage"><%= t('admin.notification.reply')%></button>
+    </li>
+  </ul>
+  <ul class="template" id="clear_notifications_template">
+    <li class="admin_notify readed" id="admin_notify_clear__template__">
+      <button type="button" class="close pull-right" aria-hidden="true"><%= t('admin.notification.clear_all')%></button>
+    </li>
+  </ul>
+  <div class="template" id="admin_reply_message_template">
+    <div>
+      <label><textarea name="driver_message" id="driver_message_template_" cols="30" rows="10" disabled="disabled" style="width: 760px;"></textarea></label>
+      <label><textarea name="admin_message" id="admin_message_template_" cols="30" rows="10"></textarea></label>
+      <button class="btn btn-cancel pull-right" data-id="__id__" data-dismiss="modal" aria-hidden="true"><span class="icon icon-remove-sign"></span></button>
+      <button class="btn btn-ok pull-right" data-id="__id__"><span class="icon icon-ok-sign"></span><%='Send'%></button>
+    </div>
+
+  </div>
+
+</div>
+<!-- Top navbar END -->

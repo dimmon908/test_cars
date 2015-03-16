@@ -1,0 +1,110 @@
+// Place all the styles related to the request controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.favorites {
+  .icon {
+    background: url(/img/icon/favorites.png) no-repeat 0 1px;
+    padding-left: 25px;
+    width: 180px;
+    height: 16px;
+    display: block;
+    cursor: pointer;
+    color: #349ca9;
+  }
+}
+
+.favorites.exist {
+  .icon {
+    background-position: 0 -15px;
+    color: #b9b9b9;
+  }
+}
+
+.favorite_star {
+  cursor: pointer;
+  display: block;
+  width: 15px;
+  height: 16px;
+  background: url(/img/icon/favorites.png) no-repeat 0 1px;
+  position: absolute;
+  top: 6px;
+  right: 30px;
+}
+
+.favorite_star.exist {
+  background-position: 0 -15px;
+  cursor: auto;
+}
+
+.waiting_pickup {
+  padding: 10px 10px 8px;
+  background: #2A8C9A;
+  color: #FFF;
+  line-height: 1;
+  margin-top: -10px;
+}
+.request_details {
+  position: absolute;
+  z-index: 3;
+  width: 300px;
+}
+.request_details ul.tabs {
+  margin: 0;
+  padding: 0;
+  width: 60px;
+  background: #fff;
+  float: left;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  box-shadow: 0 3px 5px 0 #cccccc;
+}
+.request_details ul.tabs li {
+  display: block;
+  border-bottom: 1px solid #d3d3d3;
+  padding: 0;
+  margin: 0;
+}
+.request_details ul.tabs li > a {
+  display: block;
+  height: 50px;
+  padding: 13px 18px;
+}
+.request_details ul.tabs li:first-child {
+}
+.request_details ul.tabs li:last-child {
+  border-bottom: none;
+}
+.request_details .tab-content {
+  width: 240px;
+  background: #fff;
+  float: left;
+  min-height: 240px;
+  padding: 15px;
+  box-shadow: 0 3px 5px 0 #cccccc;
+  border-radius: 0 5px 5px;
+}
+.vertical-separator {
+  margin: 0 7px;
+  display: inline-block;
+}
+.vertical-separator:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: #c2c2c2;
+}
+
+.valid_promo {
+  color: red;
+  position: relative;
+  top: 5px;
+}
+
+.check_box_label_span {
+  margin-left: 5px;
+  margin-top: 3px;
+  display: inline-block;
+}

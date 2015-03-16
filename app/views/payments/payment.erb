@@ -1,0 +1,53 @@
+<h2>Checkout</h2>
+<% form_for :user, :url => 'https://secure.authorize.net/gateway/transact.dll' do |f| %>
+  <%= sim_fields(@sim_transaction) %>
+  <% field_set_tag do |f| %>
+    <div>
+      <%= label_tag 'x_card_num', 'Credit Card Number'%>
+      <%= text_field_tag 'x_card_num', '6011000000000012', :class => 'text', :size => 16 %>
+    </div>
+    <div>
+      <%= label_tag 'x_exp_date', 'Exp.'%>
+      <%= text_field_tag 'x_exp_date', '0415', :class => 'text', :size => 4 %>
+    </div>
+    <div>
+      <%= label_tag 'x_card_code', 'CCV'%>
+      <%= text_field_tag 'x_card_code', '123', :class => 'text', :size => 4 %>
+    </div>
+  <% end %>
+  <% field_set_tag do |f| %>
+    <div>
+      <%= label_tag 'x_first_name', 'First Name'%>
+      <%= text_field_tag 'x_first_name', 'John', :class => 'text', :size => 15 %>
+    </div>
+    <div>
+        <%= label_tag 'x_last_name', 'Last Name'%>
+      <%= text_field_tag 'x_last_name', 'Doe', :class => 'text', :size => 15 %>
+    </div>
+  <% end %>
+  <% field_set_tag do |f| %>
+    <div>
+      <%= label_tag 'x_address', 'Address'%>
+      <%= text_field_tag 'x_address', '123 Fake Street', :class => 'text', :size => 26 %>
+    </div>
+    <div>
+      <%= label_tag 'x_city', 'City'%>
+      <%= text_field_tag 'x_city', 'San Francisco', :class => 'text', :size => 15 %>
+    </div>
+  <% end %>
+  <% field_set_tag do |f| %>
+    <div>
+      <%= label_tag 'x_state', 'State'%>
+      <%= text_field_tag 'x_state', 'CA', :class => 'text', :size => 4 %>
+    </div>
+    <div>
+      <%= label_tag 'x_zip', 'Zip Code'%>
+      <%= text_field_tag 'x_zip', '94111', :class => 'text', :size => 9 %>
+    </div>
+    <div>
+      <%= label_tag 'x_country', 'Country'%>
+      <%= text_field_tag 'x_country', 'United States', :class => 'text', :size => 22 %>
+    </div>
+  <% end %>
+  <%= submit_tag 'BUY', :class => 'submit buy', :name => 'buy' %>
+<% end %>

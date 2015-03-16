@@ -1,0 +1,29 @@
+<h1>Api Logs for type : "<%= params[:type]%>"</h1>
+
+<table cellpadding="2" cellspacing="2" border="1" width="1200px" style="border-collapse: collapse;">
+  <tr>
+    <th>Id</th>
+    <th>User</th>
+    <th>Action</th>
+    <th>Request</th>
+    <th>Data</th>
+    <th>Date</th>
+    <th>Actions</th>
+  </tr>
+<% @logs.each do |log| %>
+  <tr>
+    <td><%= log.id %></td>
+    <td><%= log.user ? log.user.username : ''%></td>
+    <td><%= log.action %></td>
+    <td><%= log.request %></td>
+    <td><%= log.response[0..100] %>...</td>
+    <td><span class="datetime" data-date="<%= log.created_at.strftime(HelperTools::JS_DATE) %>"></span></td>
+    <td>
+      <%= link_to 'Show', "/api_log/#{log.id}", :target => '_blank' %>
+      <br/>
+      <%= link_to 'Destroy', "/api_log/#{log.id}", method: :delete, data: { confirm: 'Are you sure?' } %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<%= will_paginate @logs, :remote => true %>

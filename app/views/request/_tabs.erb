@@ -1,0 +1,5 @@
+<%= tabs_tag :open_tabs => { :class => 'nav nav-tabs request-tabs'} do |tab| %>
+  <%= tab.new_request  t('forms.request.tabs.new_request'), '#new_request', :class => 'ignore-active active first_item', :id => :new_request_tab %>
+  <%= tab.active_list  t('forms.request.tabs.active_list'), '#active_list', :id => :active_list %>
+  <%= tab.past_list  t('forms.request.tabs.past_list'), '#past_list', :class => :last_item, :id => :past_list %>
+<% end %>

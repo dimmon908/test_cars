@@ -1,0 +1,16 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag  'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+    <%= form_for(resource, :as => resource_name, :url => "/admin/promo_codes/#{resource.id}",  :validate => true) do |f| %>
+      <%= render 'form_fields', :f => f %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">//<![CDATA[
+  window.validators_id = <%= resource.id %>;
+  //]]>
+</script>

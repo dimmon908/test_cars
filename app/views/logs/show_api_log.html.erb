@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <b>User:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+  <%= @log.user ? @log.user.email : '' %>
+</pre>
+
+<div class="row">
+  <b>Type:</b>
+  <div class="divider"></div>
+</div>
+<br/>
+
+<pre>
+  <%= @log.user_type %>
+</pre>
+
+<div class="row">
+  <b>Date:</b>
+  <div class="divider"></div>
+</div>
+<br/>
+<pre>
+  <span class="datetime" data-date="<%= @log.created_at.strftime(HelperTools::JS_DATE) %>"></span>
+</pre>
+
+<div class="row">
+  <b>Request Data:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.request %>
+</pre>
+
+<div class="row">
+  <b>Response:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.response %>
+</pre>
+
+<div class="row">
+  <b>Device ID:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.device_id %>
+</pre>
+
+<div class="row">
+  <b>Device system:</b>
+  <div class="divider"></div>
+</div>
+
+<br/>
+<pre>
+<%= @log.device_system %>
+</pre>

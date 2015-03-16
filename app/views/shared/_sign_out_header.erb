@@ -1,0 +1,15 @@
+<%= render 'shared/logo' %>
+
+<div class="divider row">
+  <div class="col-xs-8 col-xs-offset-2">
+    <div class="pull-left text-left">
+    </div>
+
+    <% if user_signed_in? %>
+    <div class="pull-right text-right">
+      <p class="description"><%= link_to t('top.text.logout'), destroy_user_session_path %></p>
+    </div>
+    <% end %>
+  </div>
+</div>
+

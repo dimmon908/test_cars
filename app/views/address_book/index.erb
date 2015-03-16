@@ -1,0 +1,23 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11 col-sm-11 col-xs-11">
+    <% if @list.empty? %>
+        No Favorites in your address book
+    <% else %>
+        <table cellspacing="0" cellpadding="2" border="1" width="100%">
+          <tr>
+            <th><%= t('address_book.public_name')%></th>
+            <th><%= t('address_book.address') %></th>
+          </tr>
+        <% @list.each do |address| %>
+          <tr>
+            <td><%= address.public_name %></td>
+            <td><%= address.address %></td>
+          </tr>
+        <% end %>
+        </table>
+    <% end %>
+    <br/>
+    <%= link_to t('links.add_address'), new_address_book_path %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

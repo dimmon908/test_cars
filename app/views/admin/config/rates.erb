@@ -1,0 +1,76 @@
+<%
+  current_vehicle = Vehicle::first
+%>
+<% content_for :scripts do %>
+  <%= javascript_include_tag  'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<h1><%= t 'admin.tabs.rate_config.vehicle_categories' %></h1>
+
+<div class="row innerLR">
+  <div class="col-md-12">
+    <div class="clearfix innerTB border-top">
+      <table class="table table-striped table-bordered table-white table-primary">
+        <% Vehicle.order('sort_order ASC').each do |vehicle| %>
+          <tr>
+            <td style="width: 20%;"><%= vehicle.name %></td>
+            <td style="width: 50%;">
+              <%= form_for vehicle, :url => "/admin/vehicle/#{vehicle.id}", :validate => true do |f| %>
+                <%= f.text_field :rate, :style => 'width: 100%;', :class => 'config_vehicle_input', :data_id => vehicle.id %>
+              <% end %>
+            </td>
+            <td>
+              <%= button_tag 'save', :class => 'save_vehicle_rate btn btn-primary' %>
+            </td>
+            <td>
+              <%= button_tag 'edit', :class => 'edit_vehicle_rate btn btn-primary' %>
+            </td>
+            <td>
+              <%= button_tag 'reset', :class => 'reset_vehicle_rate btn btn-primary' %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="row innerLR">
+  <div class="col-md-12">
+    <table class="table table-striped table-bordered table-white table-primary">
+        <tr>
+          <td style="width: 70%;">
+            <div class="clearfix innerTB border-top">
+              <%= hidden_field_tag :choose_vehicle_id, current_vehicle.id, :id => 'choose_vehicle_id' %>
+              <%= hidden_field_tag :choose_vehicle_mile, current_vehicle.per_mile, :id => 'choose_vehicle_per_mile' %>
+              <%= hidden_field_tag :choose_vehicle_minute, current_vehicle.per_minute, :id => 'choose_vehicle_per_minute' %>
+              <% hidden_field_tag :choose_vehicle_wait_minute, current_vehicle.per_wait_minute, :id => 'choose_vehicle_per_wait_minute' %>
+              Base Rate + (
+              <%= text_field_tag :per_mile, current_vehicle.per_mile, :style => 'display: inline-block;width: 50px;', :id => 'per_mile' %>
+              * Travelled Miles)
+              +
+              (
+              <%= text_field_tag :per_minute, current_vehicle.per_minute, :style => 'width: 50px; display: inline-block;', :id => 'per_minute' %>
+              * Number of Minutes)
+              <!--+-->
+              <!--(-->
+              <% text_field_tag :per_wait_minute, current_vehicle.per_wait_minute, :style => 'width: 50px; display: inline-block;', :id => 'per_wait_minute' %>
+              <!--* Number of Waiting Minutes)-->
+            </div>
+          </td>
+          <td>
+            <%= button_tag 'save', :class => 'save_vehicle_rates btn btn-primary' %>
+          </td>
+          <td>
+            &nbsp;
+          </td>
+          <td>
+            <%= button_tag 'reset', :class => 'reset_vehicle_rates btn btn-primary' %>
+          </td>
+        </tr>
+    </table>
+
+  </div>
+</div>

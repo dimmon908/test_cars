@@ -1,0 +1,37 @@
+<div class="request_details">
+  <ul class="tabs">
+    <li class="active"><a href="#request_driver" data-toggle="tab"><span class="icons icons-car"></span></a></li>
+    <li><a href="#request_time" data-toggle="tab"><span class="icons icons-time"></span></a></li>
+    <li class="border-bottom-none"><a href="#request_rate" data-toggle="tab"><span class="icons icons-money"></span></a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active fade in" id="request_driver">
+      <p class="f14 museoSans300 text-upper"><%= t 'request.driver_name' %></p>
+      <p class="f12 museoSans100">Johnattan Anthony Doe</p>
+
+      <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.car_type' %></p>
+      <p class="f12 museoSans100">Mercedes SUV Black Car</p>
+
+      <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.notes' %></p>
+      <p class="f12 museoSans100">Lorem ipsum dolor sit amet senctuer lorem ipsum dolor sit amet und van lorem senctuer lorem ipsum dolor sit amet senctuer lorem.</p>
+    </div>
+    <div class="tab-pane fade" id="request_time">
+      <p class="f14 museoSans300 text-upper"><%= t 'request.trip_date' %></p>
+      <p class="f12 museoSans100">10/15/2013 - 12:30 PM</p>
+
+      <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.estimated_duration' %></p>
+      <p class="f12 museoSans100">05:20</p>
+    </div>
+    <div class="tab-pane fade text-center" id="request_rate">
+      <img src="img/cars/vehicle1.png" style="margin: 20px;"/>
+      <p class="f14 museoSans500" style="max-width: 100px; margin: 0 auto;">Mercedes SUV Black Car</p>
+      <p class="f12 museoSans100" style="margin-top: 5px;">Black SUV</p>
+
+      <div class="divider" style="margin-top: 15px;"></div>
+
+      <p class="f14 museoSans300 text-upper" style="margin-top: 15px;"><%= t 'request.trip_rate' %></p>
+      <p class="f18 museoSans100" style="margin-top: 5px;">$1,950.20</p>
+    </div>
+  </div>
+</div>

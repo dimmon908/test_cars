@@ -1,0 +1,30 @@
+<% requests = Request.order('created_at DESC').limit(2).all %>
+
+<div class="col-md-4 innerT border-left">
+  <div class="padding-bottom-none-phone">
+    <a href="" class="widget-stats widget-stats-4 widget-stats-info">
+      <span class="txt"><%= t('admin.dashboard.statistic') %></span>
+      <span class="glyphicons refresh"><i></i></span>
+      <div class="clearfix"></div>
+      <i class="icon-play-circle"></i>
+    </a>
+
+    <% unless requests.empty? %>
+      <% cars = Car::available %>
+      <div class="innerT">
+        <div class="well margin-bottom-none">
+          <p class="strong"><%= t('admin.dashboard.cars_available') %></p>
+          <h3 class="strong margin-bottom-none"><%= cars.count %></h3>
+        </div>
+
+        <div class="widget border-none">
+          <div class="widget-body">
+            <% cars.select('`model_name`, COUNT(*) as `count`, `vehicle_id`').group(:model_name).all.each do |car| %>
+              <p><span class="strong"><%= car.count %></span> <%= car.model_name %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

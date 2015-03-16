@@ -1,0 +1,89 @@
+<%
+   f ||= {}
+   @only_credit ||= false
+%>
+<% if f.is_a?ActionView::Helpers::FormBuilder %>
+  <div class="step step_active" data-step="1">
+<% unless @only_credit %>
+    <% if can? :all, current_user %>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.label :partner %>
+          <br/>
+          <%= f.select :partner, Classes::BusinessAccount::find_all_by_role_id(Role::find_by_internal_name(:business)).collect {|p| [p.business_name, p.id]} %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :first_name %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-3">
+        <%= f.text_field :first_name, :placeholder => t(:first_name_holder), :class => 'form-control validate[required]' %>
+      </div>
+      <div class="col-md-3">
+        <%= f.text_field :last_name, :placeholder => t(:last_name_holder), :class => 'form-control validate[required]' %>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :email %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-6">
+        <%= f.email_field :email, :placeholder => t('placeholders.general.email'), :class => 'form-control validate[required,custom[email]]' %>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-3">
+        <%= f.label :phone %>
+      </div>
+
+      <div class="col-md-3">
+        <%= f.label :credit_limit %>
+      </div>
+    </div>
+<% end%>
+    <div class="row form-group">
+      <% unless @only_credit %>
+      <div class="col-md-3 input-group">
+        <span class="input-group-addon">+1</span>
+        <%= f.telephone_field :phone, :placeholder => t('placeholders.general.phone'), :class => 'form-control validate[required]' %>
+      </div>
+        <% end %>
+
+      <div class="col-md-3 input-group">
+        <%= f.text_field :sub_credit_limit, :placeholder => t('placeholders.general.credit_limit'), :class => 'form-control validate[required]' %>
+      </div>
+    </div>
+
+    <!--<div class="row">-->
+      <!--<h3><%= t('user.sub_user.username') %></h3>-->
+
+      <!--<span style="color: blue; cursor: pointer; text-decoration: underline; " id="sub_user_username">-->
+
+      <!--</span>-->
+    <!--</div>-->
+
+    <% unless resource.id %>
+    <div class="row">
+      <div class="col-md-10 col-xs-10 col-sm-10">
+        <%= button_tag t('button.generate_login_pass'), :class =>  'btn btn-lg btn-primary btn-block', :id => 'generate_un_wp' %>
+      </div>
+
+      <div class="col-md-10 col-xs-10 col-sm-10">
+        <%= button_tag t('button.welcome_email'), :class =>  'btn btn-lg btn-primary btn-block', :id => 'send_welcome'%>
+      </div>
+    </div>
+    <% end %>
+
+  </div>
+<% end %>

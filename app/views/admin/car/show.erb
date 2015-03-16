@@ -1,0 +1,103 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag 'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row">
+  <%= form_for(resource, :as => resource_name, :url => "/admin/car/#{resource.id}", :validate => true) do |f| %>
+    <div class="col-xs-5">
+      <% if resource.car_photoses %>
+        <% resource.car_photoses.each do |ff| %>
+          <div class="avatar">
+            <%= image_tag ff.photo.url(:medium), :style => 'width: auto;' %>
+          </div>
+        <% end %>
+
+        <% if resource.car_photoses.size < Configurations[:max_car_photos] %>
+          <div class="avatar">
+            <%= f.file_field :photo %>
+            <%= submit_tag 'Upload' %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-xs-7">
+      <p class="lead"><%= t 'forms.car.info' %></p>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :place_number %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :vehicle_id %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.place_number %>
+        </div>
+        <div class="col-xs-6">
+          <%= resource.vehicle.name rescue nil %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :manufacturer %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :model_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.manufacturer %>
+        </div>
+        <div class="col-xs-6">
+          <%= resource.model_name %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :model_year %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :color %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.model_year %>
+        </div>
+        <div class="col-xs-6">
+          <%= resource.color %>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <%= f.label :passenger_capacity %>
+        </div>
+        <div class="col-xs-6">
+          <%= f.label :fuel_type %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= resource.passenger_capacity %>
+        </div>
+        <div class="col-xs-6">
+          <%= resource.fuel_type %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="separator"></div>

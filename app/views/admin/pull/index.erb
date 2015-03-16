@@ -1,0 +1,14 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11 col-sm-11 col-xs-11">
+    <table cellspacing="0" cellpadding="1" border="1" width="100%">
+      <thead>
+      <tr>
+        <th><%= link_to t('top.header.pull.emails'), '/admin/pull/emails' %></th>
+        <th><%= link_to t('top.header.pull.sms'), '/admin/pull/sms' %></th>
+        <th><%= link_to t('top.header.pull.notifications'), '/admin/pull/notifications' %></th>
+      </tr>
+      </thead>
+    </table>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

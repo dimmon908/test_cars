@@ -1,0 +1,3 @@
+#encoding: utf-8
+Classes::AdminAccount.create({:email => 'dmitriy.svinin@gmail.com', :password => '12345678', :first_name => 'Dimitri', :last_name => 'Svinin', :phone => '12345678'}) unless User::where(:email => 'dmitriy.svinin@gmail.com').any?
+Classes::AdminAccount.create({:email => 'admin@vertiopia.com', :password => '12345678', :first_name => 'Admin', :last_name => 'Admin', :phone => '000000000', :username => 'admin'}) unless User::where(:email => 'admin@vertiopia.com').any?

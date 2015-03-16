@@ -1,0 +1,16 @@
+<% content_for :scripts do %>
+    <script type="text/javascript">
+      //<![CDATA[
+      window.resource_name = '<%= resource_name %>';
+      //]]>
+    </script>
+   <%= javascript_include_tag  'regex-mask-plugin', :profile_page, 'custom_validators', 'custimize_validator', 'steps' %>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for(resource, :as => resource_name, :url => '/admin', :validate => true) do |f| %>
+      <%= render 'form_fields', :f => f, :focus => true %>
+    <% end %>
+  </div>
+</div>

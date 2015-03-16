@@ -1,0 +1,12 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'tables/FooTable/footable-0.1.css', 'forms/pixelmatrix-uniform/uniform.default.css' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag 'tables/FooTable/footable.js',
+                                        'admin/tables_responsive',
+                                        'tables/TableFilter/picnet.table.filter.min.js',
+                                        'extend_datetimepicker',
+                                        'forms/pixelmatrix-uniform/jquery.uniform.min.js'
+  %>
+<% end %>

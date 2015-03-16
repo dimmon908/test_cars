@@ -1,0 +1,162 @@
+<% content_for :styles do %>
+  <%= stylesheet_link_tag 'gmaps4rails', 'forms/pixelmatrix-uniform/uniform.default.css', 'request', 'icons', 'admin/map' %>
+<% end %>
+
+<% content_for :footer_scripts do %>
+  <%= javascript_include_tag 'forms/pixelmatrix-uniform/jquery.uniform.min.js', 'infoBox' %>
+<% end %>
+
+
+<div class="map_online_statistics pull-left">
+  <h1 class="innerAll "><%= t('admin.map.online_statistic') %></h1>
+
+  <div class="widget widget-body-gray">
+    <div class="widget-body uniformjs">
+      <%= label :drivers, :available, :class => 'checkbox' do %>
+        <%= check_box_tag :drivers_available, 1, true, :class => 'checkbox driver_type' %>
+        <span class="glyphicons car available"><i></i></span>
+        <%= content_tag(:span,  t('admin.map.available')) %>
+        &nbsp;&nbsp;
+        <%= content_tag(:span, Driver::available.count, :id => :driver_available, :class => 'pull-right' )%>
+      <% end %>
+
+      <%= label :drivers, :booked, :class => 'checkbox driver_type' do %>
+        <%= check_box_tag :drivers_booked, 1, true, :class => 'checkbox' %>
+        <span class="glyphicons car booked"><i></i></span>
+        <%= content_tag(:span,  t('admin.map.booked')) %>
+        &nbsp;&nbsp;
+        <%= content_tag(:span, Driver::booked.count, :id => :driver_booked, :class => 'pull-right')%>
+      <% end %>
+
+      <%= label :drivers, :unavailable, :class => 'checkbox driver_type', :style => 'margin-top: 40px; margin-bottom: 0;' do %>
+        <%= check_box_tag :drivers_unavailable, 1, true, :class => 'checkbox' %>
+        <span class="glyphicons car unavailable"><i></i></span>
+        <%= content_tag(:span, t('admin.map.unavailable')) %>
+        &nbsp;&nbsp;
+        <%= content_tag(:span, Driver::unavailable.count, :id => :driver_unavailable, :class => 'pull-right' )%>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="widget border-none">
+    <div class="widget-body">
+      <%= content_tag(:span, t('admin.map.total')) %>
+
+      <%= content_tag(:span, Driver::online.count, :id => :driver_total, :class => 'pull-right strong' )%>
+    </div>
+  </div>
+
+  <div class="widget border-none">
+    <div class="widget-body row">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12">
+            <p class="f12 museoSans100 errors" id="broadcast_message_errors"></p>
+            <p class="f12 museoSans100 hidden_field" id="broadcast_message_ok" style="color: green;">Message send successfully</p>
+</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <%= content_tag(:span, t('admin.map.broadcast')) %>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-xs-12">
+            <%= text_area_tag :broadcast_message, nil, :class => 'form-control', :id => :broadcast_message, :rows => 4 %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <%= button_tag 'Send', id: :send_broadcast_message, :class => 'btn btn-lg btn-primary btn-block'%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget widget-body-gray hidden_field">
+    <div class="widget-body uniformjs drivers" id="drivers_markers_goto">
+      <%= content_tag(:span, '%driver_name%', :class => :goto_driver_marker) %>
+    </div>
+  </div>
+</div>
+
+<div id="google_drivers_map">
+  <% content_for :scripts do %>
+    <%= javascript_include_tag 'gmaps4rails/gmaps4rails.base.js.coffee', 'gmaps4rails/gmaps4rails.googlemaps.js.coffee', 'admin/map' %>
+  <% end %>
+  <%= gmaps(:map_options => {
+    :center_latitude => Configurations[:default_map_latitude],
+    :center_longitude => Configurations[:default_map_longitude],
+    :auto_adjust => true,
+    :auto_zoom => true,
+    :detect_location => true,
+    :center_on_user => true,
+    :zoom => Configurations[:default_map_zoom],
+    :libraries => [:places], :language => :en
+  }) %>
+</div>
+
+
+<div class="template map_popup" id="driver_popup" >
+  <div class="request_details">
+    <ul class="tabs">
+      <li class="active"><a href="#request_driver___id__" data-toggle="tab" onclick="setTab(this); return false;"><span class="icons icons-car"></span></a></li>
+      <li id="trip_info___id__" style="display: __visible__;"><a href="#request_time___id__" data-toggle="tab" onclick="setTab(this); return false;"><span class="icons icons-time"></span></a></li>
+      <li class="border-bottom-none"><a href="#request_rate___id__" data-toggle="tab" onclick="setTab(this); return false;"><span class="icons icons-money"></span></a></li>
+      <li class="border-bottom-none"><a href="#request_messsage___id__" data-toggle="tab" onclick="setTab(this); return false;"><span class="icons icons-car"></span></a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active fade in" id="request_driver___id__">
+        <p class="f14 museoSans300 text-upper"><%= t 'request.driver_name' %></p>
+        <p class="f12 museoSans100" id="driver_name___id__">__DRIVER_NAME__</p>
+
+        <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.car_type' %></p>
+        <p class="f12 museoSans100" id="car_type___id__">__CAR_TYPE__</p>
+
+        <div id="notes_block___id__" style="display: __visible__;">
+          <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.notes' %></p>
+          <p class="f12 museoSans100" id="notes___id__">__NOTES__</p>
+        </div>
+
+          <div id="break_block___id__" style="display: __break_visible__;">
+          <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t('request.break_count') %></p>
+          <p class="f12 museoSans100" id="break_count___id__">__BREAK_COUNT__</p>
+
+          <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t('request.remain_break') %></p>
+          <p class="f12 museoSans100" id="break_left___id__">__REMAIN_BREAK__</p>
+        </div>
+      </div>
+      <div class="tab-pane fade in" id="request_time___id__">
+        <p class="f14 museoSans300 text-upper"><%= t 'request.trip_date' %></p>
+        <p class="f12 museoSans100" id="date___id__">__DATE__</p>
+
+        <p class="f14 museoSans300 text-upper" style="margin-top: 20px;"><%= t 'request.estimated_duration' %></p>
+        <p class="f12 museoSans100" id="eta___id__">__ETA__</p>
+      </div>
+      <div class="tab-pane fade text-center in" id="request_rate___id__">
+        __IMG__
+        <p class="f14 museoSans500" id="car_name___id__" style="max-width: 100px; margin: 0 auto;">__NAME__</p>
+        <p class="f12 museoSans100" id="car_desc___id__" style="margin-top: 5px;">__DESC__</p>
+
+        <div class="divider" style="margin-top: 15px;"></div>
+
+        <div id="rate_block___id__" style="display: __visible__;">
+          <p class="f14 museoSans300 text-upper" style="margin-top: 15px;"><%= t 'request.trip_rate' %></p>
+          <p class="f18 museoSans100" id="rate___id__" style="margin-top: 5px;">$__RATE__</p>
+        </div>
+      </div>
+      <div class="tab-pane fade text-center in" id="request_messsage___id__">
+        <p class="f12 museoSans100 errors" id="send_message_errors___id__"></p>
+        <p class="f12 museoSans100 hidden_field" id="send_message_ok___id__" style="color: green;">Message send successfully</p>
+        <textarea name="driver_message___id__" id="driver_message___id__" cols="25" rows="8"></textarea>
+        <br/><br/>
+        <button class="btn" onclick="window.send_driver_message('__id__'); return false;"> Send Message </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="template" id="driver_goto_template">
+  <div data-lat="__lat__" data-lng="__lng__" id="driver_goto___id__" class="goto_driver_marker strong">__driver_name__</div>
+</div>

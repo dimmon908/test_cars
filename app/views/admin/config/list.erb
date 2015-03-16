@@ -1,0 +1,34 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag  'custom_validators', 'custimize_validator' %>
+<% end %>
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+    <% if @keys.empty? %>
+        <h1><%=t 'config.keys' %>:</h1>
+    <% else %>
+        <h1><%=t 'config.keys' %>:</h1>
+        <table border="1" class="list" width="100%">
+          <tr>
+            <th><%=t 'config.id' %></th>
+            <th><%=t 'config.internal_name' %></th>
+            <th><%=t 'config.key' %></th>
+            <th><%=t 'config.value' %></th>
+          </tr>
+          <% @keys.each do |key| %>
+              <tr>
+                <td><%= key.id %> </td>
+                <td><%= key.internal_name %></td>
+                <td><%= key.key %></td>
+                <td>
+                  <%= form_for key, :url => "/admin/config/#{key.id}", :validate => true do |f| %>
+                    <%= f.text_field :text_value, :style => 'width: 100%;', :class => 'config_key_input', :data_id => key.id %>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+    <%= render 'shared/back_link' %>
+    <%= render 'shared/summary_errors' %>
+  </div>
+</div>

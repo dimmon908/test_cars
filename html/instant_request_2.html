@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <!-- Bootstrap -->
+  <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet">
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="bootstrap/assets/js/html5shiv.js"></script>
+  <script src="bootstrap/assets/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="container">
+  <nav class="row navbar navbar-inverse" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Requests</a></li>
+      <li><a href="#">Address Book</a></li>
+      <li><a href="#">Get a free ride</a></li>
+      <li><a href="#">My Account</a></li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li><p class="navbar-text"><img src="/img/user_icon.png" class="user_icon"/>Hello, John Doe</p></li>
+      <li><a href="#" class="link_logout">Sign Out</a></li>
+    </ul>
+  </nav>
+
+  <div class="row">
+    <div class="col-md-3 col-sm-3 col-xs-3 bg_light_grey" id="left_column">
+      <ul class="nav nav-pills" id="request_tabs">
+        <li class="active"><a href="#instant" data-toggle="pill">Instant Request</a></li>
+        <li><a href="#future" data-toggle="pill">Future Request</a></li>
+        <li><a href="#active" data-toggle="pill">Active</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane active" id="instant">
+          <div class="fieldset">
+            <div class="title"><span class="icon vehicle_type"></span>Set notifications</div>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label>Add notifications</label>
+                <div class="row">
+                  <div class="col-md-3 col-sm-3 col-xs-3 text-center">
+                    <img src="img/phone_icon.png"/><img src="img/email_icon.png"/>
+                  </div>
+                  <div class="col-md-9 col-sm-9 col-xs-9">
+                    <input type="text" class="form-control" placeholder="john.doe@email.com">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 col-sm-3 col-xs-3 text-center">
+                    <img src="img/phone_icon.png"/><img src="img/email_icon.png"/>
+                  </div>
+                  <div class="col-md-9 col-sm-9 col-xs-9">
+                    <input type="text" class="form-control" placeholder="+1 749 200-2000">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 col-sm-3 col-xs-3 text-center">
+                    <img src="img/phone_icon.png"/><img src="img/email_icon.png"/>
+                  </div>
+                  <div class="col-md-9 col-sm-9 col-xs-9">
+                    <input type="text" class="form-control" placeholder="+1 749 200-2000">
+                  </div>
+                </div>
+                <p><a href="#">Add more notifications</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="fieldset">
+            <div class="title"><span class="icon vehicle_type"></span>Trip review</div>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <strong>Pickup location:</strong>
+                <p>San Francisco, California, United States of Americe</p>
+
+                <strong>Destination:</strong>
+                <p>Broadway Street, number 32, New York, United States of Americe</p>
+
+                <strong>Number of passengers:</strong>
+                <p>4</p>
+
+                <strong>Luggage:</strong>
+                <p>2</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="fieldset">
+            <div class="row" style="background: #E4E4E4">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="padding-top: 10px;">
+                <div class="pull-right">
+                  <a href="#">Edit trip</a>
+                </div>
+                <div class="pull-left">
+                  <p class="">Estimated rate</p>
+                  <p><strong>$22463.07</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <button type="button" class="btn btn-block btn-default">Book It</button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="tab-pane" id="future">
+          <div class="fieldset">
+            <div class="title"><span class="icon select_address"></span>Select the time of trip</div>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="address" placeholder="10/15/2013 - 12:30PM"/>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fieldset">
+            <div class="title"><span class="icon select_address"></span>Select address</div>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-6"><label for="address">Pickup address<span class="required_icon">*</span></label></div>
+              <div class="col-md-6 col-sm-6 col-xs-6"><a href="#" class="import_from_address_book">Import from address book</a></div>
+              <div class="clearfix"></div>
+              <div class="col-md-12 col-sm-12 col-xs-12 input-group">
+                <input type="text" class="form-control" name="address" id="address" placeholder="Broadway, New York"/>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-6"><label for="destination">Destination(optional)<span class="info">?</span></label></div>
+              <div class="col-md-6 col-sm-6 col-xs-6"><a href="#" class="import_from_address_book">Import from address book</a></div>
+              <div class="clearfix"></div>
+              <div class="col-md-12 col-sm-12 col-xs-12 input-group">
+                <input type="text" class="form-control" name="destination" id="destination" placeholder="Green Street, San Francisco"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="fieldset">
+            <div class="title"><span class="icon vehicle_type"></span>Vehicle type</div>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <label class="radio">
+                  <input type="radio" name="vehicle_type" value="1"/>
+                  <img src="img/car1.png">
+                  <span class="bold">Mercedes R Class</span>
+                  <span>Black car</span>
+                </label>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <label class="radio">
+                  <input type="radio" name="vehicle_type" value="2"/>
+                  <img src="img/car2.png">
+                  <span class="bold">16 Passengers Van</span>
+                  <span>Black van</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="passengers_number">Passengers number<span class="required_icon">*</span></label>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-6 input-group">
+                <select name="passengers_number" id="passengers_number" class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="luggage">Luggage<span class="required_icon">*</span></label>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-6 input-group">
+                <select name="luggage" id="luggage" class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="fieldset">
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label>
+                  <input type="checkbox" name="book_for_friend" value="1"/>
+                  <span style="font-weight: normal;">Book for a friend / guest</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="passenger_info_title"><span class="passenger_icon"></span>Passenger 1 info *</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-6"><label for="first_name">First name</label></div>
+              <div class="col-md-6 col-sm-6 col-xs-6"><label for="last_name">Last name</label></div>
+              <div class="clearfix"></div>
+              <div class="col-md-6 col-sm-6 col-xs-6 input-group">
+                <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Michaela"/>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6 input-group">
+                <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Wolf"/>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12"><label for="phone_number">Phone number</label></div>
+              <div class="clearfix"></div>
+              <div class="col-md-12 col-sm-12 col-xs-12 input-group">
+                <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="+1 749 700-7200"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12"><a href="#">Add more passengers info</a></div>
+            </div>
+          </div>
+
+          <div class="fieldset">
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="comments">Comments</label>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-md-12 col-sm-12 col-xs-12 input-group">
+                <textarea name="comments" class="form-control" id="comments" placeholder="Please add your special comments here..."></textarea>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="promo_code">Promo code</label>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-md-6 col-sm-6 col-xs-6 input-group">
+                <input type="text" name="promo_code" class="form-control" id="promo_code" placeholder="3653ggf200"/>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <button type="button" class="btn btn-block btn-default">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="active">
+          <div class="fieldset">
+            <div class="title"><span class="icon select_address"></span>Manage your requests</div>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-right">Cancellation time: 02:40</div>
+                <div class="request_type_tab pull-left">Instant request</div>
+                <div class="clearfix"></div>
+                <div class="request_info">
+                  <ul class="list-unstyled">
+                    <li>
+                      <img src="img/red_car.png" class="pull-left car_img"/>
+                      <div class="pull-left">
+                        <strong>Pickup location:</strong>
+                        <p>San Francisco, California, United States of America</p>
+                      </div>
+                      <div class="clear"></div>
+                    </li>
+
+                    <li class="path"><img src="img/path.png"/></li>
+                    <li>
+                      <img src="img/green_car.png" class="pull-left car_img"/>
+                      <div class="pull-left">
+                        <strong>Destination:</strong>
+                        <p>Broadway Street, number 32, New York,<br>United States of America</p>
+                      </div>
+                      <div class="clear"></div>
+                    </li>
+                  </ul>
+                  <p><strong>Number of passengers:</strong> 4</p>
+                  <p><strong>Luggage:</strong> 2</p>
+
+                  <div class="divider"></div>
+                  <p>Estimated rate</p>
+                  <p class="text-danger">$22463.70</p>
+
+                  <div class="col-md-5 col-sm-5 col-xs-5 row">
+                    <button type="button" class="btn btn-block btn-default">Cancel request</button>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-right">Cancellation time: 02:40</div>
+                <div class="request_type_tab pull-left">Future request</div>
+                <div class="clearfix"></div>
+                <div class="request_info">
+                  <ul class="list-unstyled">
+                    <li>
+                      <img src="img/red_car.png" class="pull-left car_img"/>
+                      <div class="pull-left">
+                        <strong>Pickup location:</strong>
+                        <p>San Francisco, California, United States of America</p>
+                      </div>
+                      <div class="clear"></div>
+                    </li>
+
+                    <li class="path"><img src="img/path.png"/></li>
+                    <li>
+                      <img src="img/green_car.png" class="pull-left car_img"/>
+                      <div class="pull-left">
+                        <strong>Destination:</strong>
+                        <p>Broadway Street, number 32, New York,<br>United States of America</p>
+                      </div>
+                      <div class="clear"></div>
+                    </li>
+                  </ul>
+                  <p><strong>Number of passengers:</strong> 4</p>
+                  <p><strong>Luggage:</strong> 2</p>
+                  <p><strong>Pickup date:</strong> 10/15/2013 - 10:30</p>
+
+                  <div class="divider"></div>
+                  <p>Estimated rate</p>
+                  <p class="text-danger">$22463.70</p>
+
+                  <div class="col-md-5 col-sm-5 col-xs-5 row">
+                    <button type="button" class="btn btn-block btn-default">Cancel request</button>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3" id="address_book" style="display: none;">
+      <div class="title">My address book</div>
+
+      <ul class="list-group address_list row">
+        <li class="list-group-item">
+          <span class="address_list_item_icon"></span>
+          <div class="pull-left">
+            <div>Broadway strret, number 32</div>
+            <div>New York, USA</div>
+            <div class="buttons_wrap" style="display: none; margin: 10px 0;">
+              <button type="button" class="btn-block btn-default">Set as pickup address</button>
+              <button type="button" class="btn-block btn-default">Set as destination</button>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li class="list-group-item">
+          <span class="address_list_item_icon"></span>
+          <div class="pull-left">
+            <div>Green Street, number 200</div>
+            <div>San Francisco, USA</div>
+            <div class="buttons_wrap" style="display: none; margin: 10px 0;">
+              <button type="button" class="btn-block btn-default">Set as pickup address</button>
+              <button type="button" class="btn-block btn-default">Set as destination</button>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li class="list-group-item">
+          <span class="address_list_item_icon"></span>
+          <div class="pull-left">
+            <div>Sea wall let, number 120</div>
+            <div>San Francisco, USA</div>
+            <div class="buttons_wrap" style="display: none; margin: 10px 0;">
+              <button type="button" class="btn-block btn-default">Set as pickup address</button>
+              <button type="button" class="btn-block btn-default">Set as destination</button>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li class="list-group-item">
+          <span class="address_list_item_icon"></span>
+          <div class="pull-left">
+            <div>Pier street, number 17</div>
+            <div>San Francisco, USA</div>
+            <div class="buttons_wrap" style="display: none; margin: 10px 0;">
+              <button type="button" class="btn-block btn-default">Set as pickup address</button>
+              <button type="button" class="btn-block btn-default">Set as destination</button>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-9 col-sm-9 col-xs-9" id="right_column">
+      <img src="img/map.png" class="map">
+    </div>
+  </div>
+</div>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="bootstrap/assets/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+  (function($) {
+    $(function() {
+      var address_book = $('#address_book');
+      setHeight();
+      $(window).resize(setHeight);
+
+      $('.import_from_address_book').click(function(e) {
+        e.preventDefault();
+        address_book.toggle();
+      });
+      address_book.find('.address_list').find('li').click(function() {
+        var current = $(this).find('.buttons_wrap');
+        address_book.find('.address_list').find('li').find('.buttons_wrap').each(function() {
+          if ($(this).get(0) == current.get(0)) {
+            $(this).slideDown();
+          } else {
+            $(this).slideUp();
+          }
+        });
+      });
+
+      function setHeight() {
+        var height = $('#right_column').innerHeight();
+        $('#left_column').css({ minHeight: height });
+        $('#address_book').height($('#left_column').height());
+      }
+    })
+  })(jQuery);
+</script>
+</body>
+</html>

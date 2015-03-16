@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-xs-12">
+    <%= render 'shared/logo' %>
+  </div>
+</div>
+
+<div class="divider row" style="margin-top: 20px;">
+  <div class="col-xs-12">
+    <p class="title text-left" style="text-transform: uppercase;"><%= t 'top.register.sign_up_header', :account_type => @account_type %></p>
+  </div>
+
+  <div class="col-xs-12">
+    <div class="pull-left">
+      <p class="description"><%= t 'top.text.already_client' %> <%= link_to t('links.sign_in_here'), new_user_session_path %></p>
+    </div>
+  </div>
+</div>

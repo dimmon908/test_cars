@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-dropdown sidebar-width-mini sticky-sidebar sidebar-hat"> <![endif]-->
+<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-dropdown sidebar-width-mini sticky-sidebar sidebar-hat"> <![endif]-->
+<!--[if IE 8]>    <html class="ie lt-ie9 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-dropdown sidebar-width-mini sticky-sidebar sidebar-hat"> <![endif]-->
+<!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-dropdown sidebar-width-mini sticky-sidebar sidebar-hat"> <![endif]-->
+<!--[if !IE]><!--><html class="animations fluid top-full menuh-top sticky-top sidebar sidebar-full sidebar-dropdown sidebar-width-mini sticky-sidebar sidebar-hat"><!-- <![endif]-->
+<head>
+  <%= render 'layouts/admin_head' %>
+  <script type="text/javascript">
+    //<![CDATA[
+    window.currentTab = '<%= @tab.blank? ? controller.action_name : @tab %>';
+    //]]>
+  </script>
+</head>
+<body class="document-body">
+<div class="container-fluid menu-hidden sidebar-hidden-phone fluid m enu-left">
+  <div id="wrapper">
+
+    <!-- Sidebar Menu -->
+    <div id="menu" class="hidden-print">
+
+      <!-- Brand -->
+      <%= link_to '/admin/dashboard', :class => 'appbrand' do %>
+        <span class="text-primary"><%= t 'general.project_name' %></span>
+      <% end %>
+
+      <!-- Scrollable menu wrapper with Maximum height -->
+      <div class="slim-scroll">
+
+        <!-- Menu Toggle Button -->
+        <button type="button" class="btn btn-navbar">
+          <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+        </button>
+        <!-- // Menu Toggle Button END -->
+
+        <!-- Sidebar Profile -->
+				<span class="profile center">
+					<%= image_tag(current_user.profile.photo.url(:small), :alt => current_user.full_name, title: current_user.full_name) %>
+				</span>
+        <!-- // Sidebar Profile END -->
+
+        <!-- Menu -->
+        <%= render 'admin/navigation' %>
+        <!-- // Menu END -->
+      </div>
+      <!-- // Scrollable Menu wrapper with Maximum Height END -->
+
+    </div>
+    <!-- // Sidebar Menu END -->
+
+    <!-- Content -->
+    <div id="content">
+      <%= render 'admin/top_menu' %>
+      <div id="ajax_container">
+        <%= yield %>
+      </div>
+    </div>
+    <%= render 'admin/shared/modal', :text => t('admin.admin.info'), :label => 'adminLabel', :id => 'adminProfile' %>
+    <%= render 'admin/shared/modal', :text => '__reply_message_header__', :label => 'adminReplyLabel', :id => 'adminReplyMessage', :buttons => false %>
+    <%= yield :scripts %>
+    <!-- // Content END -->
+  </div>
+</div>
+<%= render 'layouts/admin_footer' %>
+</body>
+</html>

@@ -1,0 +1,10 @@
+#encoding: utf-8
+require './db/roles.rb'
+#require './db/cities.rb'
+require './db/configs.rb'
+require './db/vehicles.rb'
+require './db/admins.rb'
+require './db/emails.rb'
+require './db/sms.rb'
+require './db/notifications.rb'
+require './db/others.rb'

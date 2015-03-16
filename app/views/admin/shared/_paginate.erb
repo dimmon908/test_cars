@@ -1,0 +1,17 @@
+<%
+   tab ||= :dashboard
+   default_paginate ||= WillPaginate.per_page
+
+   per_page = params[:per_page]
+   per_page ||= default_paginate
+
+   if can? :admin, :all
+     links = AdminHelper::NAVIGATION_LINKS
+   else
+     links = BusinessHelper::NAVIGATION_LINKS
+   end
+%>
+<div>
+  <%= select_tag :per_page, options_for_select(Configurations[:per_pages_values], per_page), {'data-tab' => tab, remote: true, url: url_for(links[tab][:action])} %>
+  <%= t('admin.general.result_per_page')%>
+</div>

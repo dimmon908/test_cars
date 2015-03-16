@@ -1,0 +1,85 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag  'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+    <%= form_for(resource, :as => resource_name, :url => "/admin/promo_codes/#{resource.id}",  :validate => true) do |f| %>
+      <div class="row">
+        <div class="col-xs-12">
+          <%= f.label :name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-10 form-group">
+          <%= resource.name %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <%= f.label :promo_type, 'Discount' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-5 form-group">
+          <%= resource.text_value %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-5">
+          <%= f.label :from %>
+        </div>
+        <div class="col-xs-5">
+          <%= f.label :until %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-5 form-group">
+          <div class="input-group datepicker">
+            <%= resource.format_from %>
+          </div>
+        </div>
+        <div class="col-xs-5 form-group">
+          <div class="input-group datepicker">
+            <%= resource.format_until %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-3">
+          <%= f.label :enabled %>
+        </div>
+        <div class="col-xs-3">
+          <%= f.label :orders_type, 'Orders' %>
+        </div>
+        <div class="col-xs-4">
+          <%= f.label :max_uses_number %>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 5px;">
+        <div class="col-xs-3 form-group">
+          <%= resource.status_name %>
+        </div>
+        <div class="col-xs-3 form-group">
+          <%= resource.orders_type_name %>
+        </div>
+        <div class="col-xs-4 form-group">
+          <%= resource.max_uses_number %>
+        </div>
+      </div>
+
+    <% end %>
+
+    <% requests = Request::where(:promo_code_id => resource.id).all %>
+    <% unless requests.blank? %>
+      <div class="row" style="margin-top: 20px;">
+        <%= render '/admin/request/list', :data => data %>
+      </div>
+    <% end %>
+
+    <%= link_to t('request.close'), '/admin/promo_codes', :class => 'btn btn-primary', :remote => true, 'data-tab' => :requests, 'data-ignore-tab' => true  %>
+  </div>
+</div>

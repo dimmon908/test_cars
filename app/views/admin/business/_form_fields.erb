@@ -1,0 +1,36 @@
+<% f ||= {}%>
+<% focus ||= true if focus.nil? %>
+<% if f.is_a?ActionView::Helpers::FormBuilder %>
+  <div class="row">
+    <div class="col-xs-6">
+      <%= f.label :business_name %>
+    </div>
+    <div class="col-xs-6">
+      <%= f.label :company_address %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 form-group">
+      <%= f.text_field :business_name, :placeholder => t(:business_name_holder), :autofocus => focus, :class => 'form-control validate[required]' %>
+    </div>
+    <div class="col-xs-6 form-group">
+      <%= f.text_field :company_address, :placeholder => t(:company_address_placeholder), :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.label :city %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-6">
+      <%= f.text_field :city, :class => 'form-control' %>
+    </div>
+    <div class="col-xs-2 form-group">
+      <%= f.text_field :suite, :placeholder => t(:suite_placeholder), :class => 'form-control' %>
+    </div>
+    <div class="col-xs-3 form-group">
+      <%= f.text_field :business_zip_code, :placeholder => t('placeholders.user.business.zipcode'), :class => 'form-control' %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11 col-sm-11 col-xs-11">
+    <%= form_for(resource, :as => resource_name, :url => address_book_path(resource), :validate => true) do |f| %>
+      <%= render 'shared/summary_errors' %>
+      <%= render 'form_fields', :f => f %>
+
+      <div class="form-group">
+        <div class="col-md-3 col-xs-3 col-sm-3">
+          <div class="row">
+            <%= f.submit t('button.create'), :class => 'btn btn-lg btn-primary btn-block' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

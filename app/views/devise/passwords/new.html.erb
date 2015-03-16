@@ -1,0 +1,28 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-xs-12">
+    <p class="f16" style="margin-bottom: 20px;"><%= t(:forget_password_header) %></p>
+    <div class="row">
+      <div class="col-xs-5">
+        <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => {:method => :post}) do |f| %>
+          <%= devise_error_messages! %>
+
+          <div class="form-group">
+            <%= f.text_field :find_element, :autofocus => true, :placeholder => t(:login_placeholder), :class => 'form-control', :id => 'first_name' %>
+          </div>
+          <div class="row">
+            <div class="col-xs-5">
+              <%= f.submit t(:reset_password), :class => "btn btn-default btn-block text-upper" %>
+            </div>
+            <div class="col-xs-7">
+              <div class="row">
+                <span style="vertical-align: middle;display: table-cell;height: 35px;">or <%= link_to t('button.cancel'), new_user_session_path %></span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "devise/shared/links" %>

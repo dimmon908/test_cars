@@ -1,0 +1,48 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11">
+    <% if @accounts.empty? %>
+      None sub accounts
+    <% else %>
+      <table cellpadding="2" cellspacing="0" border="1" width="100%">
+        <thead>
+        <tr>
+          <th><%= t('user.first_name') %></th>
+          <th><%= t('user.last_name') %></th>
+          <th><%= t('user.email') %></th>
+          <th><%= t('user.phone') %></th>
+          <th><%= t('user.status') %></th>
+          <% if can? :all, current_user %>
+          <th><%= t('user.partner') %></th>
+          <% end %>
+          <th><%= t('user.actions') %></th>
+        </tr>
+        </thead>
+        <tbody>
+      <% @accounts.each do |account| %>
+        <tr>
+          <td><%= account.first_name %></td>
+          <td><%= account.last_name %></td>
+          <td><%= account.email %></td>
+          <td><%= account.phone %></td>
+          <td><%= account.status_name %></td>
+          <% if can? :all, current_user %>
+          <td><%= account.partner.business_name %></td>
+          <% end %>
+          <td>
+            <%= link_to t('links.show'), sub_account_path(account) %>
+            <br/>
+            <%= link_to t('links.edit'), edit_sub_account_path(account)%>
+            <br/>
+            <%= link_to t('links.destroy'), sub_account_path(account), method: :delete, data: { confirm: t('messages.sure') } %>
+          </td>
+        </tr>
+      <% end %>
+        </tbody>
+      </table>
+    <% end  %>
+    <br/>
+    <br/>
+    <%= link_to t('user.create_sub_account'), new_sub_account_path %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

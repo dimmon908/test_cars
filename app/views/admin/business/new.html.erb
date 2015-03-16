@@ -1,0 +1,16 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-11">
+    <%= form_for(resource, :as => resource_name, :url => '/admin/business', :validate => true) do |f| %>
+
+      <%= render 'admin/personal/hidden_fields' %>
+
+      <div class="row steps">
+        <div class="col-md-12">
+          <%= render 'admin/business/form_fields', :f => f, :focus => false %>
+
+          <%= render 'admin/personal/form_fields', :f => f, :focus => false %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

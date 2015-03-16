@@ -1,0 +1,7 @@
+<% list ||= @list %>
+<% list.each do |request| %>
+  <%= render 'row', :request => request %>
+  <div class="row">
+    <div class="divider"></div>
+  </div>
+<% end %>

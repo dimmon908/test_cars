@@ -1,0 +1,18 @@
+<%
+  if can? :admin, :all
+    links = AdminHelper::NAVIGATION_LINKS
+  else
+    links = BusinessHelper::NAVIGATION_LINKS
+  end
+%>
+
+<ul>
+<% links.each_value do |link| %>
+  <li <%if @tab == link[:tab]%>class="active"<%end%> data-tab='<%= link[:tab] %>'>
+    <%= link_to link[:action], { :remote => link[:remote], 'data-tab' => link[:tab], :class => link[:class] } do %>
+      <i></i><span><%= t(link[:name]) %></span>
+    <% end %>
+  </li>
+<% end %>
+</ul>
+<div class="clearfix"></div>

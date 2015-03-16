@@ -1,0 +1,42 @@
+<% request ||= resource %>
+<div class="row">
+  <div class="col-md-10">
+    <p class="f14 museoSans100">Trip Id: <%= request.id %></p>
+    <p class="f14 museoSans100">Trip Status: <%= request.status %></p>
+
+    <% if request.user %>
+      <p class="f14 museoSans100">User Id: <%= request.user_id %></p>
+      <p class="f14 museoSans100">User login: <%= request.user.username %></p>
+      <p class="f14 museoSans100">User email: <%= request.user.email %></p>
+    <%end%>
+
+    <% if request.driver %>
+      <p class="f14 museoSans100">Driver Id: <%= request.driver_id %></p>
+      <p class="f14 museoSans100">Driver name: <%= request.driver.full_name %></p>
+      <p class="f14 museoSans100">Driver status: <%= request.driver.status %></p>
+    <%end%>
+
+    <p class="f14 museoSans100">Estimated Metres: <%= request.distance %></p>
+    <p class="f14 museoSans100">Estimated Miles: <%= HelperTools::meters_to_miles request.distance %></p>
+    <p class="f14 museoSans100">Estimated Time: <%= request.time %></p>
+    <p class="f14 museoSans100">Estimated Minutes: <%= HelperTools::to_minutes request.time %></p>
+
+    <p class="f14 museoSans100">Actually Metres: <%= request.real_distance %></p>
+    <p class="f14 museoSans100">Actually Miles: <%= HelperTools::meters_to_miles request.real_distance %></p>
+    <p class="f14 museoSans100">Actually Time: <%= request.real_time %></p>
+    <p class="f14 museoSans100">Actually Minutes: <%= HelperTools::to_minutes request.real_time %></p>
+
+    <p class="f14 museoSans100">Estimated ByMile: <%= request.vehicle.per_mile %></p>
+    <p class="f14 museoSans100">Estimated ByMinute: <%= request.vehicle.per_minute %></p>
+    <p class="f14 museoSans100">Estimated ByVehicle: <%= request.vehicle.rate %></p>
+
+    <p class="f14 museoSans100">RateByDistance: <%= Fares::by_meters request.distance, request.vehicle %></p>
+    <p class="f14 museoSans100">RateByTime: <%= Fares::by_time request.time, request.vehicle %></p>
+
+    <p class="f14 museoSans100">Estimated Rate: <%= request.rate %></p>
+    <% if request.transaction %>
+    <p class="f14 museoSans100">Real Rate: <%= request.charged_price %></p>
+    <p class="f14 museoSans100">Calculated Rate: <%= request.calculate_rate %></p>
+    <% end %>
+  </div>
+</div>

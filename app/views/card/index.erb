@@ -1,0 +1,39 @@
+<%
+   cards = Card::where('id = ? OR user_id = ?', current_user.card_id, current_user.partner_id).all
+   cards ||= []
+%>
+<% if cards.empty? %>
+  <div class="row" style="margin-top: 20px; margin-bottom: 30px;">
+    <div class="col-xs-12 col-lg-10">
+      <p class="f12 museoSans100 pull-left" style="margin-right: 10px;">
+        <span></span>
+        <span style="margin: 0 30px;"></span>
+        <span></span>
+      </p>
+
+      <p class="f12 museoSans100 pull-right" style="position: relative;">
+        <%= link_to 'Add New', '/card/new', :remote => true %>
+      </p>
+    </div>
+  </div>
+<% else %>
+  <% cards.each do |card| %>
+  <div class="row" style="margin-top: 20px; margin-bottom: 30px;">
+    <div class="col-xs-12 col-lg-10">
+      <p class="f12 museoSans100 pull-left" style="margin-right: 10px;">
+        <span><%= Card::CARD_TYPES[card.type_name.to_s.to_sym] %></span>
+        <span style="margin: 0 30px;"><%= '.'*(card.card_number.size - 4)  + card.card_number.to_s[-4, 4]%></span>
+        <span>Expiration Date&nbsp;&nbsp;&nbsp;<%= card.card_expire.utc.strftime('%m/%y') %></span>
+      </p>
+
+      <p class="f12 museoSans100 pull-right" style="position: relative;">
+        <%= link_to 'Edit', "/card/#{card.id}/edit", :remote => true %>
+        <span class="vertical-separator"></span>
+        <%= link_to 'Add New', '/card/new', :remote => true %>
+        <span class="vertical-separator"></span>
+        <%= link_to 'remove', "/card/#{card.id}", :remote => true, :method => :delete, :class => 'delete_card', data: { confirm: 'Are you sure?' } %>
+      </p>
+    </div>
+  </div>
+  <% end %>
+<% end %>

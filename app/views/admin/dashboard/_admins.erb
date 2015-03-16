@@ -1,0 +1,13 @@
+<% users = User::where(:role_id => Role.select(:id).where(:internal_name => :admin).first.id) %>
+<div class="col-md-4 innerT border-left">
+  <div class="padding-bottom-none-phone">
+    <div class="widget-stats widget-stats-gray widget-stats-5">
+      <%= link_to t('admin.links.see_all'), {:controller => 'admin', :action => :admins}, {:remote => true, 'data-tab' => :business, :class => 'pull-right'} %>
+
+      <h4><%= t('admin.dashboard.admins') %></h4>
+      <p><%= "#{users.count} #{t('general.available')}" %></p>
+
+      <%= link_to t('admin.links.new_admin'), '/admin/admins#new', {'data-tab' => :promo_codes, :class => 'btn btn-primary'} %>
+    </div>
+  </div>
+</div>

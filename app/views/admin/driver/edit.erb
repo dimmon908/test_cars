@@ -1,0 +1,11 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag 'custom_validators', 'custimize_validator' %>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for(resource, :as => resource_name, :url => "/admin/driver/#{resource.id}", :validate => true, :remote => true) do |f| %>
+      <%= render 'admin/driver/form_fields', :f => f %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<% web_path ||= session_path(resource_name) %>
+<div class="row" style="margin-top: 40px;">
+  <div class="col-xs-4">
+    <% if flash[:notice] %>
+      <p class="notice"><%= flash[:notice].html_safe %></p>
+    <% end %>
+    <% if flash[:alert] %>
+      <p class="alert"><%= flash[:alert].html_safe %></p>
+    <% end %>
+    <% if flash[:error] %>
+      <p class="error"><%= flash[:error].html_safe %></p>
+    <% end %>
+    <%= form_for(resource, :as => resource_name, :url => web_path) do |f| %>
+      <p class="text-upper"><%= t :via_email_phone %></p>
+
+      <%= f.text_field :email, :autofocus => true, :placeholder => t(:login_placeholder), :class => 'form-control' %>
+
+      <%= f.password_field :password, :placeholder => t(:password_placeholder), :class => 'form-control', :style => 'margin-top: 15px;' %>
+
+      <%= link_to t(:forget_password), new_password_path(resource_name), :class => 'pull-right forgot_link' %>
+
+      <label class="checkbox">
+        <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+      </label>
+
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-xs-5">
+          <%= f.submit t('button.sign_in'), :class => 'btn btn-default btn-block text-upper' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-xs-3 col-xs-offset-5">
+    <p>&nbsp;</p>
+
+    <%= link_to user_omniauth_authorize_path(:facebook), :class => 'btn btn-block btn-lg text-upper btn-social_media btn-facebook' do %>
+      <span></span><%= t 'links.sign_in_with_facebook'  %>
+    <% end %>
+
+    <%= link_to user_omniauth_authorize_path(:linkedin), :class => 'btn btn-block btn-lg text-upper btn-social_media btn-linkein' do %>
+      <span></span><%= t 'links.sign_in_with_linkedin'  %>
+    <% end %>
+
+    <%= link_to user_omniauth_authorize_path(:twitter), :class => 'btn btn-block btn-lg text-upper btn-social_media btn-twitter' do %>
+      <span></span><%= t 'links.sign_in_with_twitter'  %>
+    <% end %>
+  </div>
+</div>

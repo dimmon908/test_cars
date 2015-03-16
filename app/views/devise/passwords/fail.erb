@@ -1,0 +1,14 @@
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-12">
+    <p class="f16 museoSans300"><%= t('user.messages.fail_forget')%></p>
+  </div>
+</div>
+<%  session[:errors] ||= [] %>
+<% unless session[:errors].empty? %>
+  <ul>
+  <% session[:errors].each do |error| %>
+    <li><%= error %></li>
+  <% end %>
+  </ul>
+<% end %>
+<% session[:errors] = nil %>

@@ -1,0 +1,56 @@
+<% f ||= {}%>
+<% focus ||= true if focus.nil? %>
+<% if f.is_a?ActionView::Helpers::FormBuilder %>
+  <%= hidden_field :business_mode, nil, :id => :business_mode, :name => :business_mode, :value => Payment::Type::CREDIT_CARD %>
+  <div class="step" data-step="2">
+    <p class="lead"><span class="icons icons-business_information"></span><%= t 'forms.user.business_info' %></p>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.label :business_name %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 form-group">
+        <%= f.text_field :business_name, :placeholder => t(:business_name_holder), :autofocus => focus, :class => 'form-control validate[required]' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.label :company_address %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-6">
+        <%= f.text_field :company_address, :placeholder => t(:company_address_placeholder), :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2 form-group">
+        <%= f.text_field :suite, :placeholder => t(:suite_placeholder), :class => 'form-control' %>
+      </div>
+      <div class="col-xs-3 form-group">
+        <%= f.text_field :business_zip_code, :placeholder => t('placeholders.user.business.zipcode'), :class => 'form-control' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.label :city %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-xs-4">
+        <%= f.text_field :city, :class => 'form-control' %>
+      </div>
+    </div>
+
+    <div class="row step_navigation">
+      <div class="col-xs-12">
+        <button type="button" class="step_prev btn btn-default" data-to-step="1"><span class="icons icons-prev"></span>BACK</button>
+        <button type="button" class="step_next btn btn-default" data-to-step="3">NEXT<span class="icons icons-next"></span></button>
+      </div>
+    </div>
+  </div>
+<% end %>

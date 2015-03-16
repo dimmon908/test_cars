@@ -1,0 +1,48 @@
+<%
+   @data = Classes::SubAccount.get(current_user).paginate(:page => params[:page], :per_page => params[:per_page]) rescue nil
+   @data ||= []
+%>
+<%= hidden_field_tag 'page', params[:page] , :id => 'page' %>
+<%= "#{t('general.found')} #{@data.count} #{t('general.users')}" %>
+<%= render 'admin/shared/paginate', :tab => :personal, :default_paginate => User::per_page %>
+<div class="row" style="margin-top: 30px;">
+  <div class="col-md-8 col-xs-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+
+    <% if @data.empty? %>
+      None personal accounts
+    <% else %>
+      <table border="1" width="100%"accesskey="" cellspacing="0" cellpadding="2">
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>CreditCard</th>
+          <th>Actions</th>
+        </tr>
+        <% @data.each do |user| %>
+        <tr>
+          <td><%= user.first_name %></td>
+          <td><%= user.last_name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.phone %></td>
+          <td><%= user.role.description %></td>
+          <td><%= user.status_name %></td>
+          <td><%= user.credit_card %></td>
+          <td>
+            <%= link_to t('links.show'), "/#{user.role.internal_name}/#{user.id}" %>
+            <br/>
+            <%= link_to t('links.edit'), "/#{user.role.internal_name}/#{user.id}/edit" %>
+            <br/>
+            <%= link_to t('links.destroy'), "/#{user.role.internal_name}/#{user.id}", method: :delete, data: { confirm: t('messages.sure') } %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    <% end %>
+    <%= will_paginate @data %>
+    <%= render 'shared/back_link' %>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<h1>Logs</h1>
+
+  <table class="logs_table" cellpadding="2" cellspacing="2" border="1">
+  <tr>
+      <th style="width: 50px;">Id</th>
+      <th style="width: 180px;">User</th>
+      <th style="width: 400px;">Request</th>
+      <th style="width: 100px;">Type</th>
+      <th style="width: 400px;">Data</th>
+      <th style="width: 170px;">Date</th>
+      <th style="width: 60px;">Actions</th>
+  </tr>
+
+<% @logs.each do |log| %>
+  <tr>
+    <td><%= log.id %></td>
+    <td><%= log.username %></td>
+    <td><%= log.params %></td>
+    <td><%= log.log_type %></td>
+    <td><%= log.data[0..100] %>...</td>
+        <td><span class="datetime" data-date="<%= log.created_at.strftime(HelperTools::JS_DATE) %>"></span></td>
+    <td>
+      <%= link_to 'Show', log, :target => '_blank' %>
+      <br/>
+          <%= link_to 'Destroy', log, method: :delete, data: {confirm: 'Are you sure?'} %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @logs, :remote => true %>
+</div>

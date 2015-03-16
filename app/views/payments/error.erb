@@ -1,0 +1,16 @@
+<h2>Error!</h2>
+<div class="error">
+  <h3>We're sorry, but we can't process your order at this time due to the following error:</h3>
+  <%=h @reason %>
+  <table>
+    <tr>
+      <td>response code</td>
+      <td><%=h @response_code %></td>
+    </tr>
+    <tr>
+      <td>response reason code</td>
+      <td><%=h @reason_code %></td>
+    </tr>
+  </table>
+</div>
+<%= render :partial => 'start_over' %>

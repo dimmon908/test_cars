@@ -1,0 +1,33 @@
+<% content_for :scripts do %>
+    <script type="text/javascript">
+      window.resource_name = '<%= resource_name %>';
+    </script>
+   <%= javascript_include_tag  'regex-mask-plugin', :profile_page, 'custom_validators', 'custimize_validator', 'steps' %>
+<% end %>
+
+<div class="row" style="margin-top: 30px;">
+  <div class="col-xs-11">
+    <%= form_for(resource, :as => resource_name, :url => new_personal_path, :validate => true) do |f| %>
+      <%= devise_error_messages! %>
+      <%= render 'shared/summary_errors' %>
+
+      <%= render 'hidden_fields' %>
+
+      <div class="row steps">
+        <div class="col-xs-12">
+          <%= render 'personal/form_fields', :f => f, :focus => true %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-xs-1">
+    <div class="steps_control">
+      <div class="step step_first step_active" data-step="1"><%= t 'forms.user.personalInfo' %></div>
+      <div class="step" data-step="3"><%= t 'forms.user.accountInfo' %></div>
+      <div class="step" data-step="4"><%= t 'forms.user.creditCardInfo' %></div>
+      <div class="step step_last"><%= t 'forms.user.sign_up_complete' %></div>
+    </div>
+  </div>
+</div>
+
+<%= render "devise/shared/links" %>

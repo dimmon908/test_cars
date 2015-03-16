@@ -1,0 +1,33 @@
+<h2>Select Size</h2>
+<% form_for :order, {:url => review_order_path} do |f| %>
+  <fieldset class="centered">
+    <div>
+      <label class="orange" for="size_small">
+        <%= image_tag 'mug_small.png' %>
+        S
+      </label>
+      <%= radio_button_tag('size', 'small') %>
+      <br>
+      $1.99
+    </div> 
+    <div>
+      <label class="orange" for="size_medium">
+        <%= image_tag 'mug_medium.png' %>
+        M
+      </label>
+      <%= radio_button_tag('size', 'medium') %>
+      <br>
+      $2.99
+    </div> 
+    <div>
+      <label class="orange" for="size_large">
+        <%= image_tag 'mug_large.png' %>
+        L
+      </label>
+      <%= radio_button_tag('size', 'large') %>
+      <br>
+      $3.99
+    </div> 
+  </fieldset>
+  <%= submit_tag 'Continue', :class => 'submit', :name => 'submit'%>
+<% end %>

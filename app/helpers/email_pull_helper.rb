@@ -1,0 +1,2 @@
+module EmailPullHelper
+end
